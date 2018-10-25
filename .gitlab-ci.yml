@@ -6,7 +6,9 @@ stages:
 
 build:
     stage: build
-    script: ./gradlew bootJar
+    script:
+    - chmod 755 ./gradlew
+    - ./gradlew bootJar
     artifacts:
         paths:
         - build/libs/*.jar
