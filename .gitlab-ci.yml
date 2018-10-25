@@ -4,12 +4,17 @@ stages:
 - build
 - deploy
 
+cache:
+    paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
 build:
     stage: build
-    script: ./mvnw package
+    script: ./gradlew bootJar
     artifacts:
         paths:
-        - target/demo-0.0.1-SNAPSHOT.jar
+        - build/libs/*.jar
 
 production:
     stage: deploy
