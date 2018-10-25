@@ -7,7 +7,6 @@ stages:
 build:
     stage: build
     script:
-    - gradle wrapper
     - ./gradlew bootJar
     artifacts:
         paths:
