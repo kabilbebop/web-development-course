@@ -7,6 +7,10 @@ stages:
 build:
     stage: build
     script:
+    - apt-get install -y curl \
+    - curl -sL https://deb.nodesource.com/setup_9.x | bash - \
+    - apt-get install -y nodejs \
+    - curl -L https://www.npmjs.com/install.sh | sh
     - chmod a+x ./gradlew
     - ./gradlew bootJar
     artifacts:
