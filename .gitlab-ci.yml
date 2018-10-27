@@ -7,7 +7,7 @@ stages:
 build:
     stage: build
     script:
-    - export PATH=$(npm bin)/rimraf:$(npm bin)/tslint:$(npm bin)/prettier:$(npm bin)/jest:$PATH
+    - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
     - ./gradlew bootJar
     artifacts:
