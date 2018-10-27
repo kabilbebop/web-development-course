@@ -8,10 +8,8 @@ build:
     stage: build
     script:
     - export PATH=$(npm bin):$PATH
-    - echo $PATH
-    - ls -l $(npm bin)
     - chmod a+x ./gradlew
-    - ./gradlew bootJar
+    - ./gradlew -Pprofile=prod bootJar
     artifacts:
         paths:
         - build/libs/*.jar
