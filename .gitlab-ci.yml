@@ -7,6 +7,7 @@ stages:
 build:
     stage: build
     script:
+    - export PATH=$(npm bin)/rimraf:$PATH
     - chmod a+x ./gradlew
     - ./gradlew bootJar
     artifacts:
