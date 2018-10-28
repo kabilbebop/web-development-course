@@ -13,6 +13,7 @@ build:
     - apk add autoconf
     - apk add automake
     - apk add libpng-dev
+    - apk add libtool
     - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
     - ./gradlew -Pprod bootJar
