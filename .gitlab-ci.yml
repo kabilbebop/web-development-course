@@ -7,7 +7,7 @@ stages:
 build:
     stage: build
     script:
-    - apt-get install build-essential
+    - yum groupinstall "Development Tools"
     - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
     - ./gradlew -Pprod bootJar
