@@ -9,7 +9,7 @@ build:
     script:
     - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
-    - ./gradlew -Pprofile=prod bootJar
+    - ./gradlew -Pprod bootJar
     artifacts:
         paths:
         - build/libs/*.jar
