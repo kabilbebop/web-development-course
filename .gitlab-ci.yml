@@ -10,8 +10,7 @@ build:
     - echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
     - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk ca-certificates-java --assume-yes
     - chmod a+x ./gradlew
-    - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk-amd64
-    - find / -name tools.jar 2> /dev/null
+    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - ./gradlew -Pprod bootJar
     artifacts:
         paths:
