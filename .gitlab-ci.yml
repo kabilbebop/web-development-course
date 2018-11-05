@@ -1,4 +1,4 @@
-image: loyaltyone/docker-alpine-java-node:latest
+image: node:8-jessie
 
 stages:
 - build
@@ -7,14 +7,7 @@ stages:
 build:
     stage: build
     script:
-    - apk update && apk add --virtual build-dependencies
-    - apk --no-cache -q add build-base libgit2-dev
-    - ln -s /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4
-    - apk add autoconf
-    - apk add automake
-    - apk add libpng-dev
-    - apk add libtool
-    - export PATH=$(npm bin):$PATH
+    - apt-get update && apt-get install -y --no-install-recommends bzip2 unzip xz-utils && rm -rf /var/lib/apt/lists/*
     - chmod a+x ./gradlew
     - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
     - find / -name tools.jar 2> /dev/null
