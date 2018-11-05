@@ -7,8 +7,8 @@ stages:
 build:
     stage: build
     script:
-    - deb http://http.debian.net/debian jessie-backports main
-    - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk
+    - echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
+    - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk ca-certificates-java --assume-yes
     - update-java-alternatives --list
     - update-java-alternatives --set java-1.8.0-openjdk-amd64
     - chmod a+x ./gradlew
