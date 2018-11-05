@@ -7,9 +7,12 @@ stages:
 build:
     stage: build
     script:
-    - apt-get update && apt-get install -y --no-install-recommends bzip2 unzip xz-utils openjdk-8-jdk && rm -rf /var/lib/apt/lists/*
+    - deb http://http.debian.net/debian jessie-backports main
+    - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk
+    - update-java-alternatives --list
+    - update-java-alternatives --set java-1.8.0-openjdk-amd64
     - chmod a+x ./gradlew
-    - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+    - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk-amd64
     - find / -name tools.jar 2> /dev/null
     - ./gradlew -Pprod bootJar
     artifacts:
