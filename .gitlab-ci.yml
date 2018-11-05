@@ -16,8 +16,7 @@ build:
     - apk add libtool
     - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
-    - echo $JAVA_HOME
-    - ls -l "$JAVA_HOME/lib/"
+    - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
     - ./gradlew -Pprod bootJar
     artifacts:
         paths:
