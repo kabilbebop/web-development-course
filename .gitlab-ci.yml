@@ -17,6 +17,7 @@ build:
     - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
     - export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+    - find / -name tools.jar 2> /dev/null
     - ./gradlew -Pprod bootJar
     artifacts:
         paths:
