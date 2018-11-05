@@ -7,8 +7,16 @@ stages:
 build:
     stage: build
     script:
+    - apk update && apk add --virtual build-dependencies
+    - apk --no-cache -q add build-base libgit2-dev
+    - ln -s /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4
+    - apk add autoconf
+    - apk add automake
+    - apk add libpng-dev
+    - apk add libtool
+    - export PATH=$(npm bin):$PATH
     - chmod a+x ./gradlew
-    - ./gradlew bootJar
+    - ./gradlew -Pprod bootJar
     artifacts:
         paths:
         - build/libs/*.jar

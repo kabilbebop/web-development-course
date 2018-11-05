@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,7 +86,8 @@ public class CarResource {
     @Timed
     public List<Car> getAllCars() {
         log.debug("REST request to get all Cars");
-        return carRepository.findAll();
+        List<Car> cars = carRepository.findAll();
+        return cars;
     }
 
     /**
@@ -115,5 +117,33 @@ public class CarResource {
 
         carRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /cars : search cars from given search string.
+     * @param searchString String that match any car information (variant, option, model, manufacturer)
+     * @return the ResponseEntity with status 200 (OK) and the list of cars in body
+     */
+    @GetMapping("/cars/search/{id}")
+    @Timed
+    public List<Car> searchCarsByString(@PathVariable String searchString) {
+        log.debug("REST request to get Cars from given string {}", searchString);
+
+        // Search cars by manufacture name
+        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_name(searchString);
+
+        // Search cars by model name
+        List<Car> carsByModel = carRepository.findByModel_name(searchString);
+
+        // Search cars by variant or options
+        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptions(searchString, searchString);
+
+        // Add all cars to new result list
+        List<Car> result = new ArrayList<>();
+        result.addAll(carsByManufacturer);
+        result.addAll(carsByModel);
+        result.addAll(carsByVariantOrOptions);
+
+        return result;
     }
 }
