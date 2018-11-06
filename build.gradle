@@ -237,6 +237,14 @@ dependencies {
     testCompile "com.h2database:h2"
     liquibaseRuntime "com.h2database:h2"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+
+    // JAVA > 9
+    compile group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.4.0-b180830.0438'
+    compile group: 'org.javassist', name: 'javassist', version: '3.23.1-GA'
+    
+    // Cloud foundry
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-cloudfoundry-connector', version: '2.0.3.RELEASE'
+
 }
 
 task cleanResources(type: Delete) {
