@@ -31,18 +31,18 @@
 
     <script type="text/javascript">
         $(function() {
-            var springfox = {
-                "baseUrl": function() {
-                    var urlMatches = /(.*)\/swagger-ui\/index.html.*/.exec(window.location.href);
+            const springfox = {
+                "baseUrl": function () {
+                    const urlMatches = /(.*)\/swagger-ui\/index.html.*/.exec(window.location.href);
                     return urlMatches[1];
                 },
-                "securityConfig": function(cb) {
-                    $.getJSON(this.baseUrl() + "/swagger-resources/configuration/security", function(data) {
+                "securityConfig": function (cb) {
+                    $.getJSON(this.baseUrl() + "/swagger-resources/configuration/security", function (data) {
                         cb(data);
                     });
                 },
-                "uiConfig": function(cb) {
-                    $.getJSON(this.baseUrl() + "/swagger-resources/configuration/ui", function(data) {
+                "uiConfig": function (cb) {
+                    $.getJSON(this.baseUrl() + "/swagger-resources/configuration/ui", function (data) {
                         cb(data);
                     });
                 }
@@ -82,8 +82,8 @@
                 });
 
                 function addApiKeyAuthorization() {
-                    var authToken = JSON.parse(localStorage.getItem("jhi-authenticationToken") || sessionStorage.getItem("jhi-authenticationToken"));
-                    var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", "Bearer " + authToken, "header");
+                    const authToken = JSON.parse(localStorage.getItem("jhi-authenticationToken") || sessionStorage.getItem("jhi-authenticationToken"));
+                    const apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", "Bearer " + authToken, "header");
                     window.swaggerUi.api.clientAuthorizations.add("bearer", apiKeyAuth);
                 }
 
@@ -102,7 +102,7 @@
                 }
 
                 function initializeSpringfox() {
-                    var security = {};
+                    let security = {};
                     window.springfox.securityConfig(function(data) {
                         security = data;
                         if (typeof initOAuth === "function" && oAuthIsDefined(security)) {
@@ -113,7 +113,7 @@
             });
 
             function maybePrefix(location, withRelativePath) {
-                var pat = /^https?:\/\//i;
+                const pat = /^https?:\/\//i;
                 if (pat.test(location)) {
                     return location;
                 }
@@ -121,16 +121,16 @@
             }
 
             function initializeBaseUrl() {
-                var relativeLocation = springfox.baseUrl();
+                const relativeLocation = springfox.baseUrl();
 
                 $('#input_baseUrl').hide();
 
                 $.getJSON(relativeLocation + "/swagger-resources", function(data) {
 
-                    var $urlDropdown = $('#select_baseUrl');
+                    const $urlDropdown = $('#select_baseUrl');
                     $urlDropdown.empty();
                     $.each(data, function(i, resource) {
-                        var option = $('<option></option>')
+                        const option = $('<option></option>')
                         .attr("value", maybePrefix(resource.location, relativeLocation))
                         .text(resource.name + " (" + resource.location + ")");
                         $urlDropdown.append(option);

@@ -33,7 +33,6 @@ public class TestUtil {
      * @param object
      *            the object to convert
      * @return the JSON byte array
-     * @throws IOException
      */
     public static byte[] convertObjectToJsonBytes(Object object)
             throws IOException {
@@ -68,7 +67,7 @@ public class TestUtil {
 
         private final ZonedDateTime date;
 
-        public ZonedDateTimeMatcher(ZonedDateTime date) {
+        ZonedDateTimeMatcher(ZonedDateTime date) {
             this.date = date;
         }
 

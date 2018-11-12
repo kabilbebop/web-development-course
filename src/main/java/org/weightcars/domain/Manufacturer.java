@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  * A Manufacturer.
@@ -16,23 +17,23 @@ public class Manufacturer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    private String id;
 
     @Column(name = "name")
     private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
+    private String getName() {
         return name;
     }
 

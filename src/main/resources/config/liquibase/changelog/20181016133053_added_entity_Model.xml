@@ -18,14 +18,14 @@
     -->
     <changeSet id="20181016133053-1" author="jhipster">
         <createTable tableName="model">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="manufacturer_id" type="bigint">
+            <column name="manufacturer_id" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 

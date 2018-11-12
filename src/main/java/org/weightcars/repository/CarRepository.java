@@ -12,7 +12,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface CarRepository extends JpaRepository<Car, Long> {
+public interface CarRepository extends JpaRepository<Car, String> {
     List<Car> findByModel_Manufacturer_name(String name);
     List<Car> findByModel_name(String name);
     List<Car> findByVariantOrOptions(String variant, String options);

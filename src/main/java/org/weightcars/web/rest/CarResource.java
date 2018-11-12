@@ -66,7 +66,7 @@ public class CarResource {
      */
     @PutMapping("/cars")
     @Timed
-    public ResponseEntity<Car> updateCar(@RequestBody Car car) throws URISyntaxException {
+    public ResponseEntity<Car> updateCar(@RequestBody Car car) {
         log.debug("REST request to update Car : {}", car);
         if (car.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -86,8 +86,7 @@ public class CarResource {
     @Timed
     public List<Car> getAllCars() {
         log.debug("REST request to get all Cars");
-        List<Car> cars = carRepository.findAll();
-        return cars;
+        return carRepository.findAll();
     }
 
     /**
@@ -98,7 +97,7 @@ public class CarResource {
      */
     @GetMapping("/cars/{id}")
     @Timed
-    public ResponseEntity<Car> getCar(@PathVariable Long id) {
+    public ResponseEntity<Car> getCar(@PathVariable String id) {
         log.debug("REST request to get Car : {}", id);
         Optional<Car> car = carRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(car);
@@ -112,7 +111,7 @@ public class CarResource {
      */
     @DeleteMapping("/cars/{id}")
     @Timed
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCar(@PathVariable String id) {
         log.debug("REST request to delete Car : {}", id);
 
         carRepository.deleteById(id);
@@ -124,7 +123,7 @@ public class CarResource {
      * @param searchString String that match any car information (variant, option, model, manufacturer)
      * @return the ResponseEntity with status 200 (OK) and the list of cars in body
      */
-    @GetMapping("/cars/search/{id}")
+    @GetMapping("/cars/search/{searchString}")
     @Timed
     public List<Car> searchCarsByString(@PathVariable String searchString) {
         log.debug("REST request to get Cars from given string {}", searchString);

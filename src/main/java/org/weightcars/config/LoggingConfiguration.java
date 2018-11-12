@@ -32,8 +32,6 @@ public class LoggingConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(LoggingConfiguration.class);
 
-    private LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-
     private final String appName;
 
     private final String serverPort;
@@ -45,6 +43,7 @@ public class LoggingConfiguration {
         this.appName = appName;
         this.serverPort = serverPort;
         this.jHipsterProperties = jHipsterProperties;
+        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
         if (jHipsterProperties.getLogging().getLogstash().isEnabled()) {
             addLogstashAppender(context);
             addContextListener(context);
