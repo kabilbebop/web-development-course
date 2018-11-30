@@ -65,7 +65,7 @@ public class ManufacturerResource {
      */
     @PutMapping("/manufacturers")
     @Timed
-    public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturer) throws URISyntaxException {
+    public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturer) {
         log.debug("REST request to update Manufacturer : {}", manufacturer);
         if (manufacturer.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -96,7 +96,7 @@ public class ManufacturerResource {
      */
     @GetMapping("/manufacturers/{id}")
     @Timed
-    public ResponseEntity<Manufacturer> getManufacturer(@PathVariable Long id) {
+    public ResponseEntity<Manufacturer> getManufacturer(@PathVariable String id) {
         log.debug("REST request to get Manufacturer : {}", id);
         Optional<Manufacturer> manufacturer = manufacturerRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(manufacturer);
@@ -110,7 +110,7 @@ public class ManufacturerResource {
      */
     @DeleteMapping("/manufacturers/{id}")
     @Timed
-    public ResponseEntity<Void> deleteManufacturer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteManufacturer(@PathVariable String id) {
         log.debug("REST request to delete Manufacturer : {}", id);
 
         manufacturerRepository.deleteById(id);

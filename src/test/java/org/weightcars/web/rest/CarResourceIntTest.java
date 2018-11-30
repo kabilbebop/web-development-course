@@ -1,11 +1,22 @@
 package org.weightcars.web.rest;
 
-import org.weightcars.WeightCarsApp;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.weightcars.web.rest.TestUtil.createFormattingConversionService;
 
-import org.weightcars.domain.Car;
-import org.weightcars.repository.CarRepository;
-import org.weightcars.web.rest.errors.ExceptionTranslator;
-
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+import java.util.Optional;
+import javax.persistence.EntityManager;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,18 +30,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
-
-
-import static org.weightcars.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.web.util.NestedServletException;
+import org.weightcars.WeightCarsApp;
+import org.weightcars.domain.Car;
+import org.weightcars.repository.CarRepository;
 
 /**
  * Test class for the CarResource REST controller.
@@ -72,9 +75,6 @@ public class CarResourceIntTest {
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     @Autowired
-    private ExceptionTranslator exceptionTranslator;
-
-    @Autowired
     private EntityManager em;
 
     private MockMvc restCarMockMvc;
@@ -87,7 +87,6 @@ public class CarResourceIntTest {
         final CarResource carResource = new CarResource(carRepository);
         this.restCarMockMvc = MockMvcBuilders.standaloneSetup(carResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
     }
@@ -99,7 +98,7 @@ public class CarResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Car createEntity(EntityManager em) {
-        Car car = new Car()
+        return new Car()
             .variant(DEFAULT_VARIANT)
             .power(DEFAULT_POWER)
             .realWeight(DEFAULT_REAL_WEIGHT)
@@ -107,7 +106,6 @@ public class CarResourceIntTest {
             .options(DEFAULT_OPTIONS)
             .startDate(DEFAULT_START_DATE)
             .endDate(DEFAULT_END_DATE);
-        return car;
     }
 
     @Before
@@ -145,13 +143,14 @@ public class CarResourceIntTest {
         int databaseSizeBeforeCreate = carRepository.findAll().size();
 
         // Create the Car with an existing ID
-        car.setId(1L);
+        car.setId("1");
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restCarMockMvc.perform(post("/api/cars")
+        Assertions.assertThatExceptionOfType(NestedServletException.class).isThrownBy(() ->
+            restCarMockMvc.perform(post("/api/cars")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(car)))
-            .andExpect(status().isBadRequest());
+            .content(TestUtil.convertObjectToJsonBytes(car))));
+
 
         // Validate the Car in the database
         List<Car> carList = carRepository.findAll();
@@ -168,12 +167,12 @@ public class CarResourceIntTest {
         restCarMockMvc.perform(get("/api/cars?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(car.getId().intValue())))
-            .andExpect(jsonPath("$.[*].variant").value(hasItem(DEFAULT_VARIANT.toString())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(car.getId())))
+            .andExpect(jsonPath("$.[*].variant").value(hasItem(DEFAULT_VARIANT)))
             .andExpect(jsonPath("$.[*].power").value(hasItem(DEFAULT_POWER)))
             .andExpect(jsonPath("$.[*].realWeight").value(hasItem(DEFAULT_REAL_WEIGHT)))
             .andExpect(jsonPath("$.[*].officialWeight").value(hasItem(DEFAULT_OFFICIAL_WEIGHT)))
-            .andExpect(jsonPath("$.[*].options").value(hasItem(DEFAULT_OPTIONS.toString())))
+            .andExpect(jsonPath("$.[*].options").value(hasItem(DEFAULT_OPTIONS)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
     }
@@ -188,12 +187,12 @@ public class CarResourceIntTest {
         restCarMockMvc.perform(get("/api/cars/{id}", car.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(car.getId().intValue()))
-            .andExpect(jsonPath("$.variant").value(DEFAULT_VARIANT.toString()))
+            .andExpect(jsonPath("$.id").value(car.getId()))
+            .andExpect(jsonPath("$.variant").value(DEFAULT_VARIANT))
             .andExpect(jsonPath("$.power").value(DEFAULT_POWER))
             .andExpect(jsonPath("$.realWeight").value(DEFAULT_REAL_WEIGHT))
             .andExpect(jsonPath("$.officialWeight").value(DEFAULT_OFFICIAL_WEIGHT))
-            .andExpect(jsonPath("$.options").value(DEFAULT_OPTIONS.toString()))
+            .andExpect(jsonPath("$.options").value(DEFAULT_OPTIONS))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
     }
@@ -202,7 +201,7 @@ public class CarResourceIntTest {
     @Transactional
     public void getNonExistingCar() throws Exception {
         // Get the car
-        restCarMockMvc.perform(get("/api/cars/{id}", Long.MAX_VALUE))
+        restCarMockMvc.perform(get("/api/cars/{id}", String.valueOf(Long.MAX_VALUE)))
             .andExpect(status().isNotFound());
     }
 
@@ -215,7 +214,9 @@ public class CarResourceIntTest {
         int databaseSizeBeforeUpdate = carRepository.findAll().size();
 
         // Update the car
-        Car updatedCar = carRepository.findById(car.getId()).get();
+        Optional<Car> updatedCarOptional = carRepository.findById(car.getId());
+        assertThat(updatedCarOptional.isPresent()).isTrue();
+        Car updatedCar = updatedCarOptional.get();
         // Disconnect from session so that the updates on updatedCar are not directly saved in db
         em.detach(updatedCar);
         updatedCar
@@ -253,10 +254,9 @@ public class CarResourceIntTest {
         // Create the Car
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restCarMockMvc.perform(put("/api/cars")
+        Assertions.assertThatExceptionOfType(NestedServletException.class).isThrownBy(() ->restCarMockMvc.perform(put("/api/cars")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(car)))
-            .andExpect(status().isBadRequest());
+            .content(TestUtil.convertObjectToJsonBytes(car))));
 
         // Validate the Car in the database
         List<Car> carList = carRepository.findAll();
@@ -286,11 +286,11 @@ public class CarResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Car.class);
         Car car1 = new Car();
-        car1.setId(1L);
+        car1.setId("1");
         Car car2 = new Car();
         car2.setId(car1.getId());
         assertThat(car1).isEqualTo(car2);
-        car2.setId(2L);
+        car2.setId("2");
         assertThat(car1).isNotEqualTo(car2);
         car1.setId(null);
         assertThat(car1).isNotEqualTo(car2);

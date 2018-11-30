@@ -21,7 +21,7 @@ import static org.zalando.problem.Status.BAD_REQUEST;
  * "error.myCustomError" :  "The server says {{param0}} to {{param1}}"
  * </pre>
  */
-public class CustomParameterizedException extends AbstractThrowableProblem {
+class CustomParameterizedException extends AbstractThrowableProblem {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class CustomParameterizedException extends AbstractThrowableProblem {
         super(ErrorConstants.PARAMETERIZED_TYPE, "Parameterized Exception", BAD_REQUEST, null, null, null, toProblemParameters(message, paramMap));
     }
 
-    public static Map<String, Object> toParamMap(String... params) {
+    private static Map<String, Object> toParamMap(String... params) {
         Map<String, Object> paramMap = new HashMap<>();
         if (params != null && params.length > 0) {
             for (int i = 0; i < params.length; i++) {
@@ -45,7 +45,7 @@ public class CustomParameterizedException extends AbstractThrowableProblem {
         return paramMap;
     }
 
-    public static Map<String, Object> toProblemParameters(String message, Map<String, Object> paramMap) {
+    private static Map<String, Object> toProblemParameters(String message, Map<String, Object> paramMap) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("message", message);
         parameters.put("params", paramMap);

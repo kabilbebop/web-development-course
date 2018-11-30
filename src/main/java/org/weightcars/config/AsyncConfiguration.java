@@ -3,6 +3,7 @@ package org.weightcars.config;
 import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 import io.github.jhipster.config.JHipsterProperties;
 
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.*;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.util.concurrent.Executor;
@@ -48,7 +48,7 @@ public class AsyncConfiguration implements AsyncConfigurer, SchedulingConfigurer
     }
     
     @Override
-    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+    public void configureTasks(@NotNull ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.setScheduler(scheduledTaskExecutor());
     }
 

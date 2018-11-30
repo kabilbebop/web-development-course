@@ -65,7 +65,7 @@ public class ModelResource {
      */
     @PutMapping("/models")
     @Timed
-    public ResponseEntity<Model> updateModel(@RequestBody Model model) throws URISyntaxException {
+    public ResponseEntity<Model> updateModel(@RequestBody Model model) {
         log.debug("REST request to update Model : {}", model);
         if (model.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -96,7 +96,7 @@ public class ModelResource {
      */
     @GetMapping("/models/{id}")
     @Timed
-    public ResponseEntity<Model> getModel(@PathVariable Long id) {
+    public ResponseEntity<Model> getModel(@PathVariable String id) {
         log.debug("REST request to get Model : {}", id);
         Optional<Model> model = modelRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(model);
@@ -110,7 +110,7 @@ public class ModelResource {
      */
     @DeleteMapping("/models/{id}")
     @Timed
-    public ResponseEntity<Void> deleteModel(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteModel(@PathVariable String id) {
         log.debug("REST request to delete Model : {}", id);
 
         modelRepository.deleteById(id);
