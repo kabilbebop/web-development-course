@@ -18,7 +18,7 @@
     -->
     <changeSet id="20181016133053-1" author="jhipster">
         <createTable tableName="model">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
