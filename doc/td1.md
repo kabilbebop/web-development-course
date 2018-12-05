@@ -1,12 +1,4 @@
 # TD 1 : Setup environnement de dev
-## Cloner le repo GIT
-git clone https://gitlab.com/pjben/weight-cars.git
-
-## Importer le projet dans Intellij
-- menu File > Open 
-- Import project from external model : Gradle
-- (optional) Select Gradle JVM
-- Finish
 
 ## Explorer et comprendre l’architecture de l’application
 ### Architecture
@@ -35,6 +27,8 @@ _3) Chercher quelle est la méthode qui fera la requête en base de données_
 - build.gradle : le fichier principal avec les dépendances et les scripts
 - gradle/*.gradle : des sous-fichiers de scripts
 - gradle.properties : un fichier de propriétés modifiable
+#### Java : Intellij
+- clic-droit sur le projet > open module settings
 #### Javascript : NPM
 - package.json : le fichier principal avec les dépendances et les scripts
 - webpack/*.js : des sous-fichiers de script
@@ -42,13 +36,18 @@ _3) Chercher quelle est la méthode qui fera la requête en base de données_
 - node_modules (Javascript)
 - build (Java)
 ## Lancer les tâches de build
-- Java : menu Build > Build Project
-- Javascript : dans un terminal
-  - npm install
-  - npm run start
+compiler
+- lancer la tâche node > npmInstall
+    - observer la création du répertoire node_modules
+- lancer la tâche build > build
+    - observer la création du répertoire build
+- compiler Java uniquement : menu Build > Build Project
 ## Lancer les tâches de test
 - Java : 
   - Tool window "Gradle" à droite : task > verification > test
+  - pour avoir une vue plus sympa : run > edit configuration
+    - cliquer sur "+" et choisir junit
+    - choisir "Search for test: in whole project"
 - Javascript : dans un terminal
   - npm run test
 ## Lancer le packaging
@@ -56,3 +55,7 @@ _3) Chercher quelle est la méthode qui fera la requête en base de données_
   - un fichier .jar est généré dans build/libs/
 ## Exécuter l’application sur votre poste local
 - Tool window "Gradle" à droite : task > application > bootRun
+  - cela lance le jar Java avec l'application javascript contenu à l'intérieur
+  
+- pour développer en Javascript et profiter du "live reload"
+- dans un terminal : npm run start

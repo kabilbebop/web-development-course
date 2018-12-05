@@ -32,7 +32,7 @@ Essayer de vous connecter à ce fichier avec un client JDBC :
 - Utiliser la touche F8 pour avancer pas à pas et F9 pour libérer l'exécution
 - Placer le curseur au dessus de la variable cars de la ligne "return cars;" pour inspecter le résultat de l'appel à findAll()
 
-## Analyser et corriger un bug
+## Exercice: analyser et corriger un bug
 Dans la page principale de l'application, sélectionner un fabriquant de voiture pour filtrer la liste.
 Vous constatez que certaines voitures apparaissent en double dans la liste.
 Pour résoudre le problème :
