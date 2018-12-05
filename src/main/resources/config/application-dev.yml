@@ -35,8 +35,8 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
-        username: weightCars
+        url: jdbc:h2:file:~/mem;DB_CLOSE_DELAY=-1
+        username: sa
         password:
         hikari:
             auto-commit: false
