@@ -9,7 +9,7 @@ Essayer de vous connecter à ce fichier avec un client JDBC :
 - Explorer les tables et les données et générer le modèle de données
 
 ## Debbugger Chrome
-- Se connecter avec Chrome à http://localhost:8080
+- Se connecter avec Chrome à http://localhost:8745
 - Ouvrir Chrome Devtools (F12)
 - Ouvrir l'onglet Tools
 - Ouvrir la barre de recherche et taper app.tsx pour l'ouvrir

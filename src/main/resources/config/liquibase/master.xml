@@ -4,11 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
+    <!-- create table changelogs -->
     <include file="config/liquibase/changelog/20181016133052_added_entity_Manufacturer.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181016133053_added_entity_Model.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181016133054_added_entity_Car.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+
+    <!-- constraints changelogs -->
     <include file="config/liquibase/changelog/20181016133053_added_entity_constraints_Model.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181016133054_added_entity_constraints_Car.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+
+    <!-- load data changelogs here -->
+    <include file="config/liquibase/changelog/20181016133052_load_data_Manufacturer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181016133053_load_data_Model.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181016133054_load_data_Car.xml" relativeToChangelogFile="false"/>
+
+
 </databaseChangeLog>

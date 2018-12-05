@@ -8,7 +8,7 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://weightcars-postgresql:5432/weightCars
             - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
         ports:
-            - 8080:8080
+        - 8745:8745
     weightcars-postgresql:
         extends:
             file: postgresql.yml
