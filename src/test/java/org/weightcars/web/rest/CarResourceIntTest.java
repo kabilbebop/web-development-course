@@ -62,9 +62,6 @@ public class CarResourceIntTest {
     private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
-
     @Autowired
     private CarRepository carRepository;
 
@@ -104,8 +101,7 @@ public class CarResourceIntTest {
             .realWeight(DEFAULT_REAL_WEIGHT)
             .officialWeight(DEFAULT_OFFICIAL_WEIGHT)
             .options(DEFAULT_OPTIONS)
-            .startDate(DEFAULT_START_DATE)
-            .endDate(DEFAULT_END_DATE);
+            .startDate(DEFAULT_START_DATE);
     }
 
     @Before
@@ -134,7 +130,6 @@ public class CarResourceIntTest {
         assertThat(testCar.getOfficialWeight()).isEqualTo(DEFAULT_OFFICIAL_WEIGHT);
         assertThat(testCar.getOptions()).isEqualTo(DEFAULT_OPTIONS);
         assertThat(testCar.getStartDate()).isEqualTo(DEFAULT_START_DATE);
-        assertThat(testCar.getEndDate()).isEqualTo(DEFAULT_END_DATE);
     }
 
     @Test
@@ -143,7 +138,7 @@ public class CarResourceIntTest {
         int databaseSizeBeforeCreate = carRepository.findAll().size();
 
         // Create the Car with an existing ID
-        car.setId("1");
+        car.setId(1L);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         Assertions.assertThatExceptionOfType(NestedServletException.class).isThrownBy(() ->
@@ -173,8 +168,7 @@ public class CarResourceIntTest {
             .andExpect(jsonPath("$.[*].realWeight").value(hasItem(DEFAULT_REAL_WEIGHT)))
             .andExpect(jsonPath("$.[*].officialWeight").value(hasItem(DEFAULT_OFFICIAL_WEIGHT)))
             .andExpect(jsonPath("$.[*].options").value(hasItem(DEFAULT_OPTIONS)))
-            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
-            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())));
+            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())));
     }
     
     @Test
@@ -193,8 +187,7 @@ public class CarResourceIntTest {
             .andExpect(jsonPath("$.realWeight").value(DEFAULT_REAL_WEIGHT))
             .andExpect(jsonPath("$.officialWeight").value(DEFAULT_OFFICIAL_WEIGHT))
             .andExpect(jsonPath("$.options").value(DEFAULT_OPTIONS))
-            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
-            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()));
+            .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()));
     }
 
     @Test
@@ -225,8 +218,7 @@ public class CarResourceIntTest {
             .realWeight(UPDATED_REAL_WEIGHT)
             .officialWeight(UPDATED_OFFICIAL_WEIGHT)
             .options(UPDATED_OPTIONS)
-            .startDate(UPDATED_START_DATE)
-            .endDate(UPDATED_END_DATE);
+            .startDate(UPDATED_START_DATE);
 
         restCarMockMvc.perform(put("/api/cars")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -243,7 +235,6 @@ public class CarResourceIntTest {
         assertThat(testCar.getOfficialWeight()).isEqualTo(UPDATED_OFFICIAL_WEIGHT);
         assertThat(testCar.getOptions()).isEqualTo(UPDATED_OPTIONS);
         assertThat(testCar.getStartDate()).isEqualTo(UPDATED_START_DATE);
-        assertThat(testCar.getEndDate()).isEqualTo(UPDATED_END_DATE);
     }
 
     @Test
@@ -286,11 +277,11 @@ public class CarResourceIntTest {
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(Car.class);
         Car car1 = new Car();
-        car1.setId("1");
+        car1.setId(1L);
         Car car2 = new Car();
         car2.setId(car1.getId());
         assertThat(car1).isEqualTo(car2);
-        car2.setId("2");
+        car2.setId(2L);
         assertThat(car1).isNotEqualTo(car2);
         car1.setId(null);
         assertThat(car1).isNotEqualTo(car2);

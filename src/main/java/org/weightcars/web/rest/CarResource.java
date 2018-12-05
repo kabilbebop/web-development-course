@@ -1,22 +1,27 @@
 package org.weightcars.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.weightcars.domain.Car;
 import org.weightcars.repository.CarRepository;
 import org.weightcars.web.rest.errors.BadRequestAlertException;
 import org.weightcars.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Car.
@@ -97,7 +102,7 @@ public class CarResource {
      */
     @GetMapping("/cars/{id}")
     @Timed
-    public ResponseEntity<Car> getCar(@PathVariable String id) {
+    public ResponseEntity<Car> getCar(@PathVariable Long id) {
         log.debug("REST request to get Car : {}", id);
         Optional<Car> car = carRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(car);
@@ -111,7 +116,7 @@ public class CarResource {
      */
     @DeleteMapping("/cars/{id}")
     @Timed
-    public ResponseEntity<Void> deleteCar(@PathVariable String id) {
+    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
         log.debug("REST request to delete Car : {}", id);
 
         carRepository.deleteById(id);

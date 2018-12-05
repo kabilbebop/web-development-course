@@ -1,12 +1,16 @@
 package org.weightcars.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * A Car.
@@ -38,9 +42,6 @@ public class Car implements Serializable {
 
     @Column(name = "start_date")
     private LocalDate startDate;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -133,19 +134,6 @@ public class Car implements Serializable {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public Car endDate(LocalDate endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public Model getModel() {
         return model;
     }
@@ -190,7 +178,6 @@ public class Car implements Serializable {
             ", officialWeight=" + getOfficialWeight() +
             ", options='" + getOptions() + "'" +
             ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
             "}";
     }
 }
