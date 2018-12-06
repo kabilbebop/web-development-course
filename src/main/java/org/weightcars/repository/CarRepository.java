@@ -12,7 +12,10 @@ import org.weightcars.domain.Car;
 @SuppressWarnings("unused")
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByModel_Manufacturer_name(String name);
-    List<Car> findByModel_name(String name);
-    List<Car> findByVariantOrOptions(String variant, String options);
+
+    List<Car> findByModel_Manufacturer_nameLikeIgnoreCase(String name);
+
+    List<Car> findByModel_nameLikeIgnoreCase(String name);
+
+    List<Car> findByVariantOrOptionsLikeIgnoreCase(String variant, String options);
 }

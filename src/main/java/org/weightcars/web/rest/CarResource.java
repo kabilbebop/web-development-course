@@ -134,13 +134,13 @@ public class CarResource {
         log.debug("REST request to get Cars from given string {}", searchString);
 
         // Search cars by manufacture name
-        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_name(searchString);
+        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_nameLikeIgnoreCase(searchString);
 
         // Search cars by model name
-        List<Car> carsByModel = carRepository.findByModel_name(searchString);
+        List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(searchString);
 
         // Search cars by variant or options
-        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptions(searchString, searchString);
+        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(searchString, searchString);
 
         // Add all cars to new result list
         List<Car> result = new ArrayList<>();

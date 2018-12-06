@@ -1,4 +1,4 @@
 # TD 3 : Développement d'une nouvelle fonctionnalité
-## Implémenter l'API de tri du tableau principal
+## Implémenter les API appelées par les boutons TOP10 
 - Soumettez votre correction sur une branche en utilisant IntelliJ, Git ou Gitlab
 - Créez une merge request
