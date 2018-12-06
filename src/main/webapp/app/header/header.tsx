@@ -12,11 +12,11 @@ export default class Header extends React.Component<IHeaderState> {
     menuOpen: false
   };
 
-  toggleMenu = () => {
+  private toggleMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };
 
-  render() {
+  public render() {
     return (
       <div id="app-header">
         <Navbar dark expand="sm" fixed="top" className="jh-navbar">

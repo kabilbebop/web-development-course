@@ -1,12 +1,16 @@
-import 'react-toastify/dist/ReactToastify.css';
-import './app.css';
+import 'app/app.css';
+import ErrorBoundary from 'app/error/error-boundary';
+import Header from 'app/header/header';
 import axios from 'axios';
 import React from 'react';
-import {Card} from 'reactstrap';
-import {HashRouter as Router} from 'react-router-dom';
-import {toast, ToastContainer, ToastPosition} from 'react-toastify';
-import Header from 'app/header/header';
-import ErrorBoundary from 'app/error/error-boundary';
+import { HashRouter as Router } from 'react-router-dom';
+import { toast, ToastContainer, ToastPosition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Card } from 'reactstrap';
+
+const NO_YEAR = '0001';
+const YEAR_START = 0;
+const YEAR_END = 4;
 
 export interface IManufacturer {
   id?: number;
@@ -42,9 +46,9 @@ export class App extends React.Component<{}, IState> {
     super(props);
     this.state = {
       cars: undefined,
-      searchFilter: undefined,
+      filterInputTimeout: undefined,
       previousFilterValue: undefined,
-      filterInputTimeout: undefined
+      searchFilter: undefined
     };
     this.getCars();
   }
@@ -77,9 +81,8 @@ export class App extends React.Component<{}, IState> {
   render() {
     const paddingTop = '60px';
     let table;
-    if (!this.state.cars) {
-      table = <div>No cars</div>;
-    } else {
+    if (!this.state.cars) table = <div>No cars</div>;
+    else {
       table = this.state.cars.map(car => {
         const powerStyle = {
           width: `${car.power / 3}px`
@@ -87,7 +90,7 @@ export class App extends React.Component<{}, IState> {
         const weightStyle = {
           width: `${car.realWeight / 6}px`
         };
-        const year = car.startDate && car.startDate.substring(0, 4) !== '0001' ? car.startDate.substring(0, 4) : null;
+        const year = car.startDate && car.startDate.startsWith(NO_YEAR) ? car.startDate.slice(YEAR_START, YEAR_END) : null;
 
         const optionsIcon = car.options ? <span className="badge badge-pill badge-info hand">i</span> : '';
 

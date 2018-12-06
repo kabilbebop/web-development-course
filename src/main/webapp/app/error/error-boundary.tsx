@@ -12,14 +12,14 @@ interface IErrorBoundaryState {
 class ErrorBoundary extends React.Component<IErrorBoundaryProps, IErrorBoundaryState> {
   readonly state: IErrorBoundaryState = { error: undefined, errorInfo: undefined };
 
-  componentDidCatch(error, errorInfo) {
+  public componentDidCatch(error, errorInfo) {
     this.setState({
       error,
       errorInfo
     });
   }
 
-  render() {
+  public render() {
     const { error, errorInfo } = this.state;
     if (errorInfo) {
       const errorDetails =
