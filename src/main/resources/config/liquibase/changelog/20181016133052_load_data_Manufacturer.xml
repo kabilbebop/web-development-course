@@ -8,7 +8,7 @@
         Added the entity Manufacturer.
     -->
     <changeSet id="20181016133052-2" author="jhipster">
-        <loadData encoding="UTF-8" file="config/liquibase/manufacturers.csv" separator=";" tableName="manufacturer">
+        <loadData file="config/liquibase/manufacturers.csv" separator=";" tableName="manufacturer">
         </loadData>
     </changeSet>
 

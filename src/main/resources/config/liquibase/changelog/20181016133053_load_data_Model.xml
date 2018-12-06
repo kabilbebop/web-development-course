@@ -8,7 +8,7 @@
     -->
     <changeSet id="20181016133053-3" author="jhipster">
 
-        <loadData encoding="UTF-8" file="config/liquibase/models.csv" separator=";" tableName="model">
+        <loadData file="config/liquibase/models.csv" separator=";" tableName="model">
         </loadData>
 
     </changeSet>
