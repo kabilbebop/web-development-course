@@ -2,9 +2,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './app.css';
 import axios from 'axios';
 import React from 'react';
-import { Card } from 'reactstrap';
-import { HashRouter as Router } from 'react-router-dom';
-import { toast, ToastContainer, ToastPosition } from 'react-toastify';
+import {Card} from 'reactstrap';
+import {HashRouter as Router} from 'react-router-dom';
+import {toast, ToastContainer, ToastPosition} from 'react-toastify';
 import Header from 'app/header/header';
 import ErrorBoundary from 'app/error/error-boundary';
 
