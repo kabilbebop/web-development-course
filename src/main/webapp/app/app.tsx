@@ -7,10 +7,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { toast, ToastContainer, ToastPosition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Card } from 'reactstrap';
-
-const NO_YEAR = '0001';
-const YEAR_START = 0;
-const YEAR_END = 4;
+import { Car, ICar } from 'app/car/car';
 
 export interface IManufacturer {
   id?: number;
@@ -21,17 +18,6 @@ export interface IModel {
   id?: number;
   name?: string;
   manufacturer?: IManufacturer;
-}
-
-export interface ICar {
-  id?: number;
-  variant?: string;
-  power?: number;
-  realWeight?: number;
-  officialWeight?: number;
-  options?: string;
-  startDate?: string;
-  model?: IModel;
 }
 
 export interface IState {
@@ -78,54 +64,18 @@ export class App extends React.Component<{}, IState> {
     }
   }
 
+  top10Click(what: string) {
+    console.error('à implémenter!', what);
+  }
+
   render() {
     const paddingTop = '60px';
     let table;
-    if (!this.state.cars) table = <div>No cars</div>;
-    else {
-      table = this.state.cars.map(car => {
-        const powerStyle = {
-          width: `${car.power / 3}px`
-        };
-        const weightStyle = {
-          width: `${car.realWeight / 6}px`
-        };
-        const year = car.startDate && car.startDate.startsWith(NO_YEAR) ? car.startDate.slice(YEAR_START, YEAR_END) : null;
-
-        const optionsIcon = car.options ? <span className="badge badge-pill badge-info hand">i</span> : '';
-
-        const powerSpan = car.power ? (
-          <span className="col-lg-auto badge badge-danger" style={powerStyle}>
-            {car.power}
-            Ch
-          </span>
-        ) : (
-          ''
-        );
-
-        const weightSpan = car.realWeight ? (
-          <span className="col-lg-auto badge badge-primary" style={weightStyle}>
-            {car.realWeight}
-            Kg (+
-            {car.realWeight - car.officialWeight})
-          </span>
-        ) : (
-          ''
-        );
-
-        return (
-          <Card key={car.id} className="jh-card">
-            <div className="row">
-              <span className="col-1">{car.model.manufacturer.name}</span>
-              <span className="col-4" data-toggle="tooltip" title={car.options}>
-                {car.variant} ({year}) {optionsIcon}
-              </span>
-              {weightSpan}
-              {powerSpan}
-            </div>
-          </Card>
-        );
-      });
+    if (this.state.cars) {
+      if (this.state.cars.length === 0) table = <div>No cars</div>;
+      else {
+        table = this.state.cars.map(car => <Car key={car.id} data={car} />);
+      }
     }
     return (
       <Router>
@@ -136,7 +86,7 @@ export class App extends React.Component<{}, IState> {
             toastClassName="toastify-toast"
           />
           <ErrorBoundary>
-            <Header menuOpen={false} />
+            <Header menuOpen={false} top10Click={what => this.top10Click(what)} />
           </ErrorBoundary>
 
           <div className="form-group">

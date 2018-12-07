@@ -4,9 +4,10 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -130,7 +131,7 @@ public class CarResource {
      */
     @GetMapping("/cars/search/{searchString}")
     @Timed
-    public List<Car> searchCarsByString(@PathVariable String searchString) {
+    public Set<Car> searchCarsByString(@PathVariable String searchString) {
         log.debug("REST request to get Cars from given string {}", searchString);
 
         // Search cars by manufacture name
@@ -143,11 +144,29 @@ public class CarResource {
         List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(searchString, searchString);
 
         // Add all cars to new result list
-        List<Car> result = new ArrayList<>();
+        TreeSet<Car> result = new TreeSet<>();
         result.addAll(carsByManufacturer);
         result.addAll(carsByModel);
         result.addAll(carsByVariantOrOptions);
 
-        return result;
+        return result; /* .stream().sorted((car1, car2) ->
+            car1.getModel().getManufacturer() < car2.getModel().getManufacturer()
+                && car1.getModel().getName() < car2.getModel().getName()
+                && car1.getVariant() < car2.getVariant()); */
+    }
+
+    /**
+     * GET  /cars : search cars from given search string.
+     * @param criteria String that match one of 'weight', 'ratio' or 'power'
+     * @param number Max number of cars returned
+     * @return the ResponseEntity with status 200 (OK) and the list of cars in body
+     */
+    @GetMapping("/cars/top/{criteria}/{number}")
+    @Timed
+    public List<Car> topCars(@PathVariable String criteria, @PathVariable Integer number) {
+        log.debug("REST request to get {} top cars regarding {}", number, criteria);
+
+
+        return null;
     }
 }
