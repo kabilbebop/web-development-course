@@ -1,6 +1,8 @@
-# TD 5 : Analyser le comportement d’une application en environnement de production
-## Visualiser les logs avec CloudFoundry
-## Rajouter des logs en local jusqu'à visualiser correctement les infos nécessaires dans la console locale
-### Niveaux de log
-## Faire un push et récupérer les infos sur le serveur
-
+# TD 4 : Intégration continue et déploiement continu
+## Préparation plateformes Cloud
+### Créer son compte sur CloudFoundry
+### Créer son compte sur Gitlab.com et un projet
+### Ajouter ce projet comme nouvelle origine et faire un push
+## Activer Gitlab CI
+### Créer les pipelines en ajoutant .gitlab-ci.yml
+### Faire en sorte que l'application se lance sur CloudFoundry
