@@ -1,4 +1,4 @@
-# TD 1 : Setup environnement de dev
+# Setup environnement de dev
 
 ## Explorer et comprendre l’architecture de l’application
 ### Architecture

@@ -1,4 +1,4 @@
-# TD 4 : Intégration continue et déploiement continu
+# Intégration continue et déploiement continu
 ## Préparation plateformes Cloud
 ### Créer son compte sur CloudFoundry
 ### Créer son compte sur Gitlab.com et un projet
