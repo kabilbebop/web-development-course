@@ -1,4 +1,4 @@
-# Analyser le comportement de l'application
+# TD 2 : Analyser le comportement de l'application
 ## Base de données
 La base de donnée est une simple base H2 stockée dans un fichier.
 Essayer de vous connecter à ce fichier avec un client JDBC : 
@@ -44,14 +44,21 @@ Lancer Postman
 * effectuer une requête GET sur l'url "cars" appelée au chargement de la page dans l'onglet réseau
 * effectuer la requête POST identique à celle effectuée avec Swagger
 
-## Exercice: analyser et corriger un bug
-Dans la page principale de l'application, sélectionner un fabriquant de voiture pour filtrer la liste.
-Vous constatez que certaines voitures apparaissent en double dans la liste.
-Pour résoudre le problème :
-- Mettez un point d'arrêt dans la classe CarResource, méthode searchCarsByString()
-- Analysez ce que fait la méthode et trouver une solution pour dédoublonner la liste renvoyée
-- Plusieurs méthodes sont possibles : 
-  - consulter la javadoc de la classe java.util.Set pour la solution la plus facile
-  - la solution la plus performante est de n'effectuer qu'un seul appel à CarRepository
-- Faire un git commit et un git push en utilisant IntelliJ
+## Les outils de qualité de code (ou revue de code statique)
+### IntelliJ pour le code Java
+Importer un profil d'inspection fourni à la racine du projet
+* menu File > settings
+* Inspection : choisir la roue de configuration et importer
+* importer le fichier XML
+Créer un custom scope :
+* Menu Analyze > Inspect code
+* choisir custom scope puis "..."
+* choisir "production classes" > "weight-cars" > "weight-cars_main"
+Lancer l'analyse et corriger les problèmes identifiés.
 
+### TSLint pour le code typescript
+La liste des règles peut être configurée dans le fichier tsconfig.json
+* lancer la tâche Gradle other > webpackBuildDev
+* constater que des warnings sont identifiés
+* essayer de corriger tous les warnings
+* identifier si certains sont compliqués à corriger sans désactiver la règle
