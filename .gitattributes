@@ -25,6 +25,7 @@
 *.sql           text
 *.txt           text
 *.ts            text
+*.tsx           text
 *.xml           text
 *.yaml          text
 *.yml           text
