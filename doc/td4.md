@@ -4,9 +4,11 @@
 - TOP 10 Weight : les 10 voitures les plus légères
 - TOP 10 Power : les 10 voitures les plus puissantes
 - TOP 10 Ration : les 10 voitures ayant le meilleur rapport poids/puissance (donc les 10 plus petites valeurs en kg/ch)
-- Soumettez votre correction sur une branche en utilisant IntelliJ, Git ou Gitlab
+- Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab
 - Créez une merge request
 
 ## Implémenter l'API de filtre
 - Quand je tape du texte dans la partie "filter", je dois voir apparaître uniquement les voitures dont le "manufacturer", le "model" ou la "variant" comprends le texte, peu importe la casse
-
+- Implémenter un test JUNIT qui valide le cas d'utilisation nominal : recherche avec un texte conforme qui ramène au moins 1 élément
+- Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab
+- Créez une merge request
