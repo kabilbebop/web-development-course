@@ -1,16 +1,17 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Navbar, Nav } from 'reactstrap';
+import { Nav, Navbar } from 'reactstrap';
 
-import { Home, Brand } from 'src/main/webapp/app/header/header-components';
+import { Brand, Home } from 'src/main/webapp/app/header/header-components';
 import Header from 'src/main/webapp/app/header/header';
 
 describe('Header', () => {
   let mountedWrapper;
 
   const userProps = {
-    menuOpen: false
+    menuOpen: false,
+    top10Click: () => {}
   };
 
   const wrapper = (props = userProps) => {
