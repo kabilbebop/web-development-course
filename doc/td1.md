@@ -2,7 +2,7 @@
 
 ## Explorer et comprendre l’architecture de l’application
 ### Architecture
-[Schema](architecture.jpg)
+[Schema](architecture.odt)
 ### Le code source
 #### Le back-end Java :
 - src/main/test : le code java des tests automatisés
