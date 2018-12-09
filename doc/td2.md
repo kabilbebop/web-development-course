@@ -1,12 +1,17 @@
 # Analyser le comportement de l'application
 ## Base de données
 La base de donnée est une simple base H2 stockée dans un fichier.
-Essayer de vous connecter à ce fichier avec un client JDBC : 
-- Télécharger et installer https://dbeaver.io/download/
-- Au lancement de l'application sélectionner une connexion de type H2 embedded
-- Renseigner l'URL JDBC avec les infos du fichier application.yml
-  - il faut que l'application soit arrêtée pour accéder au fichier
-- Explorer les tables et les données et générer le modèle de données
+Essayer de vous connecter à ce fichier avec le client JDBC intégré à l'appli : 
+- [http://localhost:8745/h2-console](http://localhost:8745/h2-console)
+- Au lancement de l'application, renseigner l'URL JDBC de l'application (jdbc:h2:...)
+- Renseigner le nom d'utilisateur et mot de passe correspondant
+- Explorer les tables et les données
+
+_Exercice_ : 
+1. combien de voitures sont chargées dans l'application?
+2. de quel fichier proviennent ces données?
+3. comment sont créer les tables manufacturer, model et car?
+ 
 
 ## Debbugger Chrome
 - Se connecter avec Chrome à http://localhost:8745
@@ -34,12 +39,11 @@ Essayer de vous connecter à ce fichier avec un client JDBC :
 
 ## Les outils de test d'API
 ### Swagger UI
-http://localhost:8745/swagger-ui/index.html
+Swagger permet d'intégrer à l'application un outil de test d'API :
 
-* Déplier les opérations sur la ressource "Manufacturer"
-* Poster un nouvel objet Manufacturer au format JSON pour le créer en base
+[http://localhost:8745/swagger-ui/index.html](http://localhost:8745/swagger-ui/index.html)
 
-### Postman
-Lancer Postman 
-* effectuer une requête GET sur l'url "cars" appelée au chargement de la page dans l'onglet réseau
-* effectuer la requête POST identique à celle effectuée avec Swagger
+- Effectuer une requête GET sur l'url "cars" appelée au chargement de la page dans l'onglet réseau
+- Déplier les opérations sur la ressource "Manufacturer"
+- Poster un nouvel objet Manufacturer au format JSON pour le créer en base
+- Vérifier qu'une nouvelle ligne a bien été créée en base avec H2 Console
