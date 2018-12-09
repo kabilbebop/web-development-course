@@ -1,13 +1,18 @@
 import './header.css';
 import React from 'react';
-import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
-import { Home, Brand } from './header-components';
+import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from 'reactstrap';
+import { Brand, Home, Top10Power, Top10Ratio, Top10Weight } from './header-components';
 
 export interface IHeaderState {
   menuOpen: boolean;
 }
 
-export default class Header extends React.Component<IHeaderState> {
+export interface IHeaderProps {
+  top10Click: any;
+  menuOpen: any;
+}
+
+export default class Header extends React.Component<IHeaderProps, IHeaderState> {
   state: IHeaderState = {
     menuOpen: false
   };
@@ -24,6 +29,9 @@ export default class Header extends React.Component<IHeaderState> {
           <Brand />
           <Collapse isOpen={this.state.menuOpen} navbar>
             <Nav id="header-tabs" className="ml-auto" navbar>
+              <Top10Weight onClick={() => this.props.top10Click('weight')} />
+              <Top10Power onClick={() => this.props.top10Click('power')} />
+              <Top10Ratio onClick={() => this.props.top10Click('ratio')} />
               <Home />
             </Nav>
           </Collapse>
