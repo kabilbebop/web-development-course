@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -166,7 +167,20 @@ public class CarResource {
     public List<Car> topCars(@PathVariable String criteria, @PathVariable Integer number) {
         log.debug("REST request to get {} top cars regarding {}", number, criteria);
 
-
-        return null;
+        List<Car> result;
+        switch (criteria) {
+            case "weight":
+                result = carRepository.findTop10ByOrderByRealWeightAsc();
+                break;
+            case "power":
+                result = carRepository.findTop10ByOrderByPowerDesc();
+                break;
+            case "ratio":
+                result = carRepository.findAllOrderByRatio();
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+        return result.stream().limit(number).collect(Collectors.toList());
     }
 }

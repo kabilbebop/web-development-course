@@ -2,6 +2,7 @@ package org.weightcars.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.weightcars.domain.Car;
 
@@ -18,4 +19,11 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findByModel_nameLikeIgnoreCase(String name);
 
     List<Car> findByVariantOrOptionsLikeIgnoreCase(String variant, String options);
+
+    List<Car> findTop10ByOrderByPowerDesc();
+
+    List<Car> findTop10ByOrderByRealWeightAsc();
+
+    @Query("from Car order by realWeight/power asc")
+    List<Car> findAllOrderByRatio();
 }
