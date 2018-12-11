@@ -58,4 +58,4 @@ compiler
   - cela lance le jar Java avec l'application javascript contenu à l'intérieur
   
 - pour développer en Javascript et profiter du "live reload"
-- dans un terminal : npm run start
+  - dans un terminal : npm run start
