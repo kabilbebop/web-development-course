@@ -24,6 +24,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findTop10ByOrderByRealWeightAsc();
 
-    @Query("from Car order by realWeight/power asc")
+    @Query("from Car where realWeight is not null and realWeight <> 0 and power is not null and power <> 0 order by realWeight/power asc")
     List<Car> findAllOrderByRatio();
 }

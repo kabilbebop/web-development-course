@@ -65,7 +65,9 @@ export class App extends React.Component<{}, IState> {
   }
 
   top10Click(what: string) {
-    console.error('à implémenter!', what);
+    axios.get<ICar>(`api/cars/top/${what}/10`).then(response => {
+      this.setState({ cars: response.data as ICar[] });
+    });
   }
 
   render() {

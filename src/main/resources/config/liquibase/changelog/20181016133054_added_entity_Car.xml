@@ -52,4 +52,10 @@
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+
+    <changeSet id="20181016133054-2" author="bcaure">
+        <modifyDataType tableName="car" columnName="power" newDataType="float" />
+        <modifyDataType tableName="car" columnName="real_weight" newDataType="float" />
+        <modifyDataType tableName="car" columnName="official_weight" newDataType="float" />
+    </changeSet>
 </databaseChangeLog>
