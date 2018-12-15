@@ -1,8 +1,14 @@
-# Intégration continue et déploiement continu
-## Préparation plateformes Cloud
-### Créer son compte sur CloudFoundry
-### Créer son compte sur Gitlab.com et un projet
-### Ajouter ce projet comme nouvelle origine et faire un push
-## Activer Gitlab CI
-### Créer les pipelines en ajoutant .gitlab-ci.yml
-### Faire en sorte que l'application se lance sur CloudFoundry
+# Développement d'une nouvelle fonctionnalité
+## Implémenter les API appelées par les boutons "TOP 10"
+- !!Vous devez ignorer les valeurs nulles de weight et power!!
+- TOP 10 Weight : les 10 voitures les plus légères
+- TOP 10 Power : les 10 voitures les plus puissantes
+- TOP 10 Ration : les 10 voitures ayant le meilleur rapport poids/puissance (donc les 10 plus petites valeurs en kg/ch)
+- Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab
+- Créez une merge request
+
+## Implémenter l'API de filtre
+- Quand je tape du texte dans la partie "filter", je dois voir apparaître uniquement les voitures dont le "manufacturer", le "model" ou la "variant" comprends le texte, peu importe la casse
+- Implémenter un test JUNIT qui valide le cas d'utilisation nominal : recherche avec un texte conforme qui ramène au moins 1 élément
+- Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab
+- Créez une merge request
