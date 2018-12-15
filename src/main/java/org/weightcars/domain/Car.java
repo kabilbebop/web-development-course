@@ -29,13 +29,13 @@ public class Car implements Serializable {
     private String variant;
 
     @Column(name = "power")
-    private Integer power;
+    private Double power;
 
     @Column(name = "real_weight")
-    private Integer realWeight;
+    private Double realWeight;
 
     @Column(name = "official_weight")
-    private Integer officialWeight;
+    private Double officialWeight;
 
     @Column(name = "options")
     private String options;
@@ -69,42 +69,42 @@ public class Car implements Serializable {
         this.variant = variant;
     }
 
-    public Integer getPower() {
+    public Double getPower() {
         return power;
     }
 
-    public Car power(Integer power) {
+    public Car power(Double power) {
         this.power = power;
         return this;
     }
 
-    public void setPower(Integer power) {
+    public void setPower(Double power) {
         this.power = power;
     }
 
-    public Integer getRealWeight() {
+    public Double getRealWeight() {
         return realWeight;
     }
 
-    public Car realWeight(Integer realWeight) {
+    public Car realWeight(Double realWeight) {
         this.realWeight = realWeight;
         return this;
     }
 
-    public void setRealWeight(Integer realWeight) {
+    public void setRealWeight(Double realWeight) {
         this.realWeight = realWeight;
     }
 
-    public Integer getOfficialWeight() {
+    public Double getOfficialWeight() {
         return officialWeight;
     }
 
-    public Car officialWeight(Integer officialWeight) {
+    public Car officialWeight(Double officialWeight) {
         this.officialWeight = officialWeight;
         return this;
     }
 
-    public void setOfficialWeight(Integer officialWeight) {
+    public void setOfficialWeight(Double officialWeight) {
         this.officialWeight = officialWeight;
     }
 

@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,8 +28,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.NestedServletException;
@@ -50,14 +47,14 @@ public class CarResourceIntTest {
     private static final String DEFAULT_VARIANT = "AAAAAAAAAA";
     private static final String UPDATED_VARIANT = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_POWER = 1;
-    private static final Integer UPDATED_POWER = 2;
+    private static final Double DEFAULT_POWER = 1D;
+    private static final Double UPDATED_POWER = 2D;
 
-    private static final Integer DEFAULT_REAL_WEIGHT = 1;
-    private static final Integer UPDATED_REAL_WEIGHT = 2;
+    private static final Double DEFAULT_REAL_WEIGHT = 1D;
+    private static final Double UPDATED_REAL_WEIGHT = 2D;
 
-    private static final Integer DEFAULT_OFFICIAL_WEIGHT = 1;
-    private static final Integer UPDATED_OFFICIAL_WEIGHT = 2;
+    private static final Double DEFAULT_OFFICIAL_WEIGHT = 1D;
+    private static final Double UPDATED_OFFICIAL_WEIGHT = 2D;
 
     private static final String DEFAULT_OPTIONS = "AAAAAAAAAA";
     private static final String UPDATED_OPTIONS = "BBBBBBBBBB";

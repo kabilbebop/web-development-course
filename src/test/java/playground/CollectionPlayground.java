@@ -2,7 +2,6 @@ package playground;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,6 @@ public class CollectionPlayground {
         System.out.println(strings.get(0));
         System.out.println(strings.get(1));
         System.out.println(strings.get(2));
-
-        fail();
     }
 
     @Test

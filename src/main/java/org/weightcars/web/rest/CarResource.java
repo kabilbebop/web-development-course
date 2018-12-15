@@ -4,10 +4,10 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +145,7 @@ public class CarResource {
         List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(searchString, searchString);
 
         // Add all cars to new result list
-        TreeSet<Car> result = new TreeSet<>();
+        Set<Car> result = new HashSet<>();
         result.addAll(carsByManufacturer);
         result.addAll(carsByModel);
         result.addAll(carsByVariantOrOptions);
