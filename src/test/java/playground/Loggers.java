@@ -1,10 +1,11 @@
 package playground;
 
+import static playground.CollectionLoop.myObjects;
+
+import java.util.Arrays;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static playground.CollectionLoop.myObjects;
 
 
 public class Loggers {
@@ -28,10 +29,11 @@ public class Loggers {
 
 
     private void logLevels() {
-        for (char c : "ABCDEF".toCharArray()) {
-            logger.info(""+c);
-            for (int j = 0; j < 10; j++) {
-                logger.debug(""+c+j);
+        for (String s : Arrays.asList("A", "B", "C")) {
+            logger.info(s);
+            for (int j = 1; j <= 3; j++) {
+                String element = s+j;
+                logger.debug(element);
             }
         }
     }
