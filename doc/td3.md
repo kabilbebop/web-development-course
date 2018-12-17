@@ -1,6 +1,6 @@
 # TD Fondamentaux Java
 ## Exercice 1 : les types de collection
-1. Dans le fichier CollectionPlayground.java
+1. Dans le fichier CollectionTypes.java
     1. observer la méthode testArray()
     2. lancer le test avec ▶ dans la marge
     3. observer la sortie console
