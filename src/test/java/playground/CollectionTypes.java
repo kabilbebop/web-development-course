@@ -1,10 +1,9 @@
 package playground;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import org.junit.Test;
 
 public class CollectionTypes {
 
@@ -55,7 +54,7 @@ public class CollectionTypes {
         strings.put(2, "b");
         strings.put(3, "c");
 
-        // ajouter votre code ici
+        strings.put(1, "A");
 
         System.out.println(strings);
     }
@@ -67,6 +66,8 @@ public class CollectionTypes {
         strings.put(2, "b");
         strings.put(3, "c");
 
-        // ajouter votre code ici
+        System.out.println(strings.get(1));
+        System.out.println(strings.get(2));
+        System.out.println(strings.get(3));
     }
 }

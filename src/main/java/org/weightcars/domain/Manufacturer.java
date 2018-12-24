@@ -1,10 +1,14 @@
 package org.weightcars.domain;
 
 
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * A Manufacturer.
@@ -19,7 +23,7 @@ public class Manufacturer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "brand_name")
     private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

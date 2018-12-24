@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -93,7 +94,9 @@ public class CarResource {
     @Timed
     public List<Car> getAllCars() {
         log.debug("REST request to get all Cars");
-        return carRepository.findAll();
+        List<Car> cars = carRepository.findAll();
+        cars = cars.stream().sorted(Comparator.comparing(car -> car.getModel().getName())).collect(Collectors.toList());
+        return cars;
     }
 
     /**
