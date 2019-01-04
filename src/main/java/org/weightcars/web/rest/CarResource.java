@@ -76,9 +76,9 @@ public class CarResource {
     @Timed
     public ResponseEntity<Car> updateCar(@RequestBody Car car) {
         log.debug("REST request to update Car : {}", car);
-        if (car.getId() == null) {
+        if (car.getId() == null)
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
+
         Car result = carRepository.save(car);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, car.getId().toString()))

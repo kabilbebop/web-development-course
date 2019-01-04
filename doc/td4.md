@@ -1,15 +1,20 @@
 # Qualité de code, refactoring et générateurs
 ## Les outils de qualité de code (ou revue de code statique)
 ### IntelliJ pour le code Java
-Importer un profil d'inspection fourni à la racine du projet
-* menu File > settings
-* Inspection : choisir la roue de configuration et importer
-* importer le fichier XML
-Créer un custom scope :
-* Menu Analyze > Inspect code
-* choisir custom scope puis "..."
-* choisir "production classes" > "weight-cars" > "weight-cars_main"
-Lancer l'analyse et corriger les problèmes identifiés.
+Importer du profil d'inspection :
+* menu _File > settings_
+* _Editor > Inspection_ : choisir la roue de configuration 🎡 puis _Import profile_
+* importer le fichier XML ```IntelliJ-inspection-profile.xml``` à la racine du projet
+
+Lancer l'analyse :
+* Menu _Analyze > Inspect code_
+* dans le menu déroulant _Inspection profile_ en bas choisir le profil _WeightCars_ que nous venons d'importer
+* choisir _Custom scope_ puis "..."
+* créer un nouveau profil avec le bouton + et le nommer _Java_
+* choisir _production classes > weight-cars > weight-cars_main_ puis _Include recursively_
+
+Lancer l'analyse : vous devriez avoir 6 warnings à corriger.
+Accéder à la description du problème en faisant un clic-droit sur le warning puis _Edit settings_.
 
 ### TSLint pour le code typescript
 La liste des règles peut être configurée dans le fichier tsconfig.json
@@ -20,7 +25,8 @@ La liste des règles peut être configurée dans le fichier tsconfig.json
 
 ## Les outils de refactoring
 ### Renommage
-La classe Manufacturer n'est pas très parlante, on peut vouloir la renommer en classe Brand (Marque)
+La classe ```Manufacturer``` n'est pas très parlant pour la marque d'une voiture, on veut la renommer en classe ```Brand```.
+  - utiliser le menu contextuel _Refactor_ pour renommer la classe
   - comprendre les propositions d'IntelliJ pour garder la cohérence dans le nommage des variables et les commentaires
   - constater les limites avec le code javascript qui n'est pas pris en compte
   - corriger à la main et vérifier que l'application fonctionne toujours

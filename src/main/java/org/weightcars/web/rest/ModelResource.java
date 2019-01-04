@@ -1,21 +1,26 @@
 package org.weightcars.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.weightcars.domain.Model;
 import org.weightcars.repository.ModelRepository;
 import org.weightcars.web.rest.errors.BadRequestAlertException;
 import org.weightcars.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Model.
@@ -61,7 +66,6 @@ public class ModelResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated model,
      * or with status 400 (Bad Request) if the model is not valid,
      * or with status 500 (Internal Server Error) if the model couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/models")
     @Timed
@@ -114,6 +118,6 @@ public class ModelResource {
         log.debug("REST request to delete Model : {}", id);
 
         modelRepository.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
 }
