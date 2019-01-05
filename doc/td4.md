@@ -18,16 +18,15 @@ Accéder à la description du problème en faisant un clic-droit sur le warning 
 
 ### TSLint pour le code typescript
 La liste des règles peut être configurée dans le fichier tsconfig.json
-* lancer la tâche Gradle other > webpackBuildDev
-* constater que des warnings sont identifiés
+* lancer la tâche Gradle verification > tsLint
+* constater que 4 warnings sont identifiés
 * essayer de corriger tous les warnings
-* identifier si certains sont compliqués à corriger sans désactiver la règle
 
 ## Les outils de refactoring
 ### Renommage
-La classe ```Manufacturer``` n'est pas très parlant pour la marque d'une voiture, on veut la renommer en classe ```Brand```.
+Le nom de la classe ```Manufacturer``` n'est pas très parlant pour les marques de voiture, on veut la renommer en classe ```Brand```.
   - utiliser le menu contextuel _Refactor_ pour renommer la classe
-  - comprendre les propositions d'IntelliJ pour garder la cohérence dans le nommage des variables et les commentaires
+  - comprendre les propositions d'IntelliJ pour garder la cohérence entre le nommage des variables et les commentaires
   - constater les limites avec le code javascript qui n'est pas pris en compte
   - corriger à la main et vérifier que l'application fonctionne toujours
 ### Factorisation
@@ -46,13 +45,18 @@ Une fenêtre s'ouvre pour proposer une signature différente : IntelliJ a détec
 ## Génération de code
 Pour être plus productif, il ne faut pas hésiter à faire appel au fonctionnalités de l'IDE pour générer du code rapidement.
 ### Exercice
-- ouvrir la classe org.weightcars.Test
-- décommenter la ligne de la méthode main()
-- faire en sorte que cette méthode affiche la sortie suivante en utilisant uniquement la génération de code
+- ouvrir la classe Generator
+- décommentez le code des méthodes ```testGenerator1``` et ```testGenerator2``` 
+- faire en sorte que les méthodes compilent et affichent les sorties suivantes
 
-```Test{tata='tata', tutu=0, titi=Sat Dec 08 14:37:37 CET 2018}```
+    ```
+    [main] INFO playground.Generator - Film{name='The hitchhiker's guide to the galaxy', budget=50000000, date=2005-08-18}
+    [main] INFO playground.Generator - Film{name='Snatch', budget=10000000, date=2000-11-15}
+    ```
 
-- _remarques_ :
-  - titi = date du jour bien entendu!
-  - pour lancer la méthode main, utiliser le bouton ▶ à côté de la méthode main()
+ Pour cela vous devez générer le code nécessaire dans la classe ```Film``` en bas du fichier :
+ - faire un clic-droit dans le corps de la classe ```Film``` et utiliser le menu _Generate_ 
+ - il est interdit de taper du code pour cette exercice!
+
+
  

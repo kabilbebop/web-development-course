@@ -99,7 +99,6 @@
     "no-magic-numbers": true,
     "ban-types": [true, ["Object", "Use {} instead."]],
     "no-submodule-imports": false,
-    "arrow-body-style": true,
     "ter-arrow-body-style": [true],
     "ter-no-irregular-whitespace": [true],
     "ter-no-sparse-arrays": [true],

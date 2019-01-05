@@ -1,7 +1,7 @@
 let StorageMock = () => {
   let storage = {};
   return {
-    clear: () => (storage = {})
+    clear: () => (storage = {}),
     getItem: key => (key in storage ? storage[key] : null),
     removeItem: key => delete storage[key],
     setItem: (key, value) => (storage[key] = value || '')
