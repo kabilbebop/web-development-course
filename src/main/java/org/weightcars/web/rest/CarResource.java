@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,11 +38,8 @@ public class CarResource {
 
     private static final String ENTITY_NAME = "car";
 
-    private final CarRepository carRepository;
-
-    public CarResource(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
+    @Autowired
+    private CarRepository carRepository;
 
     /**
      * POST  /cars : Create a new car.
