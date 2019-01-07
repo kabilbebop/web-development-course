@@ -22,7 +22,7 @@ On constate qu'il y a déjà pas mal d'impact sur le code. Le mieux ce n'est pas
     - cette annotation est à placer au dessus du champs "name" 
 - redémarrer et constater le bon fonctionnement de l'application 
 
-## Exercice 3 : implémenter les API appelées par les boutons "TOP 10"
+## Exercice 2 : implémenter les API appelées par les boutons "TOP 10"
 - !!Vous devez ignorer les valeurs nulles de weight et power!!
 - TOP 10 Weight : les 10 voitures les plus légères
 - TOP 10 Power : les 10 voitures les plus puissantes
@@ -30,7 +30,7 @@ On constate qu'il y a déjà pas mal d'impact sur le code. Le mieux ce n'est pas
 - Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab
 - Créez une merge request
 
-## Exercice 4 : implémenter l'API de filtre
+## Exercice 3 : implémenter l'API de filtre
 - Quand je tape du texte dans la partie "filter", je dois voir apparaître uniquement les voitures dont le "manufacturer", le "model" ou la "variant" comprends le texte, peu importe la casse
 - Implémenter un test JUNIT qui valide le cas d'utilisation nominal : recherche avec un texte conforme qui ramène au moins 1 élément
 - Soumettez votre correction sur une branche en utilisant IntelliJ et Gitlab

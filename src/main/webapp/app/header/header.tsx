@@ -13,7 +13,7 @@ export interface IHeaderProps {
 }
 
 export default class Header extends React.Component<IHeaderProps, IHeaderState> {
-  state: IHeaderState = {
+  public state: IHeaderState = {
     menuOpen: false
   };
 

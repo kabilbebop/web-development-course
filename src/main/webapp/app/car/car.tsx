@@ -5,6 +5,7 @@ import { Card } from 'reactstrap';
 const NO_YEAR = '0001';
 const YEAR_START = 0;
 const YEAR_END = 4;
+const WEIGHT_PX_RATIO = 3;
 
 export interface ICar {
   id?: number;
@@ -18,9 +19,11 @@ export interface ICar {
 }
 
 export const Car = props => {
+  // Size of the power bar
   const powerStyle = {
-    width: `${props.data.power / 3}px`
+    width: `${props.data.power / WEIGHT_PX_RATIO}px`
   };
+  // Size of the weight bar
   const weightStyle = {
     width: `${props.data.realWeight / 6}px`
   };

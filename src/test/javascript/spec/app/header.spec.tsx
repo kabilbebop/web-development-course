@@ -11,7 +11,7 @@ describe('Header', () => {
 
   const userProps = {
     menuOpen: false,
-    top10Click: () => {}
+    top10Click: () => ''
   };
 
   const wrapper = (props = userProps) => {
@@ -20,8 +20,6 @@ describe('Header', () => {
     }
     return mountedWrapper;
   };
-
-  beforeEach(() => {});
 
   // All tests will go here
   it('Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon.', () => {

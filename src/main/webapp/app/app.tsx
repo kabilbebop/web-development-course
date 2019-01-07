@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Card } from 'reactstrap';
 import { Car, ICar } from 'app/car/car';
 
+const FILTER_INPUT_TIMEOUT = 500;
+
 export interface IManufacturer {
   id?: number;
   name?: string;
@@ -38,15 +40,15 @@ export class App extends React.Component<{}, IState> {
     };
     this.getCars();
   }
-  componentDidMount() {}
+  public componentDidMount() {}
 
-  getCars() {
+  private getCars() {
     axios.get<ICar>(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => {
       this.setState({ cars: response.data as ICar[] });
     });
   }
 
-  filterCars() {
+  private filterCars() {
     const input = document.getElementById('searchFilter') as HTMLInputElement;
     if (input.value !== this.state.previousFilterValue) {
       clearTimeout(this.state.filterInputTimeout);
@@ -58,19 +60,19 @@ export class App extends React.Component<{}, IState> {
         } else {
           this.getCars();
         }
-      }, 500);
+      }, FILTER_INPUT_TIMEOUT);
       this.setState({ filterInputTimeout: timer });
       this.setState({ previousFilterValue: input.value });
     }
   }
 
-  top10Click(what: string) {
+  private top10Click(what: string) {
     axios.get<ICar>(`api/cars/top/${what}/10`).then(response => {
       this.setState({ cars: response.data as ICar[] });
     });
   }
 
-  render() {
+  public render() {
     const paddingTop = '60px';
     let table;
     if (this.state.cars) {
