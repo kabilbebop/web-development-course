@@ -9,7 +9,7 @@ Importer du profil d'inspection :
 Lancer l'analyse :
 * Menu _Analyze > Inspect code_
 * dans le menu déroulant _Inspection profile_ en bas choisir le profil _WeightCars_ que nous venons d'importer
-* choisir _Custom scope_ puis "..."
+* choisir _Custom scope_ puis ```...```
 * créer un nouveau profil avec le bouton + et le nommer _Java_
 * choisir _production classes > weight-cars > weight-cars_main_ puis _Include recursively_
 
@@ -18,7 +18,7 @@ Accéder à la description du problème en faisant un clic-droit sur le warning 
 
 ### TSLint pour le code typescript
 La liste des règles peut être configurée dans le fichier tsconfig.json
-* lancer la tâche Gradle other > webpackBuildDev
+* lancer la tâche Gradle _Other > webpackBuildDev_
 * constater que des warnings sont identifiés
 * essayer de corriger tous les warnings
 * identifier si certains sont compliqués à corriger sans désactiver la règle
@@ -33,11 +33,11 @@ La classe ```Manufacturer``` n'est pas très parlant pour la marque d'une voitur
 ### Factorisation
 Lorsque l'on trouve du code dupliqué, on peut vouloir le factoriser pour appliquer le principe DRI.
 C'est le cas dans CarResourceIntTest.java : 
-- à la fin de createCar() et à la fin de updateCar()
+- à la fin de ```createCar()``` et à la fin de ```updateCar()```
 IntelliJ facilite le refactoring :
 - sélectionner les lignes dupliquées
-- clic-droit > refactoring > extract > method
-- nommer la nouvelle sous-méthode assertCarEqual
+- clic-droit puis _Refactoring > extract > method_
+- nommer la nouvelle sous-méthode ```assertCarEqual```
 Une fenêtre s'ouvre pour proposer une signature différente : IntelliJ a détecté la duplication et vous propose de factoriser le code à votre place.
 - accepter la nouvelle signature
 - accepter le remplacement de la factorisation du code dupliqué
@@ -47,7 +47,7 @@ Une fenêtre s'ouvre pour proposer une signature différente : IntelliJ a détec
 Pour être plus productif, il ne faut pas hésiter à faire appel au fonctionnalités de l'IDE pour générer du code rapidement.
 ### Exercice
 - ouvrir la classe org.weightcars.Test
-- décommenter la ligne de la méthode main()
+- décommenter la ligne de la méthode ```main()```
 - faire en sorte que cette méthode affiche la sortie suivante en utilisant uniquement la génération de code
 
 ```Test{tata='tata', tutu=0, titi=Sat Dec 08 14:37:37 CET 2018}```
