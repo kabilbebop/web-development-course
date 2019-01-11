@@ -29,7 +29,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faRoad } from '@fortawesome/free-solid-svg-icons/faRoad';
 import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
 import { faWeightHanging } from '@fortawesome/free-solid-svg-icons/faWeightHanging';
-import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopWatch';
+import { faStopwatch } from '@fortawesome/free-solid-svg-icons/faStopwatch';
 import { faCarBattery } from '@fortawesome/free-solid-svg-icons/faCarBattery';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
