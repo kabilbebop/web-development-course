@@ -121,15 +121,19 @@ public class CarResourceIntTest {
             .andExpect(status().isCreated());
 
         // Validate the Car in the database
+        assertCarEqual(databaseSizeBeforeCreate + 1, DEFAULT_VARIANT, DEFAULT_POWER, DEFAULT_REAL_WEIGHT, DEFAULT_OFFICIAL_WEIGHT, DEFAULT_OPTIONS, DEFAULT_START_DATE);
+    }
+
+    private void assertCarEqual(int i, String defaultVariant, Double defaultPower, Double defaultRealWeight, Double defaultOfficialWeight, String defaultOptions, LocalDate defaultStartDate) {
         List<Car> carList = carRepository.findAll();
-        assertThat(carList).hasSize(databaseSizeBeforeCreate + 1);
+        assertThat(carList).hasSize(i);
         Car testCar = carList.get(carList.size() - 1);
-        assertThat(testCar.getVariant()).isEqualTo(DEFAULT_VARIANT);
-        assertThat(testCar.getPower()).isEqualTo(DEFAULT_POWER);
-        assertThat(testCar.getRealWeight()).isEqualTo(DEFAULT_REAL_WEIGHT);
-        assertThat(testCar.getOfficialWeight()).isEqualTo(DEFAULT_OFFICIAL_WEIGHT);
-        assertThat(testCar.getOptions()).isEqualTo(DEFAULT_OPTIONS);
-        assertThat(testCar.getStartDate()).isEqualTo(DEFAULT_START_DATE);
+        assertThat(testCar.getVariant()).isEqualTo(defaultVariant);
+        assertThat(testCar.getPower()).isEqualTo(defaultPower);
+        assertThat(testCar.getRealWeight()).isEqualTo(defaultRealWeight);
+        assertThat(testCar.getOfficialWeight()).isEqualTo(defaultOfficialWeight);
+        assertThat(testCar.getOptions()).isEqualTo(defaultOptions);
+        assertThat(testCar.getStartDate()).isEqualTo(defaultStartDate);
     }
 
     @Test
@@ -168,7 +172,7 @@ public class CarResourceIntTest {
             .andExpect(jsonPath("$.[*].options").value(hasItem(DEFAULT_OPTIONS)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getCar() throws Exception {
@@ -224,15 +228,7 @@ public class CarResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the Car in the database
-        List<Car> carList = carRepository.findAll();
-        assertThat(carList).hasSize(databaseSizeBeforeUpdate);
-        Car testCar = carList.get(carList.size() - 1);
-        assertThat(testCar.getVariant()).isEqualTo(UPDATED_VARIANT);
-        assertThat(testCar.getPower()).isEqualTo(UPDATED_POWER);
-        assertThat(testCar.getRealWeight()).isEqualTo(UPDATED_REAL_WEIGHT);
-        assertThat(testCar.getOfficialWeight()).isEqualTo(UPDATED_OFFICIAL_WEIGHT);
-        assertThat(testCar.getOptions()).isEqualTo(UPDATED_OPTIONS);
-        assertThat(testCar.getStartDate()).isEqualTo(UPDATED_START_DATE);
+        assertCarEqual(databaseSizeBeforeUpdate, UPDATED_VARIANT, UPDATED_POWER, UPDATED_REAL_WEIGHT, UPDATED_OFFICIAL_WEIGHT, UPDATED_OPTIONS, UPDATED_START_DATE);
     }
 
     @Test
