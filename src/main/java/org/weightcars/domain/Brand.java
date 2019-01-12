@@ -15,7 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "manufacturer")
-public class Manufacturer implements Serializable {
+public class Brand implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +39,7 @@ public class Manufacturer implements Serializable {
         return name;
     }
 
-    public Manufacturer name(String name) {
+    public Brand name(String name) {
         this.name = name;
         return this;
     }
@@ -57,7 +57,7 @@ public class Manufacturer implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Manufacturer manufacturer = (Manufacturer) o;
+        Brand manufacturer = (Brand) o;
         if (manufacturer.getId() == null || getId() == null) {
             return false;
         }

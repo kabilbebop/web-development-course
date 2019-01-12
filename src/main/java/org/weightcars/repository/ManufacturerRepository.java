@@ -1,8 +1,8 @@
 package org.weightcars.repository;
 
-import org.weightcars.domain.Manufacturer;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.weightcars.domain.Brand;
 
 
 /**
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ManufacturerRepository extends JpaRepository<Manufacturer, String> {
+public interface ManufacturerRepository extends JpaRepository<Brand, String> {
 
 }

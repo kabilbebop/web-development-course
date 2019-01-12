@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.weightcars.domain.Manufacturer;
+import org.weightcars.domain.Brand;
 import org.weightcars.repository.ManufacturerRepository;
 import org.weightcars.web.rest.errors.BadRequestAlertException;
 import org.weightcars.web.rest.util.HeaderUtil;
@@ -46,12 +46,12 @@ public class ManufacturerResource {
      */
     @PostMapping("/manufacturers")
     @Timed
-    public ResponseEntity<Manufacturer> createManufacturer(@RequestBody Manufacturer manufacturer) throws URISyntaxException {
+    public ResponseEntity<Brand> createManufacturer(@RequestBody Brand manufacturer) throws URISyntaxException {
         log.debug("REST request to save Manufacturer : {}", manufacturer);
         if (manufacturer.getId() != null) {
             throw new BadRequestAlertException("A new manufacturer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Manufacturer result = manufacturerRepository.save(manufacturer);
+        Brand result = manufacturerRepository.save(manufacturer);
         return ResponseEntity.created(new URI("/api/manufacturers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -67,12 +67,12 @@ public class ManufacturerResource {
      */
     @PutMapping("/manufacturers")
     @Timed
-    public ResponseEntity<Manufacturer> updateManufacturer(@RequestBody Manufacturer manufacturer) {
+    public ResponseEntity<Brand> updateManufacturer(@RequestBody Brand manufacturer) {
         log.debug("REST request to update Manufacturer : {}", manufacturer);
         if (manufacturer.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Manufacturer result = manufacturerRepository.save(manufacturer);
+        Brand result = manufacturerRepository.save(manufacturer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, manufacturer.getId().toString()))
             .body(result);
@@ -85,7 +85,7 @@ public class ManufacturerResource {
      */
     @GetMapping("/manufacturers")
     @Timed
-    public List<Manufacturer> getAllManufacturers() {
+    public List<Brand> getAllManufacturers() {
         log.debug("REST request to get all Manufacturers");
         return manufacturerRepository.findAll();
     }
@@ -98,9 +98,9 @@ public class ManufacturerResource {
      */
     @GetMapping("/manufacturers/{id}")
     @Timed
-    public ResponseEntity<Manufacturer> getManufacturer(@PathVariable String id) {
+    public ResponseEntity<Brand> getManufacturer(@PathVariable String id) {
         log.debug("REST request to get Manufacturer : {}", id);
-        Optional<Manufacturer> manufacturer = manufacturerRepository.findById(id);
+        Optional<Brand> manufacturer = manufacturerRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(manufacturer);
     }
 

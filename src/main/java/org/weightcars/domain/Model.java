@@ -1,11 +1,15 @@
 package org.weightcars.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * A Model.
@@ -25,7 +29,7 @@ public class Model implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("")
-    private Manufacturer manufacturer;
+    private Brand manufacturer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -49,16 +53,16 @@ public class Model implements Serializable {
         this.name = name;
     }
 
-    public Manufacturer getManufacturer() {
+    public Brand getManufacturer() {
         return manufacturer;
     }
 
-    public Model manufacturer(Manufacturer manufacturer) {
+    public Model manufacturer(Brand manufacturer) {
         this.manufacturer = manufacturer;
         return this;
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
+    public void setManufacturer(Brand manufacturer) {
         this.manufacturer = manufacturer;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
