@@ -2,7 +2,7 @@
 
 ## Les outils de qualité de code (ou revue de code statique)
 
-### IntelliJ pour le code Java
+### Exercice 1 : IntelliJ pour le code Java
 Importer du profil d'inspection :
   - menu _File > settings_
   - _Editor > Inspection_ : choisir la roue de configuration 🎡 puis _Import profile_
@@ -18,7 +18,7 @@ Lancer l'analyse :
 Lancer l'analyse : vous devriez avoir 6 warnings à corriger.
 Accéder à la description du problème en faisant un clic-droit sur le warning puis _Edit settings_.
 
-### TSLint pour le code typescript
+### Exercice 2 : TSLint pour le code typescript
 La liste des règles peut être configurée dans le fichier tsconfig.json
   - lancer la tâche Gradle verification > tsLint
   - constater que 4 warnings sont identifiés
@@ -26,7 +26,7 @@ La liste des règles peut être configurée dans le fichier tsconfig.json
 
 ## Les outils de refactoring
 
-### Renommage
+### Exercice 3 : Renommage d'une classe
 Le nom de la classe ```Manufacturer``` n'est pas très parlant pour les marques de voiture, on veut la renommer en classe ```Brand```.
 Dans cette exercice, vous allez utiliser le menu contextuel _Refactor_ pour renommer la classe :
   - clic-droit sur le nom de la classe, _Refactor > Rename_
@@ -42,7 +42,7 @@ Dans cette exercice, vous allez utiliser le menu contextuel _Refactor_ pour reno
     - si ce n'est pas le cas, sélectionner tous les fichiers dans la vue _Local Changes_ puis clic-droit _Revert_
   - relancer les tests et l'application pour constater qu'ils fonctionnent toujours
 
-### Factorisation
+### Exercice 4 : Factorisation de code
 Lorsque l'on trouve du code dupliqué, on peut vouloir le factoriser pour appliquer le principe _DRY_.
 
 C'est le cas dans ```CarResourceIntTest.java``` : 
@@ -62,7 +62,7 @@ Une fenêtre s'ouvre pour proposer une signature différente : IntelliJ a détec
 ## Génération de code
 Pour être plus productif, il ne faut pas hésiter à faire appel au fonctionnalités de l'IDE pour générer du code rapidement.
 
-### Exercice
+### Exercice 5
   - ouvrir la classe Generator
   - décommentez le code des méthodes ```testGenerator1``` et ```testGenerator2``` 
   - faire en sorte que les méthodes compilent et affichent les sorties suivantes
