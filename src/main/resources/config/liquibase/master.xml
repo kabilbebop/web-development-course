@@ -14,9 +14,9 @@
     <include file="config/liquibase/changelog/20181016133054_added_entity_constraints_Car.xml" relativeToChangelogFile="false"/>
 
     <!-- load data changelogs here -->
-    <include file="config/liquibase/changelog/20181016133052_load_data_Manufacturer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20181016133053_load_data_Model.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20181016133054_load_data_Car.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181016133052_load_data_Manufacturer.xml" relativeToChangelogFile="false" context="dev"/>
+    <include file="config/liquibase/changelog/20181016133053_load_data_Model.xml" relativeToChangelogFile="false" context="dev"/>
+    <include file="config/liquibase/changelog/20181016133054_load_data_Car.xml" relativeToChangelogFile="false" context="dev"/>
 
     <!-- TD5 changelog -->
     <include file="config/liquibase/changelog/20181212124300_modify_column_Manufacturer_name.xml" relativeToChangelogFile="false"/>

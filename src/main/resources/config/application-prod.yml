@@ -25,6 +25,7 @@ spring:
             enabled: false
         livereload:
             enabled: false
+# No production datasource as it is configured with CloudDatabaseConfiguration
 #    datasource:
 #        driver-class-name: org.postgresql.Driver
 #        type: com.zaxxer.hikari.HikariDataSource
@@ -43,9 +44,9 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
-#  liquibase:
-#       contexts: prod
-#       enabled: false
+  liquibase:
+       contexts: prod
+       enabled: false
     mail:
         host: localhost
         port: 25
