@@ -4,3 +4,5 @@ applications:
   random-route: true
   memory: 1G
   path: build/libs/weight-cars-1.0.jar
+  env:
+    SPRING_PROFILES_ACTIVE: production
