@@ -34,7 +34,7 @@ Il y a 3 boutons TOP 10 :
 - TOP 10 Power : les 10 voitures les plus puissantes
 - TOP 10 Ratio : les 10 voitures ayant le meilleur rapport poids/puissance (donc les 10 plus petites valeurs en kg/ch)
 
-Chaque bouton appelle la méthode top10Click du fichier typescript app.tsx.
+Chaque bouton appelle la méthode ```top10Click()``` du fichier typescript ```app.tsx```.
 Cette méthode appelle une API qui n'est pas implémentée côté backend.
 
 Pour cela, vous devez implémenter : 
