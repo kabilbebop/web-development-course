@@ -25,13 +25,14 @@ spring:
             enabled: false
         livereload:
             enabled: false
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/weightCars
-        username: weightCars
-        password:
-        hikari:
-            auto-commit: false
+#    datasource:
+#        driver-class-name: org.postgresql.Driver
+#        type: com.zaxxer.hikari.HikariDataSource
+#        url: jdbc:postgresql://localhost:5432/weightCars
+#        username: weightCars
+#        password:
+#        hikari:
+#            auto-commit: false
     jpa:
         database-platform: io.github.jhipster.domain.util.FixedPostgreSQL82Dialect
         database: POSTGRESQL
