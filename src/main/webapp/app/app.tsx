@@ -40,7 +40,6 @@ export class App extends React.Component<{}, IState> {
     };
     this.getCars();
   }
-  public componentDidMount() {}
 
   private getCars() {
     axios.get<ICar>(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => {
@@ -74,13 +73,13 @@ export class App extends React.Component<{}, IState> {
 
   public render() {
     const paddingTop = '60px';
-    let table;
-    if (this.state.cars) {
-      if (this.state.cars.length === 0) table = <div>No cars</div>;
-      else {
-        table = this.state.cars.map(car => <Car key={car.id} data={car} />);
-      }
-    }
+    const table =
+      this.state && this.state.cars && this.state.cars.length > 0 ? (
+        this.state.cars.map(car => <Car key={car.id} data={car} />)
+      ) : (
+        <div>No cars</div>
+      );
+
     return (
       <Router>
         <div className="app-container" style={{ paddingTop }}>
