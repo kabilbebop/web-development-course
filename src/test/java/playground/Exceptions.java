@@ -5,12 +5,6 @@ import org.junit.Test;
 public class Exceptions {
 
     @Test
-    public void testThrowsException() {
-        int i = 0;
-        int j = 3 / i;
-    }
-
-    @Test
     public void testCatchException() {
         try {
             int i = 0;
@@ -20,7 +14,7 @@ public class Exceptions {
         }
     }
 
-    @Test
+    // @Test
     public void testCausedBy() {
         try {
             int i = 0;
