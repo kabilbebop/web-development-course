@@ -76,5 +76,22 @@ Pour être plus productif, il ne faut pas hésiter à faire appel au fonctionnal
  - faire un clic-droit dans le corps de la classe ```Film``` et utiliser le menu _Generate_ 
  - il est interdit de taper du code pour cette exercice!
 
+## Gestion de dépendances avec Gradle
+Nous allons observer comment la configuration des dépendances dans Gradle modifie les bibliothèques disponibles dans l'application.
 
- 
+### Exercice 6 : ajout d'une dépendance
+- Ouvrir le fichier ```Dependencies.java``` et décommenter toutes les lignes
+- Résoudre l'erreur de compilation en modifiant le fichier ```build.gradle```
+
+### Exercice 7 : ménage
+Le but de cet exercice est de voir comment la transitivité des dépendances _Spring Data_ rendent redondantes les dépendances _Hibernate_.
+Nous allons donc faire le ménage :
+- Dans ```build.gradle```, chercher les dépendances _Spring Boot Data JPA Starter_ et _Hibernate_.
+- Ouvrir le menu _File > Project structure_ puis _Libraries_ : repérer les dépendances dans la liste
+- Dans [mvnrepository.com](mvnrepository.com), Vérifier si les dépendances _Hibernate_ sont bien inclues dans la dépendance _Spring Boot Data JPA Starter_
+- Supprimer les dépendances déjà inclues
+- Lancer les tâches _clean_ et _build_
+- Ouvrir le menu _File > Project structure_ puis _Libraries_ 
+    - les dépendances sont-elles toujours dans la liste?
+    - Pourquoi?
+
