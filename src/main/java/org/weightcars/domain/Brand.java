@@ -9,13 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A Manufacturer.
  */
 @Entity
 @Table(name = "manufacturer")
-public class Brand implements Serializable {
+public class Brand implements Serializable, Comparable<Brand> {
 
     private static final long serialVersionUID = 1L;
 
@@ -75,5 +76,11 @@ public class Brand implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             "}";
+    }
+
+
+    @Override
+    public int compareTo(Brand other) {
+        return other == null ? 1 : StringUtils.compareIgnoreCase(this.getName(), other.getName());
     }
 }

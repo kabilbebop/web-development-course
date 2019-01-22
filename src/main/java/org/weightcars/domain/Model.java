@@ -10,13 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * A Model.
  */
 @Entity
 @Table(name = "model")
-public class Model implements Serializable {
+public class Model implements Serializable, Comparable<Model> {
 
     private static final long serialVersionUID = 1L;
 
@@ -93,5 +94,19 @@ public class Model implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             "}";
+    }
+
+    @Override
+    public int compareTo(Model other) {
+        int result;
+        if (other == null) {
+            result = -1; // null first
+        } else {
+            result = this.getManufacturer().compareTo(other.getManufacturer());
+            if (result == 0) {
+                result = StringUtils.compareIgnoreCase(this.getName(), other.getName());
+            }
+        }
+        return result;
     }
 }

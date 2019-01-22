@@ -49,5 +49,15 @@ Pour cela, vous devez implémenter :
 Vous remarquerez un champs texte au dessus de la liste des voitures : ce champs texte appelle à chaque changement une API de filtre qui n'existe pas encore.
 Vous devez implémenter cette API comme pour l'exercice précédent.
 Le résultat doit être le suivant :  
-- quand je tape du texte dans la partie _filter_, je dois voir apparaître uniquement les voitures dont le _manufacturer_ (_brand_), le _model_ ou la _variant_ comprends le texte, peu importe la casse
+- quand je tape du texte dans la partie _filter_, je dois voir apparaître uniquement les voitures dont le _manufacturer_ (_brand_), le _model_ ou la _variant_ comprends le texte, peu importe la casse (majuscules/minuscules)
 - implémenter un test JUNIT qui valide le cas d'utilisation nominal : recherche avec un texte conforme qui ramène au moins 1 élément
+
+## Exercice 4 (bonus) : implémenter un tri par défaut
+On voudrait que la recherche initiale ```/api/cars``` et la recherche filtrée ```api/cars/search``` soient triées par défaut.
+La logique de tri est l'ordre "naturel" :
+- par ordre alphabétique sur le nom de la marque
+- puis par ordre alphabétique sur le nom du modèle
+- puis par ordre alphabétique sur le nom de la variante
+- les valeurs nulles sont affichées en 1er
+- on ignore la casse (majuscules/minuscules)
+Il faut donc modifier les 2 API sans dupliquer le code de la logique de tri.

@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -70,14 +71,14 @@ public class CarResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated car,
      * or with status 400 (Bad Request) if the car is not valid,
      * or with status 500 (Internal Server Error) if the car couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/cars")
     @Timed
     public ResponseEntity<Car> updateCar(@RequestBody Car car) {
         log.debug("REST request to update Car : {}", car);
-        if (car.getId() == null)
+        if (car.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
 
         Car result = carRepository.save(car);
         return ResponseEntity.ok()
@@ -96,6 +97,7 @@ public class CarResource {
         log.debug("REST request to get all Cars");
         List<Car> cars = carRepository.findAll();
         cars = cars.stream().sorted(Comparator.comparing(car -> car.getModel().getName())).collect(Collectors.toList());
+        cars.sort(Comparator.naturalOrder());
         return cars;
     }
 
@@ -135,28 +137,29 @@ public class CarResource {
      */
     @GetMapping("/cars/search/{searchString}")
     @Timed
-    public Set<Car> searchCarsByString(@PathVariable String searchString) {
+    public List<Car> searchCarsByString(@PathVariable String searchString) {
         log.debug("REST request to get Cars from given string {}", searchString);
 
+        String like = String.format("%%%s%%", searchString);
+
         // Search cars by manufacture name
-        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_nameLikeIgnoreCase(searchString);
+        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_nameLikeIgnoreCase(like);
 
         // Search cars by model name
-        List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(searchString);
+        List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(like);
 
         // Search cars by variant or options
-        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(searchString, searchString);
+        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(like, like);
 
         // Add all cars to new result list
-        Set<Car> result = new HashSet<>();
-        result.addAll(carsByManufacturer);
-        result.addAll(carsByModel);
-        result.addAll(carsByVariantOrOptions);
+        Set<Car> set = new HashSet<>();
+        set.addAll(carsByManufacturer);
+        set.addAll(carsByModel);
+        set.addAll(carsByVariantOrOptions);
 
-        return result; /* .stream().sorted((car1, car2) ->
-            car1.getModel().getManufacturer() < car2.getModel().getManufacturer()
-                && car1.getModel().getName() < car2.getModel().getName()
-                && car1.getVariant() < car2.getVariant()); */
+        List<Car> result = new ArrayList<>(set);
+        result.sort(Comparator.naturalOrder());
+        return result;
     }
 
     /**
