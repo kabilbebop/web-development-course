@@ -2,6 +2,7 @@ image: node:8-jessie
 
 stages:
 - build
+- test
 - deploy
 
 build:
