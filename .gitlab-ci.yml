@@ -15,7 +15,10 @@ build:
     artifacts:
         paths:
         - build/libs/*.jar
-
+test:
+    stage: test
+    script:
+    - ./gradlew test
 production:
     stage: deploy
     script:
