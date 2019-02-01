@@ -149,7 +149,7 @@ public class CarResource {
         List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(like);
 
         // Search cars by variant or options
-        List<Car> carsByVariantOrOptions = carRepository.findByVariantOrOptionsLikeIgnoreCase(like, like);
+        List<Car> carsByVariantOrOptions = carRepository.findByVariantLikeIgnoreCaseOrOptionsLikeIgnoreCase(like, like);
 
         // Add all cars to new result list
         Set<Car> set = new HashSet<>();

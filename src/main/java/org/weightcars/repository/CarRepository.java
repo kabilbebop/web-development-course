@@ -18,7 +18,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findByModel_nameLikeIgnoreCase(String name);
 
-    List<Car> findByVariantOrOptionsLikeIgnoreCase(String variant, String options);
+    List<Car> findByVariantLikeIgnoreCaseOrOptionsLikeIgnoreCase(String variant, String options);
 
     List<Car> findTop10ByOrderByPowerDesc();
 

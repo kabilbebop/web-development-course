@@ -21,6 +21,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -43,6 +45,8 @@ import org.weightcars.repository.CarRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WeightCarsApp.class)
 public class CarResourceIntTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(CarResourceIntTest.class);
 
     private static final String DEFAULT_VARIANT = "AAAAAAAAAA";
     private static final String UPDATED_VARIANT = "BBBBBBBBBB";
@@ -264,6 +268,32 @@ public class CarResourceIntTest {
         // Validate the database is empty
         List<Car> carList = carRepository.findAll();
         assertThat(carList).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+
+    @Test
+    @Transactional
+    public void testSearch() throws Exception {
+
+        Car car1 = new Car();
+        car1.setModel(car.getModel());
+        car1.setVariant("toto");
+
+        Car car2 = new Car();
+        car2.setModel(car.getModel());
+        car2.setVariant("tutu");
+
+        carRepository.saveAndFlush(car1);
+        carRepository.saveAndFlush(car2);
+
+        List<Car> cars = carRepository.findAll();
+
+
+        String result = restCarMockMvc.perform(get("/api/cars/search/tutu"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.[*].variant").value(hasItem(car2.getVariant())))
+            .andReturn().getResponse().getContentAsString();
+        logger.debug(result);
     }
 
     @Test
