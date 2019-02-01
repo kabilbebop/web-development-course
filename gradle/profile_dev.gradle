@@ -28,11 +28,6 @@ task webpackBuildDev(type: NpmTask, dependsOn: 'npm_install') {
     args = ["run", "webpack:build"]
 }
 
-task tsLint(type: NpmTask, dependsOn: 'npm_install') {
-    args = ["run", "lint"]
-    group = 'verification'
-}
-
 war {
     webAppDirName = 'build/www/'
 }

@@ -108,6 +108,20 @@ apply from: 'gradle/docker.gradle'
 apply from: 'gradle/sonar.gradle'
 //jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
+task webpack(type: NpmTask, dependsOn: 'npm_install') {
+    args = ["run", "webpack:prod"]
+}
+
+task tsLint(type: NpmTask, dependsOn: 'npm_install') {
+    args = ["run", "lint"]
+    group = 'verification'
+}
+
+task jestTest(type: NpmTask, dependsOn: 'webpack') {
+    args = ["run", "webpack:test"]
+    group = 'verification'
+}
+
 if (project.hasProperty('prod')) {
     apply from: 'gradle/profile_prod.gradle'
 } else {

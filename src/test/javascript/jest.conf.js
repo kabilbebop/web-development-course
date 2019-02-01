@@ -8,7 +8,7 @@ module.exports = {
   testMatch: ['<rootDir>/src/test/javascript/spec/**/+(*.)+(spec.ts?(x))'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
-    'app/(.*)': '<rootDir>/src/main/webapp/app/$1',
+    'app/(.*)': '<rootDir>/src/main/webapp/$1',
     '\\.(css|scss)$': 'identity-obj-proxy'
   },
   reporters: [

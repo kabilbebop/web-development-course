@@ -19,7 +19,7 @@ build jar:
         paths:
         - build/libs/*.jar
 
-test junit jest:
+test junit:
     stage: test
     script:
     - ./gradlew test
@@ -27,6 +27,7 @@ test junit jest:
 review tslint:
     stage: test
     script:
+    - npm install -g tslint
     - ./gradlew tsLint
     allow_failure: true
 
