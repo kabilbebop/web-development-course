@@ -5,26 +5,32 @@ stages:
 - test
 - deploy
 
-build:
-    stage: build
-    script:
+before_script:
     - echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
     - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk ca-certificates-java --assume-yes
     - chmod a+x ./gradlew
     - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+
+build jar:
+    stage: build
+    script:
     - ./gradlew -Pprod bootJar
     artifacts:
         paths:
         - build/libs/*.jar
-test:
+
+test junit jest:
     stage: test
     script:
-    - echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
-    - apt-get update && apt-get install -t jessie-backports openjdk-8-jdk ca-certificates-java --assume-yes
-    - chmod a+x ./gradlew
-    - export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
     - ./gradlew test
-production:
+
+review tslint:
+    stage: test
+    script:
+    - ./gradlew tsLint
+    allow_failure: true
+
+push to cloudfoundry:
     stage: deploy
     script:
     - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
