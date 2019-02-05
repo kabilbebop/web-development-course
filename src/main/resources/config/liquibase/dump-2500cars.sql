@@ -10,7 +10,6 @@ SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', 'public', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -3269,30 +3268,6 @@ INSERT INTO car VALUES (2446, 'E10S 2,0L', 250, 863, 725, '', '2015-01-01', 711)
 
 SELECT pg_catalog.setval('car_id_seq', 1, false);
 
-
---
--- Data for Name: databasechangelog; Type: TABLE DATA; Schema: weightcars; Owner: -
---
-
-INSERT INTO databasechangelog VALUES ('20181016133052-1', 'jhipster', 'config/liquibase/changelog/20181016133052_added_entity_Manufacturer.xml', '2019-01-17 15:17:51.179354', 1, 'EXECUTED', '7:a24bb3f0ccab72dc3d6a9d92cd39524d', 'createTable tableName=manufacturer', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133053-1', 'jhipster', 'config/liquibase/changelog/20181016133053_added_entity_Model.xml', '2019-01-17 15:17:51.201431', 2, 'EXECUTED', '7:c5159a62c81c28577b7d6ff0a5e18b53', 'createTable tableName=model', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133054-1', 'jhipster', 'config/liquibase/changelog/20181016133054_added_entity_Car.xml', '2019-01-17 15:17:51.500727', 3, 'EXECUTED', '7:af06a9f71f7d3effa992620327d115ed', 'createTable tableName=car', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133054-2', 'bcaure', 'config/liquibase/changelog/20181016133054_added_entity_Car.xml', '2019-01-17 15:17:51.651584', 4, 'EXECUTED', '7:a3563e48811361d92977da02203a485b', 'modifyDataType columnName=power, tableName=car; modifyDataType columnName=real_weight, tableName=car; modifyDataType columnName=official_weight, tableName=car', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133053-2', 'jhipster', 'config/liquibase/changelog/20181016133053_added_entity_constraints_Model.xml', '2019-01-17 15:17:51.679501', 5, 'EXECUTED', '7:1e920ac9b900a060bf79938ecf3529ff', 'addForeignKeyConstraint baseTableName=model, constraintName=fk_model_manufacturer_id, referencedTableName=manufacturer', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133054-2', 'jhipster', 'config/liquibase/changelog/20181016133054_added_entity_constraints_Car.xml', '2019-01-17 15:17:51.685087', 6, 'EXECUTED', '7:96c99d6247c8cddeab8befb8bfcec9b2', 'addForeignKeyConstraint baseTableName=car, constraintName=fk_car_model_id, referencedTableName=model', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133052-2', 'jhipster', 'config/liquibase/changelog/20181016133052_load_data_Manufacturer.xml', '2019-01-17 15:17:51.700855', 7, 'EXECUTED', '7:037798000864b8f1fe40a7652ee12b6c', 'loadData tableName=manufacturer', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133053-3', 'jhipster', 'config/liquibase/changelog/20181016133053_load_data_Model.xml', '2019-01-17 15:17:51.786766', 8, 'EXECUTED', '7:a75c0aae28d4b2a2f41088181936133c', 'loadData tableName=model', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133054-3', 'jhipster', 'config/liquibase/changelog/20181016133054_load_data_Car.xml', '2019-01-17 15:17:52.570452', 9, 'EXECUTED', '7:c6abccb3d2ec4e5195a06277b5763d82', 'loadData tableName=car', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-INSERT INTO databasechangelog VALUES ('20181016133052-2', 'jhipster', 'config/liquibase/changelog/20181212124300_modify_column_Manufacturer_name.xml', '2019-01-17 15:17:52.57468', 10, 'EXECUTED', '7:2bfc66ef05db0223de96badd82d85deb', 'renameColumn newColumnName=brand_name, oldColumnName=name, tableName=manufacturer', '', NULL, '3.5.4', NULL, NULL, '7734671108');
-
-
---
--- Data for Name: databasechangeloglock; Type: TABLE DATA; Schema: weightcars; Owner: -
---
-
-INSERT INTO databasechangeloglock VALUES (1, false, NULL, NULL);
-
-
 --
 -- Name: manufacturer_id_seq; Type: SEQUENCE SET; Schema: weightcars; Owner: -
 --
@@ -3310,4 +3285,3 @@ SELECT pg_catalog.setval('model_id_seq', 1, false);
 --
 -- PostgreSQL database dump complete
 --
-
