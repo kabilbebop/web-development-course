@@ -19,22 +19,21 @@ build jar:
         paths:
         - build/libs/*.jar
 
-test backend:
+test java:
     stage: test
     script:
     - ./gradlew test
 
-test frontend:
+test javascript:
     stage: test
     script:
     - ./gradlew jsTest
 
-review tslint:
+review javascript:
     stage: test
     script:
     - npm install -g tslint
     - ./gradlew tsLint
-    allow_failure: true
 
 push to cloudfoundry:
     stage: deploy
