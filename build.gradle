@@ -117,7 +117,7 @@ task tsLint(type: NpmTask, dependsOn: 'npm_install') {
     group = 'verification'
 }
 
-task jestTest(type: NpmTask, dependsOn: 'webpack') {
+task jsTest(type: NpmTask, dependsOn: 'webpack') {
     args = ["run", "webpack:test"]
     group = 'verification'
 }

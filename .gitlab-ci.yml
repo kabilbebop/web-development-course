@@ -19,10 +19,15 @@ build jar:
         paths:
         - build/libs/*.jar
 
-test junit:
+test backend:
     stage: test
     script:
     - ./gradlew test
+
+test frontend:
+    stage: test
+    script:
+    - ./gradlew jsTest
 
 review tslint:
     stage: test
