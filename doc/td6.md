@@ -36,7 +36,6 @@ Le stage test comportera 3 jobs :
 - Créer son compte sur la plateforme [Pivotal CloudFoundry](https://run.pivotal.io)
 - Créer une organisation
 - Créer un service ElephantSQL qui correspondra à la base de données postgres de prod
-- Charger cette base avec le fichier ```config/liquibase/dump-2500cars.sql```
 
 ### Gitlab.com
 Pousser les sources dans Gitlab.com
@@ -54,18 +53,25 @@ Ajouter les variables suivantes dans Gitlab (menu _Settings > CI / CD > environm
 Dans le fichier manifest ```.gitlab-ci.yml```, ajouter le pipeline de déploiement :
 
 ```
+stages:
+- build
+- test
+- deploy
+```
+
+
+```
 push to cloudfoundry:
     stage: deploy
     script:
     - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
     - ./cf login -u $CF_USERNAME -p $CF_PASSWORD -a api.run.pivotal.io
     - ./cf push
-    only:
-    - master
 ```
 
 Le job de build génère un fichier ```weight-cars-1.0.jar``` qu'il faut ensuite passer au job de deploy, pour faire cela il faut utiliser la commande suivante :
 ```
+build jar:
     artifacts:
         paths:
         - build/libs/*.jar
