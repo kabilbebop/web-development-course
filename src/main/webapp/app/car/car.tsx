@@ -17,6 +17,7 @@ export interface ICar {
   options?: string;
   startDate?: string;
   model?: IModel;
+  image?: string;
 }
 
 export const Car = props => {
@@ -51,10 +52,21 @@ export const Car = props => {
     ''
   );
 
+  const colImg = props.data.image ? (
+    <div className="col-xl-1 col-lg-2 col-md-4 col-sm-6">
+      <a href={props.data.image}>
+        <img src={props.data.image} style={{ maxWidth: '100%' }} />
+      </a>
+    </div>
+  ) : (
+    ''
+  );
+
   return (
     <Card key={props.data.id} className="jh-card">
       <div className="row">
-        <div className="col-xl-1 col-lg-2 col-md-4 col-sm-12">{props.data.model.manufacturer.name}</div>
+        {colImg}
+        <div className="col-xl-1 col-lg-2 col-md-4 col-sm-6">{props.data.model.manufacturer.name}</div>
         <div className="col-xl-4 col-lg-4 col-md-8 col-sm-12" data-toggle="tooltip" title={props.data.options}>
           {props.data.variant} ({year}) {optionsIcon}
         </div>

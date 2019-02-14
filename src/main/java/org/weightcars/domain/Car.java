@@ -44,6 +44,9 @@ public class Car implements Serializable, Comparable<Car> {
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @Column(name = "image")
+    private String image;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private Model model;
@@ -147,6 +150,17 @@ public class Car implements Serializable, Comparable<Car> {
     public void setModel(Model model) {
         this.model = model;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
+    public Car setImage(String image) {
+        this.image = image;
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

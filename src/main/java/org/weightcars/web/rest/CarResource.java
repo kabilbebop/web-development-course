@@ -4,13 +4,13 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.weightcars.domain.Car;
+import org.weightcars.domain.CarImage;
 import org.weightcars.repository.CarRepository;
 import org.weightcars.web.rest.errors.BadRequestAlertException;
 import org.weightcars.web.rest.util.HeaderUtil;
@@ -96,7 +98,11 @@ public class CarResource {
     public List<Car> getAllCars() {
         log.debug("REST request to get all Cars");
         List<Car> cars = carRepository.findAll();
-        cars = cars.stream().sorted(Comparator.comparing(car -> car.getModel().getName())).collect(Collectors.toList());
+        cars = cars.stream()
+            .sorted(Comparator.comparing(car -> car.getModel().getName()))
+            .limit(10)
+            .map(car -> refreshCarImage(car))
+            .collect(Collectors.toList());
         cars.sort(Comparator.naturalOrder());
         return cars;
     }
@@ -157,8 +163,11 @@ public class CarResource {
         set.addAll(carsByModel);
         set.addAll(carsByVariantOrOptions);
 
-        List<Car> result = new ArrayList<>(set);
-        result.sort(Comparator.naturalOrder());
+        List<Car> result = set.stream()
+            .sorted(Comparator.naturalOrder())
+            .limit(10)
+            .map(car -> refreshCarImage(car))
+            .collect(Collectors.toList());
         return result;
     }
 
@@ -187,6 +196,26 @@ public class CarResource {
             default:
                 throw new UnsupportedOperationException();
         }
-        return result.stream().limit(number).collect(Collectors.toList());
+        return result.stream()
+            .limit(number)
+            .map(car -> refreshCarImage(car))
+            .collect(Collectors.toList());
+    }
+
+    public Car refreshCarImage(Car car) {
+        String url = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" + car.getModel().getManufacturer().getName();
+        if (StringUtils.isNotEmpty(car.getModel().getName())) {
+            url += "+" + car.getModel().getName();
+        }
+        if (StringUtils.isNotEmpty(car.getVariant())) {
+            url += "+" + car.getVariant();
+        }
+
+        CarImage response = new RestTemplate().getForObject(url, CarImage.class);
+
+        car.setImage(response != null ? response.getUrl() : null);
+        carRepository.save(car);
+
+        return car;
     }
 }

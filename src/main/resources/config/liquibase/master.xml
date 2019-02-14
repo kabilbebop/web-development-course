@@ -21,4 +21,7 @@
     <!-- TD5 changelog -->
     <include file="config/liquibase/changelog/20181212124300_modify_column_Manufacturer_name.xml" relativeToChangelogFile="false"/>
 
+    <!-- TD6 changelog -->
+    <include file="config/liquibase/changelog/20190214124300_added_column_Car_image.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>

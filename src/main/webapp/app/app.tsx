@@ -53,9 +53,7 @@ export class App extends React.Component<{}, IState> {
       clearTimeout(this.state.filterInputTimeout);
       const timer = setTimeout(() => {
         if (input.value && input.value.trim() !== '') {
-          axios.get('api/cars/search/' + input.value).then(response => {
-            this.setState({ cars: response.data as ICar[] });
-          });
+          axios.get('api/cars/search/' + input.value).then(response => this.setState({ cars: response.data as ICar[] }));
         } else {
           this.getCars();
         }
@@ -66,9 +64,7 @@ export class App extends React.Component<{}, IState> {
   }
 
   private top10Click(what: string) {
-    axios.get<ICar>(`api/cars/top/${what}/10`).then(response => {
-      this.setState({ cars: response.data as ICar[] });
-    });
+    axios.get<ICar[]>(`api/cars/top/${what}/10`).then(response => this.setState({ cars: response.data as ICar[] }));
   }
 
   public render() {
