@@ -32,8 +32,7 @@ test javascript:
 review javascript:
     stage: test
     script:
-    - npm install -g tslint
-    - ./gradlew tsLint
+    - ./gradlew jsLint
 
 push to cloudfoundry:
     stage: deploy
@@ -41,5 +40,4 @@ push to cloudfoundry:
     - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
     - ./cf login -u $CF_USERNAME -p $CF_PASSWORD -a api.run.pivotal.io
     - ./cf push
-    only:
-    - master
+
