@@ -34,8 +34,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.NestedServletException;
 import org.weightcars.WeightCarsApp;
+import org.weightcars.domain.Brand;
 import org.weightcars.domain.Car;
+import org.weightcars.domain.Model;
 import org.weightcars.repository.CarRepository;
+import org.weightcars.service.CarService;
 
 /**
  * Test class for the CarResource REST controller.
@@ -47,6 +50,9 @@ import org.weightcars.repository.CarRepository;
 public class CarResourceIntTest {
 
     private static final Logger logger = LoggerFactory.getLogger(CarResourceIntTest.class);
+
+    private static final String DEFAULT_MANUFACTURER = "RRRRRRR";
+    private static final String DEFAULT_MODEL = "MMMMMMM";
 
     private static final String DEFAULT_VARIANT = "AAAAAAAAAA";
     private static final String UPDATED_VARIANT = "BBBBBBBBBB";
@@ -70,6 +76,9 @@ public class CarResourceIntTest {
     private CarRepository carRepository;
 
     @Autowired
+    private CarService carService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -85,7 +94,7 @@ public class CarResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CarResource carResource = new CarResource(carRepository);
+        final CarResource carResource = new CarResource(carRepository, carService);
         this.restCarMockMvc = MockMvcBuilders.standaloneSetup(carResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setConversionService(createFormattingConversionService())
@@ -99,13 +108,22 @@ public class CarResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Car createEntity(EntityManager em) {
+
+        Brand brand = new Brand();
+        brand.setName(DEFAULT_MANUFACTURER);
+
+        Model model = new Model();
+        model.setName(DEFAULT_MODEL);
+        model.setManufacturer(brand);
+
         return new Car()
             .variant(DEFAULT_VARIANT)
             .power(DEFAULT_POWER)
             .realWeight(DEFAULT_REAL_WEIGHT)
             .officialWeight(DEFAULT_OFFICIAL_WEIGHT)
             .options(DEFAULT_OPTIONS)
-            .startDate(DEFAULT_START_DATE);
+            .startDate(DEFAULT_START_DATE)
+            .model(model);
     }
 
     @Before
@@ -158,23 +176,6 @@ public class CarResourceIntTest {
         // Validate the Car in the database
         List<Car> carList = carRepository.findAll();
         assertThat(carList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void searchCars() throws Exception {
-        // Initialize the database
-        carRepository.saveAndFlush(car);
-
-        // Get all the carList
-        restCarMockMvc.perform(get("/api/cars/search/"+car.getVariant()))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].variant").value(hasItem(DEFAULT_VARIANT)))
-            .andExpect(jsonPath("$.[*].power").value(hasItem(DEFAULT_POWER)))
-            .andExpect(jsonPath("$.[*].realWeight").value(hasItem(DEFAULT_REAL_WEIGHT)))
-            .andExpect(jsonPath("$.[*].officialWeight").value(hasItem(DEFAULT_OFFICIAL_WEIGHT)))
-            .andExpect(jsonPath("$.[*].options").value(hasItem(DEFAULT_OPTIONS)))
-            .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())));
     }
 
     @Test
