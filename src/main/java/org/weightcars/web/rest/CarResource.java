@@ -91,8 +91,6 @@ public class CarResource {
         List<Car> cars = carRepository.findAll();
         cars = cars.stream()
             .sorted(Comparator.comparing(car -> car.getModel().getName()))
-            .limit(10)
-            .map(carService::refreshCarImage)
             .collect(Collectors.toList());
         cars.sort(Comparator.naturalOrder());
         return cars;

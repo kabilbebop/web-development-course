@@ -9,7 +9,12 @@
     -->
     <changeSet id="20190214133052-2" author="jhipster">
         <addColumn tableName="car">
-            <column name="image" type="varchar(1000)">
+            <column name="image_url" type="varchar(1000)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="car">
+            <column name="image" type="blob">
                 <constraints nullable="true"/>
             </column>
         </addColumn>

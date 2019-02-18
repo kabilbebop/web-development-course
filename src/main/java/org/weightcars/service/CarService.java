@@ -10,6 +10,15 @@ import org.weightcars.domain.Car;
 import org.weightcars.domain.CarImage;
 import org.weightcars.repository.CarRepository;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+
+/**
+ * TD7 : manage Car images
+ */
 @Service
 public class CarService {
 
@@ -21,25 +30,51 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
+    /**
+     * Refresh given car image from carimagery
+     */
     public Car refreshCarImage(Car car) {
         LOGGER.info("refreshCarImage for {}", car.toString());
-        String url = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" + car.getModel().getManufacturer().getName();
+
+        // Get image url
+        String apiUrl = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" + car.getModel().getManufacturer().getName();
         if (StringUtils.isNotEmpty(car.getModel().getName())) {
-            url += "+" + car.getModel().getName();
+            apiUrl += "+" + car.getModel().getName();
         }
         if (StringUtils.isNotEmpty(car.getVariant())) {
-            url += "+" + car.getVariant();
+            apiUrl += "+" + car.getVariant();
+        }
+        CarImage response = new RestTemplate().getForObject(apiUrl, CarImage.class);
+        car.setImageUrl(response != null ? response.getUrl() : null);
+
+        // Get image from url
+        CarImage responseUrl = null;
+        try {
+            if (response.getUrl() != null) {
+                BufferedImage image = ImageIO.read(new URL(response.getUrl()));
+                if (image != null) {
+                    // Save image as byte array
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, "jpg", baos);
+                    baos.flush();
+                    byte[] imageInByte = baos.toByteArray();
+                    baos.close();
+                    car.setImage(imageInByte);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.error(null, e);
         }
 
-        CarImage response = new RestTemplate().getForObject(url, CarImage.class);
-
-        car.setImage(response != null ? response.getUrl() : null);
         carRepository.save(car);
 
         return car;
     }
 
-    @Scheduled(fixedDelay = 24 * 3600 * 1000)
+    /**
+     * Batch refresh database images
+     */
+    @Scheduled(fixedDelay = 24 * 3600 * 1000) // each days
     public void refreshAllCarImages() {
         LOGGER.info("refresh all car images");
         carRepository.findAll().forEach(this::refreshCarImage);
