@@ -2,32 +2,20 @@ package org.weightcars.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.*;
 import org.weightcars.domain.Car;
-import org.weightcars.domain.CarImage;
 import org.weightcars.repository.CarRepository;
+import org.weightcars.service.CarService;
 import org.weightcars.web.rest.errors.BadRequestAlertException;
 import org.weightcars.web.rest.util.HeaderUtil;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Car.
@@ -42,8 +30,11 @@ public class CarResource {
 
     private final CarRepository carRepository;
 
-    public CarResource(CarRepository carRepository) {
+    private final CarService carService;
+
+    CarResource(CarRepository carRepository, CarService carService) {
         this.carRepository = carRepository;
+        this.carService = carService;
     }
 
     /**
@@ -100,8 +91,6 @@ public class CarResource {
         List<Car> cars = carRepository.findAll();
         cars = cars.stream()
             .sorted(Comparator.comparing(car -> car.getModel().getName()))
-            .limit(10)
-            .map(car -> refreshCarImage(car))
             .collect(Collectors.toList());
         cars.sort(Comparator.naturalOrder());
         return cars;
@@ -163,12 +152,11 @@ public class CarResource {
         set.addAll(carsByModel);
         set.addAll(carsByVariantOrOptions);
 
-        List<Car> result = set.stream()
+        return set.stream()
             .sorted(Comparator.naturalOrder())
             .limit(10)
-            .map(car -> refreshCarImage(car))
+            .map(carService::refreshCarImage)
             .collect(Collectors.toList());
-        return result;
     }
 
     /**
@@ -198,24 +186,7 @@ public class CarResource {
         }
         return result.stream()
             .limit(number)
-            .map(car -> refreshCarImage(car))
+            .map(carService::refreshCarImage)
             .collect(Collectors.toList());
-    }
-
-    public Car refreshCarImage(Car car) {
-        String url = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" + car.getModel().getManufacturer().getName();
-        if (StringUtils.isNotEmpty(car.getModel().getName())) {
-            url += "+" + car.getModel().getName();
-        }
-        if (StringUtils.isNotEmpty(car.getVariant())) {
-            url += "+" + car.getVariant();
-        }
-
-        CarImage response = new RestTemplate().getForObject(url, CarImage.class);
-
-        car.setImage(response != null ? response.getUrl() : null);
-        carRepository.save(car);
-
-        return car;
     }
 }

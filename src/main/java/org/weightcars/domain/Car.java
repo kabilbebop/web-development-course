@@ -3,14 +3,10 @@ package org.weightcars.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -44,10 +40,13 @@ public class Car implements Serializable, Comparable<Car> {
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image_url")
+    private String imageUrl;
 
-    @ManyToOne
+    @Column(name = "image")
+    private byte[] image;
+
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JsonIgnoreProperties("")
     private Model model;
 
@@ -151,17 +150,31 @@ public class Car implements Serializable, Comparable<Car> {
         this.model = model;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    /**
+     * TD7
+     * @return image as base64 for frontend
+     */
     public String getImage() {
-        return image;
+        if (image != null) {
+            return Base64.getEncoder().encodeToString(image);
+        } else {
+            return null;
+        }
     }
 
-    @SuppressWarnings("UnusedReturnValue")
-    public Car setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
-        return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+// jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

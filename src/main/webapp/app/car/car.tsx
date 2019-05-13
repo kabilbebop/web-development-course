@@ -55,7 +55,7 @@ export const Car = props => {
   const colImg = props.data.image ? (
     <div className="col-xl-1 col-lg-2 col-md-4 col-sm-6">
       <a href={props.data.image}>
-        <img src={props.data.image} style={{ maxWidth: '100%' }} />
+        <img src={'data:image/png;base64, ' + props.data.image} style={{ maxWidth: '100%' }} />
       </a>
     </div>
   ) : (
