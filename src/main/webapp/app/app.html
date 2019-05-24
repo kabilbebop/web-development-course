@@ -1,0 +1,20 @@
+<template id="app-component-template">
+    <link rel="stylesheet" href="app/app.css">
+    <section class="app-container">
+        <header-component></header-component>
+
+        <section class="app-content">
+            <menu-component></menu-component>
+
+            <article class="form-group">
+                <input type="text" class="form-control" id="searchFilter" placeholder="Filter" onKeyUp="filterCars()"
+                    value="this.state.searchFilter" />
+            </article>
+
+            <article>
+                <div>No cars</div>
+            </article>
+        </section>
+    </section>
+</template>
+<script src="app.js"></script>

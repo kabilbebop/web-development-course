@@ -1,0 +1,24 @@
+@import '/static/bootstrap.min.css';
+
+details {
+  flex: 0 0 200px;
+}
+.nav-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-items nav {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.nav-items img {
+  padding-right: 5px;
+  width: 30px;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}

@@ -5,7 +5,7 @@ exports[`Header Renders a Header component in dev profile with LoadingBar, Navba
   id="app-header"
 >
   <Navbar
-    className="jh-navbar"
+    class="jh-navbar"
     dark={true}
     expand="sm"
     fixed="top"
@@ -37,7 +37,7 @@ exports[`Header Renders a Header component in dev profile with LoadingBar, Navba
       unmountOnExit={false}
     >
       <Nav
-        className="ml-auto"
+        class="ml-auto"
         id="header-tabs"
         navbar={true}
         tag="ul"
@@ -64,7 +64,7 @@ exports[`Header Renders a Header component in prod profile with LoadingBar, Navb
   id="app-header"
 >
   <Navbar
-    className="jh-navbar"
+    class="jh-navbar"
     dark={true}
     expand="sm"
     fixed="top"
@@ -96,7 +96,7 @@ exports[`Header Renders a Header component in prod profile with LoadingBar, Navb
       unmountOnExit={false}
     >
       <Nav
-        className="ml-auto"
+        class="ml-auto"
         id="header-tabs"
         navbar={true}
         tag="ul"

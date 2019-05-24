@@ -1,0 +1,32 @@
+<template>
+    <link rel="stylesheet" href="app/menu/menu.css">
+
+    <section class="nav-items">
+        <nav class="d-flex align-items-center">
+            <img src="/static/icons/home.svg" alt="home">
+            <span>Home</span>
+        </nav>
+        <details>
+            <summary>
+                <img src="/static/icons/sort-ascending.svg" alt="sort ascending">
+                <span>Top 10</span>
+            </summary>
+
+            <section>
+                <nav class="d-flex align-items-center" onClick="props.onClick()">
+                    <img src="/static/icons/expand-up.svg" alt="expand up">
+                    <span>Weight</span>
+                </nav>
+                <nav class="d-flex align-items-center" onClick="props.onClick()">
+                    <img src="/static/icons/battery-full.svg" alt="battery full">
+                    <span>Power</span>
+                </nav>
+                <nav class="d-flex align-items-center" onClick="props.onClick()">
+                    <img src="/static/icons/calculator.svg" alt="calculator">
+                    <span>Ratio</span>
+                </nav>
+            </section>
+        </details>
+    </section>
+</template>
+<script src="menu.js"></script>
