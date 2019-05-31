@@ -1,11 +1,46 @@
 <template>
     <link rel="stylesheet" href="app/header/header.css">
-    <header id="app-header">
+    <header class="app-header">
 
-        <section class="brand-icon">
-            <img src="static/images/logo.jpg" alt="Logo" />
-        </section>
         <h1>Weight Cars</h1>
+        <nav class="search">
+            <span class="icon">🔍</span><input type="text" class="form-control" id="searchFilter" placeholder="Filter" onKeyUp="filterCars()" />
+        </nav>
+
+
+        <section class="nav-items">
+            <details>
+                <summary>
+                    <nav>
+                        <span class="icon">🏠</span>
+                        <span>Home</span>
+                    </nav>
+                </summary>
+            </details>
+            <details class="menu-top10">
+                <summary>
+                    <nav>
+                        <span class="icon">🏆</span>
+                        <span>Top 10</span>
+                    </nav>
+                </summary>
+
+                <section>
+                    <nav onClick="props.onClick()">
+                        <span class="icon">⏲</span>
+                        <span>Weight</span>
+                    </nav>
+                    <nav onClick="props.onClick()">
+                        <span class="icon">🔋</span>
+                        <span>Power</span>
+                    </nav>
+                    <nav onClick="props.onClick()">
+                        <span class="icon">📝</span>
+                        <span>Ratio</span>
+                    </nav>
+                </section>
+            </details>
+        </section>
 
     </header>
 </template>

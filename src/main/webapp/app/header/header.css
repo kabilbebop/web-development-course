@@ -1,14 +1,77 @@
 @import '/static/bootstrap.min.css';
-header {
+.app-header {
+  flex: 1;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: baseline;
   height: 150px;
   padding: 50px;
+  color: white;
 }
-.brand-icon img {
-  width: 100px;
-}
+
 h1 {
-  flex: 1;
+  flex: 0 0 200px;
   text-align: center;
+  font-variant: small-caps;
+  font-size: 2rem;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.search input.form-control {
+  width: 200px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.search input.form-control::placeholder {
+  color: white;
+}
+
+/*** MENU ***/
+
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-items > * {
+  /* do not move position when showing details */
+  height: 70px;
+}
+
+.nav-items .menu-top10 {
+  /* do not move position when showing details */
+  width: 350px;
+}
+
+.nav-items nav {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.nav-items span {
+  white-space: nowrap;
+}
+
+.icon {
+  padding-right: 5px;
+}
+
+/* Horizontal menu */
+details section {
+  display: flex;
+}
+
+/* Hide arrow */
+details summary::-webkit-details-marker {
+  display: none;
 }

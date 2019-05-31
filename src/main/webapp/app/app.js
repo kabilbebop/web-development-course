@@ -39,9 +39,9 @@ export default class AppComponent extends HTMLElement {
   }
 
   getCars() {
-    fetch(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => {
-      this.state.cars = response ? response.data : undefined;
-    });
+    /* fetch(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => { */
+      this.state.cars = [];/* response ? response.data : undefined; */
+    /* }); */
   }
 
   filterCars() {
