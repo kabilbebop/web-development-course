@@ -29,7 +29,7 @@
   "include": [
     "src/main/webapp/app/typing.d.ts",
     "src/main/webapp/app/**/*",
-    "src/test/javascript/spec/**/*"
+    "src/test/javascript/spec/**/*", "src/main/webapp/app.js"
   ],
   "exclude": [
     "node_modules"

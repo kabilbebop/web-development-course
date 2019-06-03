@@ -1,4 +1,3 @@
-import { Model } from 'app/app';
 import React from 'react';
 import { Card } from 'reactstrap';
 

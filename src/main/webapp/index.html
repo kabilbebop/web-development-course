@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
+
 <head>
     <base href="./" />
     <meta charset="utf-8">
@@ -10,18 +11,33 @@
     <meta name="theme-color" content="#000000">
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="manifest" href="manifest.webapp" />
-    <script type="module" src="app/app.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="index.js"></script>
     <script type="module" src="app/header/header.js"></script>
-    <script type="module" src="app/menu/menu.js"></script>
 </head>
+
 <body style="margin: 0px">
+
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <app-component></app-component>
     <noscript>
         <h1>You must enable javascript to view this page.</h1>
     </noscript>
+
     
+    <section class="app-container">
+        <header-component></header-component>
+
+        <section class="app-content">
+            <article>
+                No cars
+            </article>
+        </section>
+    </section>
+    <div class="overlay"></div>
+
+
 </body>
+
 </html>
