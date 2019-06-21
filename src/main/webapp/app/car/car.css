@@ -1,0 +1,13 @@
+.bar {
+  height: 20px;
+}
+
+.bar.weight {
+  background-color: blue;
+}
+.bar.power {
+  background-color: red;
+}
+.bar.ratio {
+  background-color: yellow;
+}

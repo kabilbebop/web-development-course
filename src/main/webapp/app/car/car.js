@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card } from 'reactstrap';
+import getTemplate from '/app/util.js';
 
 const NO_YEAR = '0001';
 const YEAR_START = 0;
@@ -21,67 +20,21 @@ export class Car {
   }
 }
 
-export class CarComponent {
+export class CarComponent extends HTMLElement {
+  connectedCallback() {
+    var shadow = this.attachShadow({ mode: 'open' });
+    this.render(shadow);
+  }
 
-  render() {
-    // Size of the power bar
-    const powerStyle = {
-      width: `${props.data.power / POWER_PX_RATIO}px`
-    };
-    // Size of the weight bar
-    const weightStyle = {
-      width: `${props.data.realWeight / WEIGHT_PX_RATIO}px`
-    };
-    const year = props.data.startDate && !props.data.startDate.startsWith(NO_YEAR) ? props.data.startDate.slice(YEAR_START, YEAR_END) : null;
+  async render(shadow) {
 
-    const optionsIcon = props.data.options ? <span class="badge badge-pill badge-info hand">i</span> : '';
+    // Select the template and clone it. Finally attach the cloned node to the shadowDOM's root.
+    // Current document needs to be defined to get DOM access to imported HTML
+    const template = await getTemplate('/app/car/car.html');
+    const instance = template.content.cloneNode(true);
 
-    const powerSpan = props.data.power ? (
-      <span class="badge badge-danger" style="powerStyle">
-        {props.data.power}
-        Ch
-    </span>
-    ) : (
-        ''
-      );
+    shadow.appendChild(instance);
 
-    const weightSpan = props.data.realWeight ? (
-      <span class="badge badge-primary" style="weightStyle">
-        {props.data.realWeight}
-        Kg (+
-      {props.data.realWeight - props.data.officialWeight})
-    </span>
-    ) : (
-        ''
-      );
-
-    const colImg = props.data.image ? (
-      <div class="col-xl-1 col-lg-2 col-md-4 col-sm-6">
-        <a href="props.data.image">
-          <img src="'data:image/png;base64, ' + props.data.image" style="maxWidth: 100%" />
-        </a>
-      </div>
-    ) : (
-        ''
-      );
-
-    return (
-      <Card key="props.data.id" class="jh-card">
-        <div class="row">
-          {colImg}
-          <div class="col-xl-1 col-lg-2 col-md-4 col-sm-6">{props.data.model.manufacturer.name}</div>
-          <div class="col-xl-4 col-lg-4 col-md-8 col-sm-12" data-toggle="tooltip" title="props.data.options">
-            {props.data.variant} ({year}) {optionsIcon}
-          </div>
-          <div class="col col-xs-12">
-            <div style="display: flex">
-              {weightSpan}
-              {powerSpan}
-            </div>
-          </div>
-        </div>
-      </Card>
-    );
   }
 }
 

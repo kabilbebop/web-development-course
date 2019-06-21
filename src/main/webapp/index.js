@@ -40,8 +40,8 @@ function refreshCars() {
   const appContent = document.querySelector('.app-content');
   appContent.innerHTML = '';
   state.cars.forEach(car => {
-    const element = document.createElement("article");
-    element.innerText = `${car.model.manufacturer.name} ${car.model.name} ${car.variant}`;
+    const element = document.createElement("car-component");
+    // element.innerText = `${car.model.manufacturer.name} ${car.model.name} ${car.variant}`;
     appContent.appendChild(element);
   });
 }
