@@ -1,5 +1,3 @@
-import getTemplate from '/app/util.js';
-
 const FILTER_INPUT_TIMEOUT = 500;
 
 export class Manufacturer {
@@ -41,7 +39,8 @@ function refreshCars() {
   appContent.innerHTML = '';
   state.cars.forEach(car => {
     const element = document.createElement("car-component");
-    // element.innerText = `${car.model.manufacturer.name} ${car.model.name} ${car.variant}`;
+    element.setAttribute('car', car);
+    element.classList.add('card');
     appContent.appendChild(element);
   });
 }

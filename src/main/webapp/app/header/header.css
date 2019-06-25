@@ -1,4 +1,6 @@
 @import '/static/bootstrap.min.css';
+@import '/theme.css';
+
 .app-header {
   flex: 1;
   display: flex;
@@ -6,7 +8,7 @@
   align-items: baseline;
   height: 150px;
   padding: 50px;
-  color: white;
+  color: var(--text-bright);
 }
 
 h1 {
@@ -27,11 +29,11 @@ h1 {
   width: 200px;
   height: 25px;
   background-color: rgba(255, 255, 255, 0.3);
-  color: white;
+  color: var(--text-medium);
 }
 
 .search input.form-control::placeholder {
-  color: white;
+  color: var(--text-medium);
 }
 
 /*** MENU ***/
@@ -60,6 +62,10 @@ h1 {
 
 .nav-items span {
   white-space: nowrap;
+}
+
+nav:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .icon {

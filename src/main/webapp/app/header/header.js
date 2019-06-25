@@ -16,24 +16,17 @@ export default class HeaderComponent extends HTMLElement {
     menuOpen: false
   };
 
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    getTemplate('/app/header/header.html').then(template => {
+      this.shadowRoot.appendChild(template.content.cloneNode(true));
+    });
+  }
+
   toggleMenu = () => {
     this.setState({ menuOpen: !this.state.menuOpen });
   };
-
-  connectedCallback() {
-    var shadow = this.attachShadow({mode: 'open'});
-    this.render(shadow);
-  }
-
-  async render(shadow) {
-
-    // Select the template and clone it. Finally attach the cloned node to the shadowDOM's root.
-    // Current document needs to be defined to get DOM access to imported HTML
-    const template = await getTemplate('/app/header/header.html');
-    const instance = template.content.cloneNode(true);
-    shadow.appendChild(instance);
-
-  }
 }
 
 customElements.define('header-component', HeaderComponent);

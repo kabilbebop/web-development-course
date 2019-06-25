@@ -1,15 +1,19 @@
 @import '/static/bootstrap.min.css';
+@import '/theme.css';
+
 .app-container {
   display: flex;
   flex-direction: column;
   background-image: url('/static/hangar.jpg');
   background-size: cover;
   font-family: 'Gill Sans', sans-serif;
+  min-height: 100vh;
+  position: relative;
 }
 .app-container,
 .overlay {
   width: 100%;
-  height: 97vh;
+  height: 100%;
 }
 .overlay {
   position: absolute;
@@ -19,11 +23,10 @@
 header-component,
 .app-content {
   z-index: 1;
-}
-
-.app-content {
   align-self: center;
+  align-items: start;
   display: flex;
+  flex-wrap: wrap;
   width: 90%;
   height: 90%;
 }
@@ -32,11 +35,12 @@ menu-component {
   flex: 0 0 300px;
 }
 
-article {
-  flex: 1;
-  color: white;
-  background-color: rgba(50, 50, 50, 0.8);
-  border-radius: 15px;
-  margin: 10px;
+.card {
+  margin: 15px;
+  color: var(--text-bright);
   padding: 15px;
+  border-radius: 15px;
+  background-color: rgba(55, 55, 70, 0.8);
+  display: flex;
+  width: 350px;
 }

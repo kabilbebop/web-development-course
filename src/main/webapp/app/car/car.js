@@ -21,19 +21,42 @@ export class Car {
 }
 
 export class CarComponent extends HTMLElement {
-  connectedCallback() {
-    var shadow = this.attachShadow({ mode: 'open' });
-    this.render(shadow);
+
+  get car() {
+    return this.getAttribute('car');
+  }
+
+  set car(newValue) {
+    this.setAttribute('car', newValue);
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+    getTemplate('/app/car/car.html').then(template => {
+      this.shadowRoot.appendChild(template.content.cloneNode(true));
+    });
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'car':
+        console.log(`Value changed from ${oldValue} to ${newValue}`);
+        break;
+    }
   }
 
   async render(shadow) {
 
     // Select the template and clone it. Finally attach the cloned node to the shadowDOM's root.
     // Current document needs to be defined to get DOM access to imported HTML
-    const template = await getTemplate('/app/car/car.html');
-    const instance = template.content.cloneNode(true);
 
-    shadow.appendChild(instance);
+
+    if (this.getAttribute('car')) {
+      this.querySelector('.model').innerText = this.getAttribute('car').model;
+    }
+
+    // shadow.appendChild(instance);
 
   }
 }

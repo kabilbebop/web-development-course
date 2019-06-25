@@ -1,13 +1,55 @@
+@import '/theme.css';
+
+h4 {
+  font-weight: bold;
+}
+
+img {
+  border-radius: 5px;
+  border-width: 3px;
+  border-color: var(--text-medium);
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+details.variant {
+  margin-bottom: 15px;
+}
+
+summary.variant {
+  display: flex;
+  align-items: center;
+}
+
+.bars {
+  margin-left: 15px;
+}
+
+.bars label {
+  color: var(--text-medium);
+}
+
+.bars span {
+  color: var(--text-extra-bright);
+}
+
 .bar {
-  height: 20px;
+  height: 10px;
+  margin: 5px 0 10px 0;
 }
 
 .bar.weight {
-  background-color: blue;
+  background-color: yellow;
 }
 .bar.power {
   background-color: red;
 }
 .bar.ratio {
-  background-color: yellow;
+  background-color: green;
+}
+
+.bar-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: small;
 }
