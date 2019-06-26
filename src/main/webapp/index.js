@@ -1,69 +1,70 @@
 const FILTER_INPUT_TIMEOUT = 500;
 
-export class Manufacturer {
-  constructor(id, name) {
-    this.id = id;
-    this.name = name;
-  }
-}
-
-export class Model {
-  constructor(id, name, manufacturer) {
-    this.id = id;
-    this.name = name;
-    this.manufacturer = manufacturer;
-  }
-}
-
-export class State {
-  constructor(cars, searchFilter, previousFilterValue, filterInputTimeout) {
-    this.cars = cars;
-    this.searchFilter = searchFilter;
-    this.previousFilterValue = previousFilterValue;
-    this.filterInputTimeout = filterInputTimeout;
-  }
-}
-
-const state = new State({
-  cars: undefined,
-  filterInputTimeout: undefined,
-  previousFilterValue: undefined,
-  searchFilter: undefined
-});
+let cars, filterInputTimeout, previousFilterValue, searchFilter;
 
 function refreshCars() {
   /* fetch(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => { */
-  state.cars = mockdata;/* response ? response.data : undefined; */
+  cars = mockdata;/* response ? response.data : undefined; */
   /* }); */
   const appContent = document.querySelector('.app-content');
   appContent.innerHTML = '';
-  state.cars.forEach(car => {
-    const element = document.createElement("car-component");
-    element.setAttribute('car', car);
-    element.classList.add('card');
-    appContent.appendChild(element);
+  let previousModel;
+  let carComponent;
+  let variants = [];
+  cars.forEach(car => {
+    if (!previousModel || previousModel !== car.model.name) {
+      if (previousModel && previousModel !== car.model.name) {
+        carComponent.variants = variants; // push property before creating new element
+      }
+      carComponent = document.createElement('car-component');
+      carComponent.classList.add('card');
+      carComponent.setAttribute('brand', car.model.manufacturer.name)
+      carComponent.setAttribute('model', car.model.name);
+      variants = [];
+    }
+    variants.push({
+      variant: car.variant,
+      year: car.startDate ? car.startDate.match(/\d{4}/g)[0] : undefined,
+      ratio: Math.round(car.realWeight / car.power),
+      weight: car.realWeight,
+      power: car.power
+    });
+    appContent.appendChild(carComponent);
+    previousModel = car.model.name;
   });
+  carComponent.variants = variants; // push variants for last element 
 }
 
 function searchCars() {
   const input = document.getElementById('searchFilter');
-  if (input.value !== state.previousFilterValue) {
-    clearTimeout(state.filterInputTimeout);
+  if (input.value !== previousFilterValue) {
+    clearTimeout(filterInputTimeout);
     const timer = setTimeout(() => {
       if (input.value && input.value.trim() !== '') {
-        fetch('api/cars/search/' + input.value).then(response => state.cars = response.data);
+        fetch('api/cars/search/' + input.value).then(response => cars = response.data);
       } else {
         this.getCars();
       }
     }, FILTER_INPUT_TIMEOUT);
-    state.filterInputTimeout = timer;
-    state.previousFilterValue = input.value;
+    filterInputTimeout = timer;
+    previousFilterValue = input.value;
   }
 }
 
 function top10Click(what) {
-  fetch(`api/cars/top/${what}/10`).then(response => state.cars = response.data);
+  fetch(`api/cars/top/${what}/10`).then(response => cars = response.data);
 }
+
+
+const header = document.querySelector('header-component');
+// header. = () => {
+//   console.log('', header.shadowRoot)
+//   const top10Weight = header.shadowRoot.querySelector('.top10-weight');
+//   top10Weight.addEventListener('click', _event => console.log(_event) /* document.querySelector('car-component').setAttribute('model', 'TOTO') */);
+// };
+
+document.addEventListener('DOMContentLoaded', () => refreshCars());
+
 
 
 const mockdata = [{
@@ -124,4 +125,4 @@ const mockdata = [{
 
 
 
-refreshCars();
+
