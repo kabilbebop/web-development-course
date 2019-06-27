@@ -41,6 +41,7 @@ h1 {
 .nav-items {
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .nav-items > * {
@@ -50,34 +51,43 @@ h1 {
 
 .nav-items .menu-top10 {
   /* do not move position when showing details */
-  width: 350px;
+  width: 200px;
 }
 
 .nav-items nav {
-  cursor: pointer;
-  padding: 10px;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
+  cursor: pointer;
+  flex: 1;
+}
+
+.nav-items nav:hover {
+  background-color: var(--element-hover);
 }
 
 .nav-items span {
+  margin-top: 5px;
+  margin-bottom: 5px;
   white-space: nowrap;
 }
 
-nav:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+nav.top10-weight,
+nav.top10-power,
+nav.top10-ratio {
+  justify-content: center;
 }
 
-.icon {
-  padding-right: 5px;
+.nav-items details {
+  margin-left: 15px;
 }
 
 /* Horizontal menu */
-details section {
+
+summary {
   display: flex;
+  align-items: center;
 }
 
-/* Hide arrow */
-details summary::-webkit-details-marker {
-  display: none;
+details section {
+  display: flex;
 }

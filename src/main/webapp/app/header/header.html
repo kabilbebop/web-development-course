@@ -4,15 +4,14 @@
 
         <h1>Weight Cars</h1>
         <nav class="search">
-            <span class="icon">🔍</span><input type="text" class="form-control" id="searchFilter" placeholder="Filter" onKeyUp="filterCars()" />
+            <input type="text" class="form-control" id="searchFilter" placeholder="Search" onKeyUp="filterCars()" />
         </nav>
 
 
         <section class="nav-items">
-            <details>
+            <details onclick="return false">
                 <summary>
                     <nav class="home">
-                        <span class="icon">🏠</span>
                         <span>Home</span>
                     </nav>
                 </summary>
@@ -20,22 +19,18 @@
             <details class="menu-top10">
                 <summary>
                     <nav>
-                        <span class="icon">🏆</span>
                         <span>Top 10</span>
                     </nav>
                 </summary>
 
                 <section>
                     <nav class="top10-weight">
-                        <span class="icon">⏲</span>
                         <span>Weight</span>
                     </nav>
                     <nav class="top10-power">
-                        <span class="icon">🔋</span>
                         <span>Power</span>
                     </nav>
                     <nav class="top10-ratio">
-                        <span class="icon">📝</span>
                         <span>Ratio</span>
                     </nav>
                 </section>
