@@ -8,23 +8,25 @@ function refreshCars(placeholder) {
 
   cars.forEach(brand => {
     brand.models.forEach(model => {
-      const carComponent = document.createElement('car-component');
-      carComponent.classList.add('card');
+      const modelComponent = document.createElement('model-component');
+      modelComponent.classList.add('card');
 
       // we can push brand and model as attribute because they are strings
-      carComponent.setAttribute('brand', brand.name)
-      carComponent.setAttribute('model', model.name);
+      modelComponent.setAttribute('brand', brand.name)
+      modelComponent.setAttribute('model', model.name);
+      modelComponent.setAttribute('image', model.image);
+      modelComponent.setAttribute('imageUrl', model.imageUrl);
 
       // push variants as property because it is an array
-      carComponent.variants = model.variants.map(variant => ({
+      modelComponent.variants = model.variants.map(variant => ({
         variant: variant.name,
         year: variant.startDate ? variant.startDate.match(/\d{4}/g)[0] : undefined,
         ratio: Math.round(variant.realWeight / variant.power),
         weight: variant.realWeight,
-        power: variant.power
+        power: variant.power,
       }));
 
-      placeholder.appendChild(carComponent);
+      placeholder.appendChild(modelComponent);
     });
   });
 }
@@ -80,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "officialWeight": 1145.0,
         "options": "",
         "startDate": "2002-01-01",
-        "imageUrl": null,
-        "image": null,
-
       }, {
         "id": 4030001,
         "name": "A3 2,0 TFSi SPORTBACK",
@@ -91,8 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "officialWeight": 1410.0,
         "options": "",
         "startDate": "2010-01-01",
-        "imageUrl": null,
-        "image": null,
       },
       {
         "id": 4030002,
@@ -102,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "officialWeight": 1315.0,
         "options": "",
         "startDate": "2018-01-01",
-        "imageUrl": null,
-        "image": null,
       }]
     },
     {
@@ -118,8 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
           "officialWeight": 1415.0,
           "options": "",
           "startDate": "2018-01-01",
-          "imageUrl": null,
-          "image": null,
         }
       ]
     }]

@@ -4,7 +4,7 @@ const POWER_MAX = 1000; // max 1000hp, else overflow
 const WEIGHT_MAX = 2500; // max 2500kg, else overflow
 const RATIO_MAX = 1; // max 1kg/hp else overflow
 
-export class CarVariantComponent extends HTMLElement {
+export class CarComponent extends HTMLElement {
 
   static get observedAttributes() {
     return ['variant', 'year', 'power', 'weight', 'ratio'];
@@ -13,7 +13,7 @@ export class CarVariantComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.templatePromise = getTemplate('/app/car/car-variant/car-variant.html').then(template => {
+    this.templatePromise = getTemplate('/app/model/car/car.html').then(template => {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     });
   }
@@ -40,4 +40,4 @@ export class CarVariantComponent extends HTMLElement {
   }
 }
 
-customElements.define('car-variant-component', CarVariantComponent);
+customElements.define('car-component', CarComponent);
