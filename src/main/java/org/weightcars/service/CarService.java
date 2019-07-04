@@ -1,20 +1,17 @@
 package org.weightcars.service;
 
-import org.apache.commons.lang3.StringUtils;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.weightcars.domain.Car;
 import org.weightcars.domain.CarImage;
 import org.weightcars.repository.CarRepository;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * TD7 : manage Car images
@@ -37,13 +34,13 @@ public class CarService {
         LOGGER.info("refreshCarImage for {}", car.toString());
 
         // Get image url
-        String apiUrl = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" + car.getModel().getManufacturer().getName();
-        if (StringUtils.isNotEmpty(car.getModel().getName())) {
-            apiUrl += "+" + car.getModel().getName();
-        }
-        if (StringUtils.isNotEmpty(car.getVariant())) {
-            apiUrl += "+" + car.getVariant();
-        }
+        String apiUrl = "http://www.carimagery.com/api.asmx/GetImageUrl?searchTerm=" /*+ car.getModel().getBrand().getName()*/;
+//        if (StringUtils.isNotEmpty(car.getModel().getName())) {
+//            apiUrl += "+" + car.getModel().getName();
+//        }
+//        if (StringUtils.isNotEmpty(car.getVariant())) {
+//            apiUrl += "+" + car.getVariant();
+//        }
         CarImage response = new RestTemplate().getForObject(apiUrl, CarImage.class);
         car.setImageUrl(response != null ? response.getUrl() : null);
 
@@ -74,7 +71,7 @@ public class CarService {
     /**
      * Batch refresh database images
      */
-    @Scheduled(fixedDelay = 24 * 3600 * 1000) // each days
+    //@Scheduled(fixedDelay = 24 * 3600 * 1000) // each days
     public void refreshAllCarImages() {
         LOGGER.info("refresh all car images");
         carRepository.findAll().forEach(this::refreshCarImage);

@@ -2,32 +2,31 @@ package org.weightcars.domain;
 
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * A Manufacturer.
+ * A Brand.
  */
 @Entity
-@Table(name = "manufacturer")
+@Table(name = "brand")
 public class Brand implements Serializable, Comparable<Brand> {
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "brand_name")
     private String name;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    @Transient // Tells JPA to ignore this field
+    private List<Model> models;
+
     public Long getId() {
         return id;
     }
@@ -40,15 +39,17 @@ public class Brand implements Serializable, Comparable<Brand> {
         return name;
     }
 
-    public Brand name(String name) {
-        this.name = name;
-        return this;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public List<Model> getModels() {
+        return models;
+    }
+
+    public void setModels(List<Model> models) {
+        this.models = models;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -58,11 +59,11 @@ public class Brand implements Serializable, Comparable<Brand> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Brand manufacturer = (Brand) o;
-        if (manufacturer.getId() == null || getId() == null) {
+        Brand brand = (Brand) o;
+        if (brand.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), manufacturer.getId());
+        return Objects.equals(getId(), brand.getId());
     }
 
     @Override
@@ -81,6 +82,6 @@ public class Brand implements Serializable, Comparable<Brand> {
 
     @Override
     public int compareTo(Brand other) {
-        return other == null ? 1 : StringUtils.compareIgnoreCase(this.getName(), other.getName());
+        return other == null ? -1 : StringUtils.compareIgnoreCase(this.getName(), other.getName()); // nulls first
     }
 }

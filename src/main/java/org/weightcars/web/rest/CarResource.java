@@ -2,20 +2,25 @@ package org.weightcars.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.weightcars.domain.Brand;
 import org.weightcars.domain.Car;
+import org.weightcars.domain.Model;
+import org.weightcars.repository.BrandRepository;
 import org.weightcars.repository.CarRepository;
 import org.weightcars.service.CarService;
-import org.weightcars.web.rest.errors.BadRequestAlertException;
-import org.weightcars.web.rest.util.HeaderUtil;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Car.
@@ -26,57 +31,16 @@ public class CarResource {
 
     private final Logger log = LoggerFactory.getLogger(CarResource.class);
 
-    private static final String ENTITY_NAME = "car";
+    private final BrandRepository brandRepository;
 
     private final CarRepository carRepository;
 
     private final CarService carService;
 
-    CarResource(CarRepository carRepository, CarService carService) {
+    CarResource(BrandRepository brandRepository, CarRepository carRepository, CarService carService) {
+        this.brandRepository = brandRepository;
         this.carRepository = carRepository;
         this.carService = carService;
-    }
-
-    /**
-     * POST  /cars : Create a new car.
-     *
-     * @param car the car to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new car, or with status 400 (Bad Request) if the car has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/cars")
-    @Timed
-    public ResponseEntity<Car> createCar(@RequestBody Car car) throws URISyntaxException {
-        log.debug("REST request to save Car : {}", car);
-        if (car.getId() != null) {
-            throw new BadRequestAlertException("A new car cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        Car result = carRepository.save(car);
-        return ResponseEntity.created(new URI("/api/cars/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /cars : Updates an existing car.
-     *
-     * @param car the car to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated car,
-     * or with status 400 (Bad Request) if the car is not valid,
-     * or with status 500 (Internal Server Error) if the car couldn't be updated
-     */
-    @PutMapping("/cars")
-    @Timed
-    public ResponseEntity<Car> updateCar(@RequestBody Car car) {
-        log.debug("REST request to update Car : {}", car);
-        if (car.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-
-        Car result = carRepository.save(car);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, car.getId().toString()))
-            .body(result);
     }
 
     /**
@@ -87,13 +51,13 @@ public class CarResource {
     @GetMapping("/cars")
     @Timed
     public List<Car> getAllCars() {
-        log.debug("REST request to get all Cars");
+        log.debug("REST request to get all Cars grouped by Brands and Models");
         List<Car> cars = carRepository.findAll();
-        cars = cars.stream()
-            .sorted(Comparator.comparing(car -> car.getModel().getName()))
+        return cars.stream()
+            .sorted(Comparator.naturalOrder())
+            .limit(10)
+            .map(carService::refreshCarImage)
             .collect(Collectors.toList());
-        cars.sort(Comparator.naturalOrder());
-        return cars;
     }
 
     /**
@@ -106,28 +70,14 @@ public class CarResource {
     @Timed
     public ResponseEntity<Car> getCar(@PathVariable Long id) {
         log.debug("REST request to get Car : {}", id);
-        Optional<Car> car = carRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(car);
-    }
-
-    /**
-     * DELETE  /cars/:id : delete the "id" car.
-     *
-     * @param id the id of the car to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/cars/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteCar(@PathVariable Long id) {
-        log.debug("REST request to delete Car : {}", id);
-
-        carRepository.deleteById(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        Optional<Car> carOptional = carRepository.findById(id);
+        carOptional.ifPresent(car -> carService.refreshCarImage(car));
+        return ResponseUtil.wrapOrNotFound(carOptional);
     }
 
     /**
      * GET  /cars : search cars from given search string.
-     * @param searchString String that match any car information (variant, option, model, manufacturer)
+     * @param searchString String that match any car information (variant, option, model, brand)
      * @return the ResponseEntity with status 200 (OK) and the list of cars in body
      */
     @GetMapping("/cars/search/{searchString}")
@@ -138,7 +88,7 @@ public class CarResource {
         String like = String.format("%%%s%%", searchString);
 
         // Search cars by manufacture name
-        List<Car> carsByManufacturer = carRepository.findByModel_Manufacturer_nameLikeIgnoreCase(like);
+        List<Car> carsByBrand = carRepository.findByModel_Brand_nameLikeIgnoreCase(like);
 
         // Search cars by model name
         List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(like);
@@ -148,7 +98,7 @@ public class CarResource {
 
         // Add all cars to new result list
         Set<Car> set = new HashSet<>();
-        set.addAll(carsByManufacturer);
+        set.addAll(carsByBrand);
         set.addAll(carsByModel);
         set.addAll(carsByVariantOrOptions);
 
@@ -163,30 +113,34 @@ public class CarResource {
      * GET  /cars : search cars from given search string.
      * @param criteria String that match one of 'weight', 'ratio' or 'power'
      * @param number Max number of cars returned
-     * @return the ResponseEntity with status 200 (OK) and the list of cars in body
+     * @return the ResponseEntity with status 200 (OK) and the list of brands, including models including cars in body
      */
     @GetMapping("/cars/top/{criteria}/{number}")
     @Timed
-    public List<Car> topCars(@PathVariable String criteria, @PathVariable Integer number) {
+    public Set<Brand> topCars(@PathVariable String criteria, @PathVariable Integer number) {
         log.debug("REST request to get {} top cars regarding {}", number, criteria);
 
-        List<Car> result;
+        List<Car> topCars = null;
         switch (criteria) {
             case "weight":
-                result = carRepository.findTop10ByOrderByRealWeightAsc();
+                topCars = carRepository.findTop10ByOrderByRealWeightAsc();
                 break;
             case "power":
-                result = carRepository.findTop10ByOrderByPowerDesc();
+                topCars = carRepository.findTop10ByOrderByPowerDesc();
                 break;
             case "ratio":
-                result = carRepository.findAllOrderByRatio();
+                topCars = carRepository.findAllOrderByRatio();
                 break;
             default:
                 throw new UnsupportedOperationException();
         }
-        return result.stream()
-            .limit(number)
-            .map(carService::refreshCarImage)
-            .collect(Collectors.toList());
+
+        final List<Car> cars = topCars.stream().limit(number).map(carService::refreshCarImage).collect(Collectors.toList());
+        Set<Model> models = cars.stream().map(car -> car.getModel()).collect(Collectors.toSet());
+        Set<Brand> brands = models.stream().map(model -> model.getBrand()).collect(Collectors.toSet());
+        models.forEach(model -> model.setCars(cars.stream().filter(car -> car.getModel().equals(model)).collect(Collectors.toList())));
+        brands.forEach(brand -> brand.setModels(models.stream().filter(model -> model.getBrand().equals(brand)).collect(Collectors.toList())));
+
+        return brands;
     }
 }

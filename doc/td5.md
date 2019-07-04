@@ -2,9 +2,9 @@
 
 ## Exercice 1 : modification d'une colonne de base de données
 
-On va renommer la colonne ```name``` de la table ```manufacturer``` en ```brand_name```. 
+On va renommer la colonne ```name``` de la table ```brand``` en ```brand_name```. 
 
-- dans le fichier ```master.xml```, décommenter la partie ```TD5 changelog``` : un nouveau fichier xml sera lancé au démarrage et renommera la colonne en base de données
+- dans le fichier ```changelog.xml```, décommenter la partie ```TD5 changelog``` : un nouveau fichier xml sera lancé au démarrage et renommera la colonne en base de données
 - redémarrer l'application et essayer d'afficher la page : vous constaterez que rien ne s'affiche
     - trouver le message qui explique la cause de l'erreur (le message doit être explicite)
 
@@ -13,7 +13,7 @@ Hibernate mappe automatiquement le nom des variables sur le nom des colonnes, en
 
 - essayer de renommer l'attribut ```name``` en ```brandName``` dans la classe ```Manufacturer``` (qui est devenue ```Brand``` depuis le TD4)
   - vous pouvez utiliser le menu _Refactor_ du TD4
-- redémarrer l'application et constater que les voitures s'affichent bien, mais pas le ```manufacturer name```
+- redémarrer l'application et constater que les voitures s'affichent bien, mais pas le ```brand name```
     - pourquoi?
 
 On constate qu'il y a déjà pas mal d'impact sur le code, ce n'est pas la solution la plus simple. 

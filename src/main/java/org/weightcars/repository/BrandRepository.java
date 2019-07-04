@@ -6,10 +6,10 @@ import org.weightcars.domain.Brand;
 
 
 /**
- * Spring Data  repository for the Manufacturer entity.
+ * Spring Data  repository for the Brand entity.
  */
 @SuppressWarnings("unused")
 @Repository
-public interface ManufacturerRepository extends JpaRepository<Brand, String> {
+public interface BrandRepository extends JpaRepository<Brand, String> {
 
 }

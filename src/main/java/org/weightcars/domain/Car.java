@@ -1,13 +1,19 @@
 package org.weightcars.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.Objects;
-import javax.persistence.*;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Car.
@@ -47,10 +53,9 @@ public class Car implements Serializable, Comparable<Car> {
     private byte[] image;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JsonIgnoreProperties("")
+    @JsonIgnore
     private Model model;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -137,25 +142,21 @@ public class Car implements Serializable, Comparable<Car> {
         this.startDate = startDate;
     }
 
-    public Model getModel() {
-        return model;
-    }
-
-    public Car model(Model model) {
-        this.model = model;
-        return this;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public Car setModel(Model model) {
+        this.model = model;
+        return this;
     }
 
     /**
@@ -173,8 +174,6 @@ public class Car implements Serializable, Comparable<Car> {
     public void setImage(byte[] image) {
         this.image = image;
     }
-
-// jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -211,15 +210,6 @@ public class Car implements Serializable, Comparable<Car> {
 
     @Override
     public int compareTo(Car other) {
-        int result;
-        if (other == null) {
-            result = -1; // null first
-        } else {
-            result = this.getModel().compareTo(other.getModel());
-            if (result == 0) {
-                result = StringUtils.compareIgnoreCase(this.getVariant(), other.getVariant());
-            }
-        }
-        return result;
+        return other == null ? -1: StringUtils.compareIgnoreCase(this.getVariant(), other.getVariant()); // null first
     }
 }
