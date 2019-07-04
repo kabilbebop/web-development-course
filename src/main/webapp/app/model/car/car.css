@@ -2,9 +2,12 @@
 
 .variant-details {
   margin-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .variant-summary {
+  padding-left: 5px;
+  padding-right: 10px;
   display: flex;
   align-items: center;
 }
@@ -19,6 +22,7 @@
 
 .bars {
   margin-left: 15px;
+  margin-right: 10px;
 }
 
 .bars label {
