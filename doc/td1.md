@@ -1,3 +1,14 @@
+# Initialiser l'application
+
+- aller sur https://start.spring.io/
+- remplir le formulaire [comme ceci](spring-initializr.png)
+- cliquer sur "generate" et dézipper l'archive sur votre PC
+- [ouvrir avec intellij]
+- [ajouter dépendances et base de données, liquibase]
+- 
+- [démarrer l'app]
+
+
 # Explorer et comprendre l’architecture de l’application
 
 
@@ -11,14 +22,16 @@
 - **src/main/java** : le code java de l'application
   - org.weightcars.**domain** : les "domain class" ou "model" ou "entités" sont les objets représentant les tables de la base
   - org.weightcars.**repository** : les "repository" sont des interfaces permettant de faire des requêtes sur les objets métiers
-  - org.weightcars.**web.rest** : les "ressources" ou "controllers" sont les classes qui contiennent les traitements des requêtes HTTP ("API REST" ou "web services REST")
+  - org.weightcars.**controller** : les "ressources" ou "controllers" sont les classes qui contiennent les traitements des requêtes HTTP ("API REST" ou "web services REST")
   - utiliser les raccourcis pour naviguer dans le code :
     - ctrl+click pour descendre dans les appels de méthode
     - clic-droit + "find usages" pour voir où la méthode est appelée
     - ctrl+shift+F pour les recherches globales
+- **src/resources/application.properties** : fichier de configuration principal de Spring
+- **src/resources/db/** : fichier d'initialisation de la bdd (tables + données)
 
-### Le front-end Javascript:
-- **src/webapp/app** : le code javascript de l'application
+### Le front-end web de l'application :
+- **src/resources/public/** : placer le contenu javascript/CSS/HTML dans ce répertoire permet de le rendre accessible par l'url de l'application
 
 #### Exercice 1
 _1) Chercher quelle est l'API appelée par le front-end javascript (à l'aide de la lib axios)_ 

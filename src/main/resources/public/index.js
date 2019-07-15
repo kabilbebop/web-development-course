@@ -1,4 +1,5 @@
 const FILTER_INPUT_TIMEOUT = 500;
+const BASE_URL = 'http://localhost:8745';
 
 let cars, filterInputTimeout, previousFilterValue, searchFilter;
 
@@ -50,7 +51,7 @@ function searchCars() {
 }
 
 function top10Click(what) {
-  fetch(`api/cars/top/${what}/10`).then(response => cars = response.data);
+  fetch(`${BASE_URL}/api/cars/top/${what}/10`).then(response => cars = response.data);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,9 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('menu click!!', menu);
   };
 
-  /* fetch(`api/cars?cacheBuster=${new Date().getTime()}`).then(response => { */
-  cars = mockdata;/* response ? response.data : undefined; */
-  /* }); */
+  fetch(`${BASE_URL}/api/cars`).then(response => {
+    cars = response ? response.data : undefined;
+  });
   const appContent = document.querySelector('.app-content');
   refreshCars(appContent);
 });
