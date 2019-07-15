@@ -1,5 +1,6 @@
 package org.weightcars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Model.
@@ -31,7 +30,9 @@ public class Model implements Serializable, Comparable<Model> {
     @JsonIgnore
     private Brand brand;
 
-    /** List of filtered cars to send back to client  */
+    /**
+     * List of filtered cars to send back to client
+     */
     @Transient  // Tells JPA to ignore this field
     private List<Car> cars;
 
@@ -98,6 +99,8 @@ public class Model implements Serializable, Comparable<Model> {
 
     @Override
     public int compareTo(Model other) {
-        return other == null ? -1 : StringUtils.compareIgnoreCase(this.getName(), other.getName()); // null first
+        // null first
+        return other == null || other.getName() == null ? -1 :
+            other.getName().equalsIgnoreCase(this.getName()) ? 0 : other.getName().compareTo(this.getName());
     }
 }

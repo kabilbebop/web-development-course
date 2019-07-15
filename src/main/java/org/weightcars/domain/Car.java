@@ -1,5 +1,6 @@
 package org.weightcars.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Base64;
@@ -12,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.cloud.cloudfoundry.com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Car.
@@ -161,6 +160,7 @@ public class Car implements Serializable, Comparable<Car> {
 
     /**
      * TD7
+     *
      * @return image as base64 for frontend
      */
     public String getImage() {
@@ -210,6 +210,8 @@ public class Car implements Serializable, Comparable<Car> {
 
     @Override
     public int compareTo(Car other) {
-        return other == null ? -1: StringUtils.compareIgnoreCase(this.getVariant(), other.getVariant()); // null first
+        // null first
+        return other == null || other.getVariant() == null ? -1 :
+            other.getVariant().equalsIgnoreCase(this.getVariant()) ? 0 : other.getVariant().compareTo(this.getVariant());
     }
 }

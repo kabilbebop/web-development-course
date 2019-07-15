@@ -9,16 +9,19 @@
   min-height: 100vh;
   position: relative;
 }
+
 .app-container,
 .overlay {
   width: 100%;
   height: 100%;
 }
+
 .overlay {
   position: absolute;
   top: 0px;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
 header-component,
 .app-content {
   z-index: 1;

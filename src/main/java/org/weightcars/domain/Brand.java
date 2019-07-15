@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * A Brand.
@@ -82,6 +81,8 @@ public class Brand implements Serializable, Comparable<Brand> {
 
     @Override
     public int compareTo(Brand other) {
-        return other == null ? -1 : StringUtils.compareIgnoreCase(this.getName(), other.getName()); // nulls first
+        // null first
+        return other == null || other.getName() == null ? -1 :
+            other.getName().equalsIgnoreCase(this.getName()) ? 0 : other.getName().compareTo(this.getName());
     }
 }

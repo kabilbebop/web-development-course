@@ -1,42 +1,42 @@
 <template>
-    <link rel="stylesheet" href="app/header/header.css">
-    <header class="app-header">
+  <link rel="stylesheet" href="app/header/header.css">
+  <header class="app-header">
 
-        <h1>Weight Cars</h1>
-        <nav class="search">
-            <input type="text" class="form-control" id="searchFilter" placeholder="Search" onKeyUp="filterCars()" />
-        </nav>
+    <h1>Weight Cars</h1>
+    <nav class="search">
+      <input type="text" class="form-control" id="searchFilter" placeholder="Search" onKeyUp="filterCars()"/>
+    </nav>
 
 
-        <section class="nav-items">
-            <details onclick="return false">
-                <summary>
-                    <nav class="home">
-                        <span>Home</span>
-                    </nav>
-                </summary>
-            </details>
-            <details class="menu-top10">
-                <summary>
-                    <nav>
-                        <span>Top 10</span>
-                    </nav>
-                </summary>
+    <section class="nav-items">
+      <details onclick="return false">
+        <summary>
+          <nav class="home">
+            <span>Home</span>
+          </nav>
+        </summary>
+      </details>
+      <details class="menu-top10">
+        <summary>
+          <nav>
+            <span>Top 10</span>
+          </nav>
+        </summary>
 
-                <section>
-                    <nav class="top10-weight">
-                        <span>Weight</span>
-                    </nav>
-                    <nav class="top10-power">
-                        <span>Power</span>
-                    </nav>
-                    <nav class="top10-ratio">
-                        <span>Ratio</span>
-                    </nav>
-                </section>
-            </details>
+        <section>
+          <nav class="top10-weight">
+            <span>Weight</span>
+          </nav>
+          <nav class="top10-power">
+            <span>Power</span>
+          </nav>
+          <nav class="top10-ratio">
+            <span>Ratio</span>
+          </nav>
         </section>
+      </details>
+    </section>
 
-    </header>
+  </header>
 </template>
 <script src="header.js"></script>

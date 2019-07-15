@@ -8,12 +8,15 @@ import java.util.stream.Collectors;
 public class CollectionLoop {
 
     public static class MyObject {
+
         Integer id;
         String name;
+
         MyObject(Integer id, String name) {
             this.id = id;
             this.name = name;
         }
+
         public String toString() {
             return String.format("%s (%d)", name, id);
         }
@@ -36,7 +39,7 @@ public class CollectionLoop {
 
     @Test
     public void testForLoop2() {
-        for (int i = 0; i < myObjects.size() ; i++) {
+        for (int i = 0; i < myObjects.size(); i++) {
             MyObject myObject = myObjects.get(i);
             System.out.println(myObject);
         }
