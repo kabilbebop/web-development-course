@@ -1,4 +1,4 @@
-import getTemplate from '/app/util.js';
+import getTemplate from '/components/util.js';
 
 const POWER_MAX = 1000; // max 1000hp, else overflow
 const WEIGHT_MAX = 2500; // max 2500kg, else overflow
@@ -13,7 +13,7 @@ export class CarComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.templatePromise = getTemplate('/app/model/car/car.html').then(
+    this.templatePromise = getTemplate('/components/model/car/car.html').then(
         template = > {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
   })

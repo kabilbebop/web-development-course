@@ -3,7 +3,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  background-image: url('/static/hangar.jpg');
+  background-image: url('/images/hangar.jpg');
   background-size: cover;
   font-family: 'Gill Sans', sans-serif;
   min-height: 100vh;

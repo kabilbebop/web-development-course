@@ -1,4 +1,4 @@
-import getTemplate from '/app/util.js';
+import getTemplate from '/components/util.js';
 
 export default class HeaderComponent extends HTMLElement {
 
@@ -13,7 +13,7 @@ export default class HeaderComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    getTemplate('/app/header/header.html').then(template = > {
+    getTemplate('/components/header/header.html').then(template = > {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.shadowRoot.querySelector('.top10-weight').addEventListener('click',
         () = > this._onMenuSelect('.top10-weight')

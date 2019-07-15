@@ -1,4 +1,4 @@
-import getTemplate from '/app/util.js';
+import getTemplate from '/components/util.js';
 
 export class ModelComponent extends HTMLElement {
 
@@ -34,7 +34,7 @@ export class ModelComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.templatePromise = getTemplate('/app/model/model.html').then(template =
+    this.templatePromise = getTemplate('/components/model/model.html').then(template =
         > {
           this.shadowRoot.appendChild(template.content.cloneNode(true));
   })
