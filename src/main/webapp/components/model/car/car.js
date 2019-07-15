@@ -13,36 +13,31 @@ export class CarComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({mode: 'open'});
-    this.templatePromise = getTemplate('/components/model/car/car.html').then(
-        template = > {
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
-  })
-    ;
+    this.templatePromise = getTemplate('/components/model/car/car.html').then(template => {
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+    });
   }
 
   attributeChangedCallback(name, _oldValue, newValue) {
-    this.templatePromise.then(() = > {
-      if(newValue !== 'undefined'
-  )
-    {
-      this.shadowRoot.querySelector(`.${name}`).innerText = newValue;
-      if (['power', 'weight', 'ratio'].includes(name)) {
-        let numberValue = +newValue;
-        if (name === 'power') {
-          numberValue = numberValue * 100 / POWER_MAX;
+    this.templatePromise.then(() => {
+      if(newValue !== 'undefined') {
+        this.shadowRoot.querySelector(`.${name}`).innerText = newValue;
+        if (['power', 'weight', 'ratio'].includes(name)) {
+          let numberValue = +newValue;
+          if (name === 'power') {
+            numberValue = numberValue * 100 / POWER_MAX;
+          }
+          if (name === 'weight') {
+            numberValue = numberValue * 100 / WEIGHT_MAX;
+          }
+          if (name === 'power') {
+            numberValue = RATIO_MAX * 100 / numberValue;
+          }
+          this.shadowRoot.querySelector(
+              `.bar-${name}`).style.width = `${numberValue}%`;
         }
-        if (name === 'weight') {
-          numberValue = numberValue * 100 / WEIGHT_MAX;
-        }
-        if (name === 'power') {
-          numberValue = RATIO_MAX * 100 / numberValue;
-        }
-        this.shadowRoot.querySelector(
-            `.bar-${name}`).style.width = `${numberValue}%`;
       }
-    }
-  })
-    ;
+    });
   }
 }
 
