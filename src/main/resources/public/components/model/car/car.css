@@ -1,7 +1,6 @@
 @import '/theme.css';
 
 .variant-details {
-  margin-bottom: 15px;
   padding-bottom: 10px;
 }
 
@@ -10,6 +9,12 @@
   padding-right: 10px;
   display: flex;
   align-items: center;
+}
+
+.variant-summary h4 {
+  font-weight: normal;
+  margin-top: 8px;
+  margin-bottom: 5px;
 }
 
 .variant {

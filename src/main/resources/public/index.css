@@ -31,6 +31,7 @@ header-component,
   flex-wrap: wrap;
   width: 90%;
   height: 90%;
+  align-items: stretch;
 }
 
 menu-component {
@@ -45,4 +46,5 @@ menu-component {
   display: flex;
   width: 350px;
   flex-direction: column;
+  min-height: 100%;
 }

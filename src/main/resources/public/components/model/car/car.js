@@ -30,7 +30,7 @@ export class CarComponent extends HTMLElement {
           if (name === 'weight') {
             numberValue = numberValue * 100 / WEIGHT_MAX;
           }
-          if (name === 'power') {
+          if (name === 'ratio') {
             numberValue = RATIO_MAX * 100 / numberValue;
           }
           this.shadowRoot.querySelector(

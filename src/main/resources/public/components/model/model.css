@@ -1,7 +1,7 @@
 @import '/theme.css';
 
-h4 {
-  font-weight: bold;
+h3 {
+  font-weight: normal;
 }
 
 img {
@@ -10,4 +10,5 @@ img {
   border-color: var(--text-medium);
   border-style: solid;
   box-sizing: border-box;
+  width: 100%;
 }

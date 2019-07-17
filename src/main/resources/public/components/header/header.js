@@ -15,10 +15,9 @@ export default class HeaderComponent extends HTMLElement {
     this.attachShadow({mode: 'open'});
     getTemplate('/components/header/header.html').then(template => {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
-    this.shadowRoot.querySelector('.top10-weight').addEventListener('click',
-        () => this._onMenuSelect('.top10-weight'));
-    this.shadowRoot.querySelector('.top10-power').addEventListener('click', () => this._onMenuSelect('.top10-power'));
-    this.shadowRoot.querySelector('.top10-ratio').addEventListener('click', () => this._onMenuSelect('.top10-ratio'));
+    this.shadowRoot.querySelector('.top10-weight').addEventListener('click',() => this._onMenuSelect('weight'));
+    this.shadowRoot.querySelector('.top10-power').addEventListener('click', () => this._onMenuSelect('power'));
+    this.shadowRoot.querySelector('.top10-ratio').addEventListener('click', () => this._onMenuSelect('ratio'));
   })
     ;
 

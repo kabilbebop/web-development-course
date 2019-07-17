@@ -29,16 +29,13 @@ import org.weightcars.service.CarService;
 @CrossOrigin
 public class CarController {
 
-    private final Logger log = LoggerFactory.getLogger(CarController.class);
-
-    private final BrandRepository brandRepository;
+    private final static Logger LOGGER = LoggerFactory.getLogger(CarController.class);
 
     private final CarRepository carRepository;
 
     private final CarService carService;
 
-    CarController(BrandRepository brandRepository, CarRepository carRepository, CarService carService) {
-        this.brandRepository = brandRepository;
+    CarController(CarRepository carRepository, CarService carService) {
         this.carRepository = carRepository;
         this.carService = carService;
     }
@@ -49,14 +46,14 @@ public class CarController {
      * @return the ResponseEntity with status 200 (OK) and the list of cars in body
      */
     @GetMapping("/cars")
-    public List<Car> getAllCars() {
-        log.debug("REST request to get all Cars grouped by Brands and Models");
-        List<Car> cars = carRepository.findAll();
-        return cars.stream()
+    public Set<Brand> getAllCars() {
+        LOGGER.debug("REST request to get all Cars grouped by Brands and Models");
+        List<Car> cars = carRepository.findAll().stream()
             .sorted(Comparator.naturalOrder())
             .limit(10)
             .map(carService::refreshCarImage)
             .collect(Collectors.toList());
+        return carsToBrands(cars);
     }
 
     /**
@@ -67,7 +64,7 @@ public class CarController {
      */
     @GetMapping("/cars/{id}")
     public ResponseEntity<Car> getCar(@PathVariable Long id) {
-        log.debug("REST request to get Car : {}", id);
+        LOGGER.debug("REST request to get Car : {}", id);
         Optional<Car> carOptional = carRepository.findById(id);
         if (carOptional.isPresent()) {
             carService.refreshCarImage(carOptional.get());
@@ -85,7 +82,7 @@ public class CarController {
      */
     @GetMapping("/cars/search/{searchString}")
     public List<Car> searchCarsByString(@PathVariable String searchString) {
-        log.debug("REST request to get Cars from given string {}", searchString);
+        LOGGER.debug("REST request to get Cars from given string {}", searchString);
 
         String like = String.format("%%%s%%", searchString);
 
@@ -120,7 +117,7 @@ public class CarController {
      */
     @GetMapping("/cars/top/{criteria}/{number}")
     public Set<Brand> topCars(@PathVariable String criteria, @PathVariable Integer number) {
-        log.debug("REST request to get {} top cars regarding {}", number, criteria);
+        LOGGER.debug("REST request to get {} top cars regarding {}", number, criteria);
 
         List<Car> topCars = null;
         switch (criteria) {
@@ -138,11 +135,16 @@ public class CarController {
         }
 
         final List<Car> cars = topCars.stream().limit(number).map(carService::refreshCarImage).collect(Collectors.toList());
-        Set<Model> models = cars.stream().map(car -> car.getModel()).collect(Collectors.toSet());
-        Set<Brand> brands = models.stream().map(model -> model.getBrand()).collect(Collectors.toSet());
-        models.forEach(model -> model.setCars(cars.stream().filter(car -> car.getModel().equals(model)).collect(Collectors.toList())));
-        brands.forEach(brand -> brand.setModels(models.stream().filter(model -> model.getBrand().equals(brand)).collect(Collectors.toList())));
 
-        return brands;
+        return carsToBrands(cars);
+    }
+
+    private Set<Brand> carsToBrands(List<Car> cars) {
+      Set<Model> models = cars.stream().map(car -> car.getModel()).collect(Collectors.toSet());
+      Set<Brand> brands = models.stream().map(model -> model.getBrand()).collect(Collectors.toSet());
+      models.forEach(model -> model.setCars(cars.stream().filter(car -> car.getModel().equals(model)).collect(Collectors.toList())));
+      brands.forEach(brand -> brand.setModels(models.stream().filter(model -> model.getBrand().equals(brand)).collect(Collectors.toList())));
+
+      return brands;
     }
 }

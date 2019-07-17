@@ -3,25 +3,25 @@ import getTemplate from '/components/util.js';
 export class ModelComponent extends HTMLElement {
 
   static get observedAttributes() {
-    return ['brand', 'model', 'image', 'imageUrl'];
+    return ['brand', 'model', 'image', 'image-link'];
   }
 
-  get variants() {
-    return this._variants;
+  get cars() {
+    return this._cars;
   }
 
-  set variants(value) {
-    this._variants = value;
+  set cars(value) {
+    this._cars = value;
     this.templatePromise.then(() => {
-      this._variants.forEach(variant => {
+      this._cars.forEach(car => {
 
         // object variant to insert as child element
         const carVariantComponent = document.createElement('car-component');
-        carVariantComponent.setAttribute('variant', variant.variant);
-        carVariantComponent.setAttribute('year', variant.year);
-        carVariantComponent.setAttribute('ratio', variant.ratio);
-        carVariantComponent.setAttribute('weight', variant.weight);
-        carVariantComponent.setAttribute('power', variant.power);
+        carVariantComponent.setAttribute('variant', `${this.getAttribute('model')} ${car.variant}`);
+        carVariantComponent.setAttribute('year', car.year);
+        carVariantComponent.setAttribute('ratio', car.ratio);
+        carVariantComponent.setAttribute('weight', car.weight);
+        carVariantComponent.setAttribute('power', car.power);
         this.shadowRoot.querySelector('.variant-placeholder').appendChild(
             carVariantComponent);
 
@@ -35,20 +35,29 @@ export class ModelComponent extends HTMLElement {
     this.templatePromise = getTemplate('/components/model/model.html').then(template => {
       this.shadowRoot.appendChild(template.content.cloneNode(true));
     });
-    this._variants = [];
+    this._cars = [];
   }
 
   attributeChangedCallback(name, _oldValue, newValue) {
     this.templatePromise.then(() => {
-      if(newValue !== 'undefined') {
-        this.shadowRoot.querySelector(`.${name}`).innerText = newValue;
-        if (name === 'image' && newValue) {
-          const img = this.shadowRoot.querySelector('img');
-          img.src = 'data:image/png;base64, ' + newValue;
-        }
-        if (name === 'imageUrl' && newValue) {
-          const imageLink = this.shadowRoot.querySelector('image-link');
-          imageLink.href = newValue;
+      if(name && name != '' && newValue && newValue !== 'undefined') {
+        switch (name) {
+
+          case 'image':
+          //   const img = this.shadowRoot.querySelector('img');
+          //   img.src = 'data:image/png;base64, ' + newValue;
+            break;
+
+          case 'image-link':
+            const imageLink = this.shadowRoot.querySelector(`.${name}`);
+            imageLink.href = newValue;
+            const img = this.shadowRoot.querySelector('img');
+            img.src = newValue;
+            break;
+        
+          default:
+            this.shadowRoot.querySelector(`.${name}`).innerText = newValue;
+            break;
         }
       }
     });

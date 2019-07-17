@@ -1,9 +1,11 @@
 const FILTER_INPUT_TIMEOUT = 500;
 const BASE_URL = 'http://localhost:8745';
 
-let cars, filterInputTimeout, previousFilterValue, searchFilter;
+let filterInputTimeout, previousFilterValue, searchFilter;
 
-function refreshCars(placeholder) {
+function renderCars(cars) {
+
+  const placeholder = document.querySelector('.app-content');
 
   placeholder.innerHTML = '';
 
@@ -15,16 +17,16 @@ function refreshCars(placeholder) {
       // we can push brand and model as attribute because they are strings
       modelComponent.setAttribute('brand', brand.name)
       modelComponent.setAttribute('model', model.name);
-      modelComponent.setAttribute('image', model.image);
-      modelComponent.setAttribute('imageUrl', model.imageUrl);
+      modelComponent.setAttribute('image', model.cars[0].image);
+      modelComponent.setAttribute('image-link', model.cars[0].imageUrl);
 
       // push variants as property because it is an array
-      modelComponent.variants = model.variants.map(variant => ({
-        variant: variant.name,
-        year: variant.startDate ? variant.startDate.match(/\d{4}/g)[0] : undefined,
-        ratio: Math.round(variant.realWeight / variant.power),
-        weight: variant.realWeight,
-        power: variant.power,
+      modelComponent.cars = model.cars.map(car => ({
+        variant: car.variant,
+        year: car.startDate ? car.startDate.match(/\d{4}/g)[0] : undefined,
+        ratio: Math.round(car.realWeight * 10 / car.power) / 10,
+        weight: car.realWeight,
+        power: car.power,
       }));
 
       placeholder.appendChild(modelComponent);
@@ -38,7 +40,7 @@ function searchCars() {
     clearTimeout(filterInputTimeout);
     const timer = setTimeout(() => {
       if (input.value && input.value.trim() !== '') {
-        fetch('api/cars/search/' + input.value).then(response => cars = response.data);
+        fetch('api/cars/search/' + input.value).then(response => response.json()).then(data => renderCars(data));
       } else {
         this.getCars();
       }
@@ -51,7 +53,7 @@ function searchCars() {
 }
 
 function top10Click(what) {
-  fetch(`${BASE_URL}/api/cars/top/${what}/10`).then(response => cars = response.data);
+  fetch(`${BASE_URL}/api/cars/top/${what}/10`).then(response => response.json()).then(data => renderCars(data));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,14 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Header events binding
   const header = document.querySelector('header-component');
   header.onMenuSelect = menu => {
-    console.log('menu click!!', menu);
+    top10Click(menu);
   };
 
-  fetch(`${BASE_URL}/api/cars`).then(response => {
-    cars = response ? response.data : undefined;
-  });
-  const appContent = document.querySelector('.app-content');
-  refreshCars(appContent);
+  fetch(`${BASE_URL}/api/cars`).then(response => response.json()).then(data => renderCars(data));
 });
 
 const mockdata = [{
