@@ -1,14 +1,9 @@
 package org.weightcars.controller;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.weightcars.domain.Brand;
 import org.weightcars.domain.Car;
 import org.weightcars.domain.Model;
-import org.weightcars.repository.BrandRepository;
 import org.weightcars.repository.CarRepository;
 import org.weightcars.service.CarService;
 
@@ -29,6 +23,7 @@ import org.weightcars.service.CarService;
 @CrossOrigin
 public class CarController {
 
+    public static final int MAX_RESULT = 10;
     private final static Logger LOGGER = LoggerFactory.getLogger(CarController.class);
 
     private final CarRepository carRepository;
@@ -50,28 +45,10 @@ public class CarController {
         LOGGER.debug("REST request to get all Cars grouped by Brands and Models");
         List<Car> cars = carRepository.findAll().stream()
             .sorted(Comparator.naturalOrder())
-            .limit(10)
+            .limit(MAX_RESULT)
             .map(carService::refreshCarImage)
             .collect(Collectors.toList());
-        return carsToBrands(cars);
-    }
-
-    /**
-     * GET  /cars/:id : get the "id" car.
-     *
-     * @param id the id of the car to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the car, or with status 404 (Not Found)
-     */
-    @GetMapping("/cars/{id}")
-    public ResponseEntity<Car> getCar(@PathVariable Long id) {
-        LOGGER.debug("REST request to get Car : {}", id);
-        Optional<Car> carOptional = carRepository.findById(id);
-        if (carOptional.isPresent()) {
-            carService.refreshCarImage(carOptional.get());
-            return ResponseEntity.ok(carOptional.get());
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        return carsGroupByBrandModel(cars);
     }
 
     /**
@@ -81,7 +58,7 @@ public class CarController {
      * @return the ResponseEntity with status 200 (OK) and the list of cars in body
      */
     @GetMapping("/cars/search/{searchString}")
-    public List<Car> searchCarsByString(@PathVariable String searchString) {
+    public Set<Brand> searchCarsByString(@PathVariable String searchString) {
         LOGGER.debug("REST request to get Cars from given string {}", searchString);
 
         String like = String.format("%%%s%%", searchString);
@@ -96,16 +73,16 @@ public class CarController {
         List<Car> carsByVariantOrOptions = carRepository.findByVariantLikeIgnoreCaseOrOptionsLikeIgnoreCase(like, like);
 
         // Add all cars to new result list
-        Set<Car> set = new HashSet<>();
-        set.addAll(carsByBrand);
-        set.addAll(carsByModel);
-        set.addAll(carsByVariantOrOptions);
-
-        return set.stream()
-            .sorted(Comparator.naturalOrder())
-            .limit(10)
-            .map(carService::refreshCarImage)
-            .collect(Collectors.toList());
+        Set<Car> cars = new HashSet<>();
+        cars.addAll(carsByBrand);
+        cars.addAll(carsByModel);
+        cars.addAll(carsByVariantOrOptions);
+        final List<Car> filteredCars = cars.stream()
+                .sorted(Comparator.naturalOrder())
+                .limit(MAX_RESULT)
+                .map(carService::refreshCarImage)
+                .collect(Collectors.toList());
+        return carsGroupByBrandModel(filteredCars);
     }
 
     /**
@@ -136,10 +113,10 @@ public class CarController {
 
         final List<Car> cars = topCars.stream().limit(number).map(carService::refreshCarImage).collect(Collectors.toList());
 
-        return carsToBrands(cars);
+        return carsGroupByBrandModel(cars);
     }
 
-    private Set<Brand> carsToBrands(List<Car> cars) {
+    private Set<Brand> carsGroupByBrandModel(List<Car> cars) {
       Set<Model> models = cars.stream().map(car -> car.getModel()).collect(Collectors.toSet());
       Set<Brand> brands = models.stream().map(model -> model.getBrand()).collect(Collectors.toSet());
       models.forEach(model -> model.setCars(cars.stream().filter(car -> car.getModel().equals(model)).collect(Collectors.toList())));

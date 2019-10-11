@@ -67,7 +67,7 @@ h1 {
 
 .nav-items nav {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   cursor: pointer;
   flex: 1;
 }
