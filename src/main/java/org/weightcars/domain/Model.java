@@ -1,11 +1,17 @@
 package org.weightcars.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.*;
-
-import org.apache.commons.lang3.StringUtils;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * A Model.
@@ -14,20 +20,22 @@ import org.apache.commons.lang3.StringUtils;
 @Table(name = "model")
 public class Model implements Serializable, Comparable<Model> {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JsonIgnoreProperties("")
-    private Brand manufacturer;
+    @JsonIgnore
+    private Brand brand;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    /**
+     * List of filtered cars to send back to client
+     */
+    @Transient  // Tells JPA to ignore this field
+    private List<Car> cars;
+
     public Long getId() {
         return id;
     }
@@ -40,28 +48,26 @@ public class Model implements Serializable, Comparable<Model> {
         return name;
     }
 
-    public Model name(String name) {
-        this.name = name;
-        return this;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public Brand getManufacturer() {
-        return manufacturer;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public Model manufacturer(Brand manufacturer) {
-        this.manufacturer = manufacturer;
+    public Model setBrand(Brand brand) {
+        this.brand = brand;
         return this;
     }
 
-    public void setManufacturer(Brand manufacturer) {
-        this.manufacturer = manufacturer;
+    public List<Car> getCars() {
+        return cars;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -93,15 +99,8 @@ public class Model implements Serializable, Comparable<Model> {
 
     @Override
     public int compareTo(Model other) {
-        int result;
-        if (other == null) {
-            result = -1; // null first
-        } else {
-            result = this.getManufacturer().compareTo(other.getManufacturer());
-            if (result == 0) {
-                result = StringUtils.compareIgnoreCase(this.getName(), other.getName());
-            }
-        }
-        return result;
+        // null first
+        return other == null || other.getName() == null ? -1 :
+            other.getName().equalsIgnoreCase(this.getName()) ? 0 : other.getName().compareTo(this.getName());
     }
 }

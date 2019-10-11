@@ -1,9 +1,0 @@
----
-applications:
-- name: weight-cars
-  random-route: true
-  memory: 1G
-  path: build/libs/weight-cars-1.0.jar
-  env:
-    SPRING_PROFILES_ACTIVE: cloud
-    JBP_CONFIG_JMX: '{enabled: true}'

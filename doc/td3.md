@@ -65,7 +65,7 @@
 
 1. Observez la configuration des logs :
    * dans le fichier ```Loggers.java``` : déclaration de l'attribut ```logger```.
-   * dans le fichier ```application.yml``` du répertoire ```/src/test/resources/config``` : la partie ```logging``` à la fin. 
+   * dans le fichier ```application.properties``` du répertoire ```/src/main/resources/config``` : la partie ```logging``` à la fin. 
 2. Exécutez la méthode ```testLogForLoop``` :
    * observez la sortie standard dans la console
 

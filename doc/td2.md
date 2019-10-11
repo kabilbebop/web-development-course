@@ -10,7 +10,7 @@ Essayer de vous connecter à ce fichier avec le client JDBC intégré à l'appli
 _Exercice_ : 
 1. combien de voitures sont chargées dans l'application?
 2. de quel fichier proviennent ces données?
-3. comment sont créer les tables manufacturer, model et car?
+3. comment sont créer les tables brand, model et car?
  
 
 ## Debbugger Chrome
@@ -44,6 +44,6 @@ Swagger permet d'intégrer à l'application un outil de test d'API :
 [http://localhost:8745/swagger-ui/index.html](http://localhost:8745/swagger-ui/index.html)
 
 - Effectuer une requête GET sur l'url "cars" appelée au chargement de la page dans l'onglet réseau
-- Déplier les opérations sur la ressource "Manufacturer"
-- Poster un nouvel objet Manufacturer au format JSON pour le créer en base
+- Déplier les opérations sur la ressource "Brand"
+- Poster un nouvel objet Brand au format JSON pour le créer en base
 - Vérifier qu'une nouvelle ligne a bien été créée en base avec H2 Console
