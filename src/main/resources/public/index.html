@@ -2,29 +2,154 @@
 <html class="no-js" lang="en" dir="ltr">
 
 <head>
-  <base href="./"/>
+  <base href="./" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Sport Cars</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-  <link rel="shortcut icon" href="favicon.png"/>
-  <link rel="manifest" href="manifest.webapp"/>
+  <link rel="shortcut icon" href="favicon.png" />
   <link rel="stylesheet" href="index.css">
   <script type="module" src="index.js"></script>
-  <script type="module" src="components/header/header.js"></script>
-  <script type="module" src="components/model/model.js"></script>
-  <script type="module" src="components/model/car/car.js"></script>
+
 </head>
 
 <body style="margin: 0px">
 
-  <div class="loading"></div>
-
   <section class="app-container">
-    <header-component></header-component>
-    <section class="app-content"></section>
+
+    <header class="app-header">
+
+      <h1>Sports Cars</h1>
+      <nav class="search">
+        <input type="text" class="form-control search-filter" placeholder="Search" />
+      </nav>
+
+      <section class="nav-items">
+
+        <nav class="home">
+          <span>⌂ Home</span>
+        </nav>
+
+        <details class="menu-top10">
+          <summary>
+            <nav>
+              <span>Top 10</span>
+            </nav>
+          </summary>
+
+          <section>
+            <nav class="top10-weight">
+              <span>Weight</span>
+            </nav>
+            <nav class="top10-power">
+              <span>Power</span>
+            </nav>
+            <nav class="top10-ratio">
+              <span>Ratio</span>
+            </nav>
+          </section>
+        </details>
+      </section>
+
+    </header>
+
+
+    <section class="app-content">
+
+      <article class="model-content">
+        
+        <h3><span class="brand"></span>&nbsp;<span class="model"></span></h3>
+        <a class="image-link">
+          <img class="image" />
+        </a>
+
+        <section class="car-content">
+          <details class="car-details">
+            <summary class="car-summary">
+              <span class="car"></span>&nbsp;-&nbsp;<span class="year"></span>
+            </summary>
+            <section class="bars">
+              <div class="bar-title"><label>Weight</label><span><span class="weight"></span>kg</span></div>
+              <div class="bar bar-weight"></div>
+              <div class="bar-title"><label>Power</label><span><span class="power"></span>hp</span></div>
+              <div class="bar bar-power"></div>
+              <div class="bar-title"><label>Ratio</label><span><span class="ratio"></span>kg/hp</span></div>
+              <div class="bar bar-ratio"></div>
+            </section>
+          </details>
+        </section>
+      
+      </article>
+      
+      <article class="model-content">
+        
+          <h3><span class="brand"></span>&nbsp;<span class="model"></span></h3>
+          <a class="image-link">
+            <img class="image" />
+          </a>
+  
+          <section class="car-content">
+            <details class="car-details">
+              <summary class="car-summary">
+                <span class="car"></span>&nbsp;-&nbsp;<span class="year"></span>
+              </summary>
+              <section class="bars">
+                <div class="bar-title"><label>Weight</label><span><span class="weight"></span>kg</span></div>
+                <div class="bar bar-weight"></div>
+                <div class="bar-title"><label>Power</label><span><span class="power"></span>hp</span></div>
+                <div class="bar bar-power"></div>
+                <div class="bar-title"><label>Ratio</label><span><span class="ratio"></span>kg/hp</span></div>
+                <div class="bar bar-ratio"></div>
+              </section>
+            </details>
+          </section>
+        
+        </article>
+
+      <article class="model-content">
+      
+        <h3><span class="brand"></span>&nbsp;<span class="model"></span></h3>
+        <a class="image-link">
+          <img class="image" />
+        </a>
+
+        <section class="car-content">
+          <details class="car-details">
+            <summary class="car-summary">
+              <span class="car"></span>&nbsp;-&nbsp;<span class="year"></span>
+            </summary>
+            <section class="bars">
+              <div class="bar-title"><label>Weight</label><span><span class="weight"></span>kg</span></div>
+              <div class="bar bar-weight"></div>
+              <div class="bar-title"><label>Power</label><span><span class="power"></span>hp</span></div>
+              <div class="bar bar-power"></div>
+              <div class="bar-title"><label>Ratio</label><span><span class="ratio"></span>kg/hp</span></div>
+              <div class="bar bar-ratio"></div>
+            </section>
+          </details>
+        </section>
+
+        <section class="car-content">
+            <details class="car-details">
+              <summary class="car-summary">
+                <span class="car"></span>&nbsp;-&nbsp;<span class="year"></span>
+              </summary>
+              <section class="bars">
+                <div class="bar-title"><label>Weight</label><span><span class="weight"></span>kg</span></div>
+                <div class="bar bar-weight"></div>
+                <div class="bar-title"><label>Power</label><span><span class="power"></span>hp</span></div>
+                <div class="bar bar-power"></div>
+                <div class="bar-title"><label>Ratio</label><span><span class="ratio"></span>kg/hp</span></div>
+                <div class="bar bar-ratio"></div>
+              </section>
+            </details>
+          </section>
+
+      </article>
+
+    </section>
     <div class="overlay"></div>
   </section>
 
