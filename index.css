@@ -52,7 +52,6 @@ details[open] {
   flex-wrap: wrap;
   width: 90%;
   height: 90%;
-  align-items: stretch;
 }
 
 .nav-items {
@@ -67,7 +66,6 @@ details[open] {
   display: flex;
   width: 350px;
   flex-direction: column;
-  min-height: 100%;
 }
 
 
