@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  header._onSearchChange = val => {
+  header.onSearchChange = val => {
     searchCars(val);
   };
 
