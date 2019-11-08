@@ -1,82 +1,16 @@
-
-const POWER_MAX = 1000; // max 1000hp, else overflow
-const WEIGHT_MAX = 2500; // max 2500kg, else overflow
-const RATIO_MAX = 1; // max 1kg/hp else overflow
-
-const data = [{
-  "id": 160,
-  "name": "FORD",
-  "models": [
-    {
-      "id": 1601400,
-      "name": "MUSTANG",
-      "cars": [
-        {
-          "id": 16014004,
-          "name": "SHELBY GT500",
-          "power": 547.0,
-          "weight": 1789.0,
-          "startDate": "2011-01-01",
-          "imageUrl": "http://www.regcheck.org.uk/image.aspx/@Zm9yZCBtdXN0YW5n"
-        }
-      ]
-    }
-  ]
-},
-{
-  "id": 40,
-  "name": "AUDI",
-  "models": [
-    {
-      "id": 402000,
-      "name": "R8",
-      "cars": [
-        {
-          "id": 40200016,
-          "name": "V8 S-STRONIC",
-          "power": 430.0,
-          "weight": 1666.0,
-          "startDate": "2008-01-01",
-          "imageUrl": "http://www.regcheck.org.uk/image.aspx/@QVVESSBSOCBWOCBSLVRST05JQw=="
-        }
-      ]
-    },
-    {
-      "id": 401700,
-      "name": "RS4",
-      "cars": [
-        {
-          "id": 4017005,
-          "name": "AVANT",
-          "power": 420.0,
-          "weight": 1728.0,
-          "startDate": "2006-01-01",
-          "imageUrl": "http://www.regcheck.org.uk/image.aspx/@YXVkaSByczQgYjc="
-        },
-        {
-          "id": 4017006,
-          "name": "AVANT",
-          "power": 450.0,
-          "weight": 1867.0,
-          "startDate": "2013-01-01",
-          "imageUrl": "http://www.regcheck.org.uk/image.aspx/@YXVkaSByczQ="
-        }
-      ]
-    }
-  ]
-}];
+const BASE_URL = 'https://sport-cars.cfapps.io/';
 
 let loading, searchFilter;
 
-document.addEventListener('DOMContentLoaded', () => {
 
+function renderCars(data) {
 
   const modelContent = document.querySelector('.model-content');
+  modelContent.innerHTML = '';
   let i = 0;
 
   data.forEach(brand => {
-
-    brand.models.forEach(model => {
+      brand.models.forEach(model => {
       const modelComponent = document.createElement('model-component');
       modelComponent.classList.add('card');
 
@@ -97,6 +31,50 @@ document.addEventListener('DOMContentLoaded', () => {
       modelContent.appendChild(modelComponent);
     });
   });
+}
+
+
+function searchCars(value) {
+
+  const url = `${BASE_URL}/api/cars${value && value.trim() !== '' ? '/search/' + value : ''}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      renderCars(data);
+    });
+}
+
+function top10Click(what) {
+
+  fetch(`${BASE_URL}/api/cars/top/${what}/10`)
+    .then(response => response.json())
+    .then(data => {
+      renderCars(data);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Events binding
+  const header = document.querySelector('header-component');
+  header.onMenuSelect = menu => {
+    if (menu === 'home') {
+      searchCars();
+    } else {
+      top10Click(menu);
+    }
+  };
+
+  header.onSearchChange = val => {
+    searchCars(val);
+  };
+
+  // Initialize data
+  fetch(`${BASE_URL}/api/cars`)
+    .then(response => response.json())
+    .then(data => {
+      renderCars(data);
+    });
 
 });
 
