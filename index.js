@@ -66,8 +66,6 @@ const data = [{
   ]
 }];
 
-let loading, searchFilter;
-
 document.addEventListener('DOMContentLoaded', () => {
 
 
