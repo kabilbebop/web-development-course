@@ -1,8 +1,5 @@
 const BASE_URL = 'https://sport-cars.cfapps.io/';
 
-let loading, searchFilter;
-
-
 function renderCars(data) {
 
   const modelContent = document.querySelector('.model-content');
