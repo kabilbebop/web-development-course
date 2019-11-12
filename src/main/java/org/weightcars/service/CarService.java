@@ -41,8 +41,8 @@ public class CarService {
             if (car.getModel().getName() != null && !car.getModel().getName().isEmpty()) {
                 searchTerms += " " + car.getModel().getName();
             }
-            if (car.getVariant() != null && !car.getVariant().isEmpty()) {
-                searchTerms += " " + car.getVariant();
+            if (car.getName() != null && !car.getName().isEmpty()) {
+                searchTerms += " " + car.getName();
             }
             try {
                 searchTerms = URLEncoder.encode(searchTerms, "UTF-8");

@@ -28,16 +28,13 @@ public class Car implements Serializable, Comparable<Car> {
     private Long id;
 
     @Column(name = "variant")
-    private String variant;
+    private String name;
 
     @Column(name = "power")
     private Double power;
 
     @Column(name = "real_weight")
-    private Double realWeight;
-
-    @Column(name = "official_weight")
-    private Double officialWeight;
+    private Double weight;
 
     @Column(name = "options")
     private String options;
@@ -63,17 +60,17 @@ public class Car implements Serializable, Comparable<Car> {
         this.id = id;
     }
 
-    public String getVariant() {
-        return variant;
+    public String getName() {
+        return name;
     }
 
     public Car variant(String variant) {
-        this.variant = variant;
+        this.name = variant;
         return this;
     }
 
-    public void setVariant(String variant) {
-        this.variant = variant;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getPower() {
@@ -89,30 +86,12 @@ public class Car implements Serializable, Comparable<Car> {
         this.power = power;
     }
 
-    public Double getRealWeight() {
-        return realWeight;
+    public Double getWeight() {
+        return weight;
     }
 
-    public Car realWeight(Double realWeight) {
-        this.realWeight = realWeight;
-        return this;
-    }
-
-    public void setRealWeight(Double realWeight) {
-        this.realWeight = realWeight;
-    }
-
-    public Double getOfficialWeight() {
-        return officialWeight;
-    }
-
-    public Car officialWeight(Double officialWeight) {
-        this.officialWeight = officialWeight;
-        return this;
-    }
-
-    public void setOfficialWeight(Double officialWeight) {
-        this.officialWeight = officialWeight;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
     public String getOptions() {
@@ -199,10 +178,9 @@ public class Car implements Serializable, Comparable<Car> {
     public String toString() {
         return "Car{" +
             "id=" + getId() +
-            ", variant='" + getVariant() + "'" +
+            ", variant='" + getName() + "'" +
             ", power=" + getPower() +
-            ", realWeight=" + getRealWeight() +
-            ", officialWeight=" + getOfficialWeight() +
+            ", weight=" + getWeight() +
             ", options='" + getOptions() + "'" +
             ", startDate='" + getStartDate() + "'" +
             "}";
@@ -211,7 +189,7 @@ public class Car implements Serializable, Comparable<Car> {
     @Override
     public int compareTo(Car other) {
         // null first
-        return other == null || other.getVariant() == null ? -1 :
-            other.getVariant().equalsIgnoreCase(this.getVariant()) ? 0 : other.getVariant().compareTo(this.getVariant());
+        return other == null || other.getName() == null ? -1 :
+            other.getName().equalsIgnoreCase(this.getName()) ? 0 : other.getName().compareTo(this.getName());
     }
 }

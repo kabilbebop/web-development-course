@@ -18,12 +18,12 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     List<Car> findByModel_nameLikeIgnoreCase(String name);
 
-    List<Car> findByVariantLikeIgnoreCaseOrOptionsLikeIgnoreCase(String variant, String options);
+    List<Car> findByNameLikeIgnoreCase(String name);
 
     List<Car> findTop10ByOrderByPowerDesc();
 
-    List<Car> findTop10ByOrderByRealWeightAsc();
+    List<Car> findTop10ByOrderByWeightAsc();
 
-    @Query("from Car where realWeight is not null and realWeight <> 0 and power is not null and power <> 0 order by realWeight/power asc")
+    @Query("from Car where weight is not null and weight <> 0 and power is not null and power <> 0 order by weight/power asc")
     List<Car> findAllOrderByRatio();
 }

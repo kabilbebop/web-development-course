@@ -69,14 +69,14 @@ public class CarController {
         // Search cars by model name
         List<Car> carsByModel = carRepository.findByModel_nameLikeIgnoreCase(like);
 
-        // Search cars by variant or options
-        List<Car> carsByVariantOrOptions = carRepository.findByVariantLikeIgnoreCaseOrOptionsLikeIgnoreCase(like, like);
+        // Search cars by variant name
+        List<Car> carsByName = carRepository.findByNameLikeIgnoreCase(like);
 
         // Add all cars to new result list
         Set<Car> cars = new HashSet<>();
         cars.addAll(carsByBrand);
         cars.addAll(carsByModel);
-        cars.addAll(carsByVariantOrOptions);
+        cars.addAll(carsByName);
         final List<Car> filteredCars = cars.stream()
                 .sorted(Comparator.naturalOrder())
                 .limit(MAX_RESULT)
@@ -99,7 +99,7 @@ public class CarController {
         List<Car> topCars = null;
         switch (criteria) {
             case "weight":
-                topCars = carRepository.findTop10ByOrderByRealWeightAsc();
+                topCars = carRepository.findTop10ByOrderByWeightAsc();
                 break;
             case "power":
                 topCars = carRepository.findTop10ByOrderByPowerDesc();
