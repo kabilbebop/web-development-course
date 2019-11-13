@@ -5,10 +5,12 @@ import ModelComponent from './components/model/model';
 
 function App(props) {
 
+  const modelComponents = props.data.map(brand => <ModelComponent brand={ brand }></ModelComponent>);
+
   return (
     <div className="App">
       <header-component></header-component>
-      <ModelComponent brand={ props.data[0] }></ModelComponent>
+      <section className="model-content">{ modelComponents }</section>
     </div>
   );
 }
