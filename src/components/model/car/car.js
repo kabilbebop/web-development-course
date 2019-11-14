@@ -7,8 +7,6 @@ const RATIO_MAX = 1; // max 1kg/hp else overflow
 
 export default function CarComponent(props) {
 
-  console.log(props);
-
   const ratio = Math.round(RATIO_MAX * props.car.power * 100 / props.car.weight);
   const year = props.car.startDate ? props.car.startDate.substr(0, 4) : undefined;
 
