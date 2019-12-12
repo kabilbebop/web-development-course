@@ -7,6 +7,7 @@ Voici une solution simple.
 - installer _node.js_
 - se positionner dans le répertoire racine du projet
 - exécuter `npx http-serve .`
+- vérifier que votre page s'affiche à l'URL http://localhost:8080/index.html
 
 ## Décomposition en web components
 Plusieurs parties sont répétées dans l'application:
