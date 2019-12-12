@@ -1,4 +1,4 @@
-const BASE_URL = 'https://sport-cars.cfapps.io/';
+const BASE_URL = 'https://sport-cars.cfapps.io';
 
 function renderCars(data) {
 
