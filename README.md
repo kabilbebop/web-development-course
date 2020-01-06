@@ -33,14 +33,9 @@ Un web component _standard_ est composé de 3 notions :
 - inclure le fichier `header.js` dans `index.html` comme ceci : 
   `<script type="module" src="components/header/header.js"></script>`
 - le type _module_ permet de déclarer des classes et fonctions avec l'instruction `export`
-
-### Fichier `header.js` : le _shadow DOM_
-- dans le constructeur de la classe, inclure le code suivant :
-```
-    this.attachShadow({mode: 'open'});   // attache le shadow-DOM
-    this.shadowRoot.appendChild('toto'); // définit ce qu'il y a dans ce shadow-DOM
-```
-- tester votre web component dans `index.html`, même s'il n'affiche que _toto_ pour le moment
+- tester votre web component le déclarant dans `index.html` : `<header-component></header-component>`
+  - vérifier qu'il n'y a pas d'erreur dans la console javascript du navigateur
+  - inspecter l'élément header-component : vous devriez voir le pseudo element shadow-root à l'intérieur
 
 ### Fichier HTML : le _template_
 
