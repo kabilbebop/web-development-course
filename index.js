@@ -70,15 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const modelContent = document.querySelector('.model-content');
-  let i = 0;
 
   data.forEach(brand => {
 
     brand.models.forEach(model => {
+
+      // instance of ModelComponent is created as an HTML element
       const modelComponent = document.createElement('model-component');
+
+      // add css class to apply styles
       modelComponent.classList.add('card');
 
-      // we can push brand and model as attribute because they are strings
+      // we can push brand and model as attributes because they are strings
       modelComponent.setAttribute('brand', brand.name);
       modelComponent.setAttribute('model', model.name);
       modelComponent.setAttribute('image-url', model.cars[0].imageUrl);
@@ -92,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         power: car.power,
       }));
 
+      // add model element to the DOM
       modelContent.appendChild(modelComponent);
     });
   });
