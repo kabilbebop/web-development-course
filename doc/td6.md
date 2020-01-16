@@ -46,10 +46,6 @@ Pousser les sources dans Gitlab.com
 
 ### Ajouter le pipeline de déploiement continu
 
-Ajouter les variables suivantes dans Gitlab (menu _Settings > CI / CD > environment variables_) : 
-- CF_USERNAME : nom de votre utilisateur sur Pivotal CloudFoundry
-- CF_PASSWORD : mot de passe
-
 Dans le fichier manifest ```.gitlab-ci.yml```, ajouter le pipeline de déploiement :
 
 ```
@@ -57,16 +53,6 @@ stages:
 - build
 - test
 - deploy
-```
-
-
-```
-push to cloudfoundry:
-    stage: deploy
-    script:
-    - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
-    - ./cf login -u $CF_USERNAME -p $CF_PASSWORD -a api.run.pivotal.io
-    - ./cf push
 ```
 
 Le job de build génère un fichier ```weight-cars-1.0.jar``` qu'il faut ensuite passer au job de deploy, pour faire cela il faut utiliser la commande suivante :
@@ -77,7 +63,33 @@ build jar:
         - build/libs/*.jar
 ```
 
+Pour déployer sous pivotal.io, ajouter les variables suivantes dans Gitlab (menu _Settings > CI / CD > environment variables_) : 
+- CF_USERNAME : nom de votre utilisateur sur Pivotal CloudFoundry
+- CF_PASSWORD : mot de passe
 
+Puis ajouter à ```.gitlab-ci.yml```
+
+```
+push to cloudfoundry:
+    stage: deploy
+    script:
+    - curl --location "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar zx
+    - ./cf login -u $CF_USERNAME -p $CF_PASSWORD -a api.run.pivotal.io
+    - ./cf push
+```
+
+Les propriétés de l'app sont décrites dans ```manifest.yml``` à la racine du projet :
+
+```
+    ---
+    applications:
+    - name: weight-cars
+      random-route: true
+      memory: 1G
+      path: build/libs/weight-cars-1.0.jar
+```
+
+Pour tester :
 - Commit & push du fichier
 - Vérifier l'exécution du job
 - Connectez-vous sur console.run.pivotal.io pour vérifier l'état de l'application
