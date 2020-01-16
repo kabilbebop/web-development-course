@@ -3,4 +3,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'weight-cars'
+rootProject.name = 'sports-cars'
