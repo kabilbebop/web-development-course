@@ -1,68 +1,150 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# TD4
 
-## Available Scripts
+Ce TD est composé en 2 parties :
+1. Intégrer les web components W3C dans l'application ReactJS.
+2. Ré-écrire ces composants en composants ReactJS.
 
-In the project directory, you can run:
+## Intégration des web components W3C dans une application ReactJS.
 
-### `yarn start`
+### Initialisation du projet ReactJS
+On va initialiser une application from scratch dans un nouveau répertoire.
+Se positionner dans le répertoire parent du projet actuel et lancer :
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`npx create-react-app sportscars`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+⇒ cela va générer le code de l'application d'exemple.
 
-### `yarn test`
+Se placer dans le nouveau répertoire et lancer :
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`npm run start` 
 
-### `yarn build`
+⇒ l’app d’exemple s’affiche bien
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Migration des fichiers web component
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Pour migrer progressivement, on va séparer le code de nos web components actuels dans les répertoires _public_ et _src_ : 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- public
+    - hangar.jpg
+    - logo.jpg
+    - components
+        - header
+            - header.html
+            - header.css
+        - model
+            - model.html
+            - model.css
+            - car
+                - car.html
+                - car.css
+- src
+    - index.css
+    - theme.css
+    - components
+        - header
+            - header.js
+        - model
+            - model.js
+            - car
+                - car.js
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Revoir les imports
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+React va packager pour nous tous les fichiers `.js` et `.css`.
+Pour que cela fonctionne il faut que les chemins d'import soient relatifs.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Revoir tous les imports de _util.js_ :
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+import getTemplate from '/components/util.js';
+```
 
-## Learn More
+Devient :
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+import getTemplate from '../util.js';
+ou
+import getTemplate from '../../util.js';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
 
-### Code Splitting
+Revoir les imports css :
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```
+@import '/theme.css';
+```
 
-### Analyzing the Bundle Size
+Devient :
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+```
+@import '../../theme.css';
+ou
+@import '../../../theme.css';
 
-### Making a Progressive Web App
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Migration de index.html et index.js vers App.js
 
-### Advanced Configuration
+Dans `App.js`, ajouter le contenu de `<body>` depuis `index.html` et le contenu de `index.js` :
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```
+    import HeaderComponent from './components/header/header';
+    ...
+    <fonctions index.js>
+    function App() {
+        useEffect(() => {
+            <contenu de document.addEventListener('DOMContentLoaded'...) dans index.js>
+        });
+        return (<contenu de body>);
+    }
+```
 
-### Deployment
+Remplacer `class="..."` par `className="..."` (spécificité React).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Constater que l'application s’affiche bien dans la page et qu'il n'y a pas d'erreur javascript.
 
-### `yarn build` fails to minify
+## Ré-écriture des web components en composants ReactJS
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### _Model_
+Créer le répertoire `src/components/model` et y déplacer `model.css` et `model.js`.
+Modifier `model.js` :
+- pour informer React qu'il s'agit d'un composant, ajouter la ligne suivante :
+    ```
+        import React from 'react';
+    ```
+- tout ce qui concerne les web components devient inutile : `HTMLElement`, `observedAttributes`, `attachShadow`, `shadowRoot`, `attributeChangedCallback`
+- étant donné que le code construit le template, on ne doit plus utiliser `getTemplate`, `querySelector` ni `appendChild`
+- remplacer la classe par une fonction comme dans `App.js`
+- recopier et adapter le code de `model.html` dans le retour de cette fonction
+- importer les styles comme un fichier Javascript :
+    ```
+        import './model.css';
+    ```
+- ajouter le composant _Model_ au composant _App_ après l'avoir importé dans `App.js`:
+    ```
+        import ModelComponent from './components/model/model';
+    ```
+
+### _Car_
+Migrer le composants _car_ en utilisant le même principe.
+
+## Ajout d'un état pour stocker les données
+ReactJS propose de stocker les données de l'application dans un espace mémoire spécial appelé le _state_
+
+Dans le cadre de notre application, nous allons y stocker les données retournées par l'API.
+
+Dans `App.js`, déplacer `ReactDOM.render()` dans le retour d’appel de l’API d’initialisation.
+Passer le résultat au composant _App_ comme ceci `<App data={data} />`
+Dans `App.js`, les valeurs sont disponibles en paramètre : par convention, on appelle ces attributs “props”.
+Modifier l'instruction de retour comme ceci pour vérifier que les données sont bien là :
+```
+ return (
+    <div className="App">
+      <header-component></header-component>
+      { props.data[0].name }
+    </div>
+  );
+```
+Passer le reste des données en utilisant le même principe.
+ 	

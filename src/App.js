@@ -1,59 +1,96 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import logo from './logo.svg';
 import './App.css';
 import HeaderComponent from './components/header/header';
+import CarComponent from './components/model/car/car';
 import ModelComponent from './components/model/model';
-
-
-const BASE_URL = 'https://sport-cars.cfapps.io/';
-
-function menuClick(setData, menu) {
-    if (menu === 'home') {
-        searchCars(setData, null);
-    } else {
-        top10Click(setData, menu);
-    }
-}
-
-function searchCars(setData, value) {
-
-    const url = `${BASE_URL}/api/cars${value && value.trim() !== '' ? '/search/' + value : ''}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          setData(data);
-    });
-}
-
-function top10Click(setData, what) {
-
-    fetch(`${BASE_URL}/api/cars/top/${what}/10`)
-        .then(response => response.json())
-        .then(data => {
-          setData(data);
-    });
-}
 
 function App() {
 
-  const [data, setData] = useState([]);
-
   useEffect(() => {
+    // Events binding
+    const header = document.querySelector('header-component');
+    header.onMenuSelect = menu => {
+      if (menu === 'home') {
+        searchCars();
+      } else {
+        top10Click(menu);
+      }
+    };
+
+    header.onSearchChange = val => {
+      searchCars(val);
+    };
+
+    // Initialize data
     fetch(`${BASE_URL}/api/cars`)
       .then(response => response.json())
       .then(data => {
-          setData(data);
+        renderCars(data);
       });
-  }, []);
-  
+  });
 
-  const modelComponents = data.map(brand => <ModelComponent key={ brand.id } brand={ brand }></ModelComponent>);
 
   return (
-    <div className="App">
-      <header-component onMenuSelect={ menu => menuClick(setData, menu) } onSearchChange={ val => searchCars(setData, val) }></header-component>
-      <section className="model-content">{ modelComponents }</section>
-    </div>
+    <section className="app-container">
+      <header-component></header-component>
+      <section className="model-content"></section>
+      <div className="overlay"></div>
+    </section>
   );
 }
+
+const BASE_URL = 'https://sport-cars.cfapps.io';
+
+function renderCars(data) {
+
+  const modelContent = document.querySelector('.model-content');
+  modelContent.innerHTML = '';
+  let i = 0;
+
+  data.forEach(brand => {
+      brand.models.forEach(model => {
+      const modelComponent = document.createElement('model-component');
+      modelComponent.classList.add('card');
+
+      // we can push brand and model as attribute because they are strings
+      modelComponent.setAttribute('brand', brand.name);
+      modelComponent.setAttribute('model', model.name);
+      modelComponent.setAttribute('image-url', model.cars[0].imageUrl);
+
+      // push car as property because it is an array
+      modelComponent.cars = model.cars.map(car => ({
+        name: car.name,
+        year: car.startDate ? car.startDate.match(/\d{4}/g)[0] : undefined,
+        ratio: Math.round(car.weight * 10 / car.power) / 10,
+        weight: car.weight,
+        power: car.power,
+      }));
+
+      modelContent.appendChild(modelComponent);
+    });
+  });
+}
+
+
+function searchCars(value) {
+
+  const url = `${BASE_URL}/api/cars${value && value.trim() !== '' ? '/search/' + value : ''}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      renderCars(data);
+    });
+}
+
+function top10Click(what) {
+
+  fetch(`${BASE_URL}/api/cars/top/${what}/10`)
+    .then(response => response.json())
+    .then(data => {
+      renderCars(data);
+    });
+}
+
 
 export default App;

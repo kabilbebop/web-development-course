@@ -1,4 +1,4 @@
-import getTemplate from '../util';
+import getTemplate from '../util.js';
 const FILTER_INPUT_TIMEOUT = 500;
 export default class HeaderComponent extends HTMLElement {
 

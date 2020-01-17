@@ -1,26 +1,60 @@
-import React from 'react';
-import './model.css';
-import CarComponent from './car/car';
+import getTemplate from '../util.js';
 
-export default function ModelComponent(props) {
+export class ModelComponent extends HTMLElement {
 
-  const modelArticles = props.brand.models.map(model => {
+  static get observedAttributes() {
+    return ['brand', 'model', 'image-url'];
+  }
 
-    const carComponents = model.cars.map(car => (<CarComponent key={car.id} model={model} car={car}></CarComponent>));
+  get cars() {
+    return this._cars;
+  }
 
-    return (
-      <article key={model.id} className="card">
-        <link rel="stylesheet" href="components/model/model.css" />
-        <h3><span className="brand">{props.brand.name}</span>&nbsp;<span className="model">{model.name}</span></h3>
-        <a href={model.cars[0].imageUrl} className="image-link">
-          <img alt="car" src={model.cars[0].imageUrl} />
-        </a>
-        <section className="car-content">
-          {carComponents}
-        </section>
-      </article>
-    );
-  });
+  set cars(value) {
+    this._cars = value;
+    this.templatePromise.then(() => {
+      this._cars.forEach(car => {
 
-  return modelArticles;
+        // object car to insert as child element
+        const carComponent = document.createElement('car-component');
+        carComponent.setAttribute('name', `${this.getAttribute('model')} ${car.name}`);
+        carComponent.setAttribute('year', car.year);
+        carComponent.setAttribute('ratio', car.ratio);
+        carComponent.setAttribute('weight', car.weight);
+        carComponent.setAttribute('power', car.power);
+        this.shadowRoot.querySelector('.car-content').appendChild(
+            carComponent);
+
+      });
+    });
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({mode: 'open'});
+    this.templatePromise = getTemplate('/components/model/model.html').then(template => {
+      this.shadowRoot.appendChild(template.content.cloneNode(true));
+    });
+    this._cars = [];
+  }
+
+  attributeChangedCallback(name, _oldValue, newValue) {
+    this.templatePromise.then(() => {
+      if(name && name != '' && newValue && newValue !== 'undefined') {
+        switch (name) {
+
+          case 'image-url':
+            const img = this.shadowRoot.querySelector('img');
+            img.src = newValue;
+            break;
+        
+          default:
+            this.shadowRoot.querySelector(`.${name}`).innerText = newValue;
+            break;
+        }
+      }
+    });
+  }
 }
+
+customElements.define('model-component', ModelComponent);
